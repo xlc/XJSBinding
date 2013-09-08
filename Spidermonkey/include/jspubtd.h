@@ -361,7 +361,10 @@ struct PerThreadDataFriendFields
     /* Limit pointer for checking native stack consumption. */
     uintptr_t nativeStackLimit;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
     static const size_t RuntimeMainThreadOffset = offsetof(RuntimeDummy, mainThread);
+#pragma clang diagnostic pop
 
     static inline PerThreadDataFriendFields *get(js::PerThreadData *pt) {
         return reinterpret_cast<PerThreadDataFriendFields *>(pt);

@@ -2908,11 +2908,16 @@ class AutoIdArray : private AutoGCRooter
     bool operator!() {
         return !idArray;
     }
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
     jsid operator[](size_t i) const {
         JS_ASSERT(idArray);
         JS_ASSERT(i < length());
         return JS_IdArrayGet(context, idArray, i);
     }
+#pragma clang diagnostic pop
+    
     size_t length() const {
         return JS_IdArrayLength(context, idArray);
     }

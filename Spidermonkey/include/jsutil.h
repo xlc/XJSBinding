@@ -217,6 +217,9 @@ enum MaybeReportError { REPORT_ERROR = true, DONT_REPORT_ERROR = false };
 
 /* A bit array is an array of bits represented by an array of words (size_t). */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+    
 static inline unsigned
 NumWordsForBitArrayOfLength(size_t length)
 {
@@ -230,6 +233,8 @@ BitArrayIndexToWordIndex(size_t length, size_t bitIndex)
     JS_ASSERT(wordIndex < length);
     return wordIndex;
 }
+    
+#pragma clang diagnostic pop
 
 static inline size_t
 BitArrayIndexToWordMask(size_t i)
