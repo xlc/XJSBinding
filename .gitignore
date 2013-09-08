@@ -14,6 +14,7 @@ profile
 *.moved-aside
 DerivedData
 .idea/
-
+project.xcworkspace/
+xcuserdata/
 Podfile.lock
 Pods/
