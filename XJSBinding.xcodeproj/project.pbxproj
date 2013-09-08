@@ -7,13 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0635FB4517DBFE1C00E77A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0635FB4417DBFE1C00E77A85 /* libz.dylib */; };
+		0635FB4617DBFE3300E77A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0635FB4417DBFE1C00E77A85 /* libz.dylib */; };
+		066CECB917DBFC6E0078829C /* XJSContext_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECAE17DBFC6E0078829C /* XJSContext_Private.h */; };
+		066CECBA17DBFC6E0078829C /* XJSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECAF17DBFC6E0078829C /* XJSContext.h */; };
+		066CECBB17DBFC6E0078829C /* XJSContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB017DBFC6E0078829C /* XJSContext.mm */; };
+		066CECBC17DBFC6E0078829C /* XJSRuntime_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB117DBFC6E0078829C /* XJSRuntime_Private.h */; };
+		066CECBD17DBFC6E0078829C /* XJSRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB217DBFC6E0078829C /* XJSRuntime.h */; };
+		066CECBE17DBFC6E0078829C /* XJSRuntime.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB317DBFC6E0078829C /* XJSRuntime.mm */; };
+		066CECBF17DBFC6E0078829C /* XJSRuntimeThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB417DBFC6E0078829C /* XJSRuntimeThread.h */; };
+		066CECC017DBFC6E0078829C /* XJSRuntimeThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB517DBFC6E0078829C /* XJSRuntimeThread.mm */; };
+		066CECC117DBFC6E0078829C /* XJSValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB617DBFC6E0078829C /* XJSValue.h */; };
+		066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB717DBFC6E0078829C /* XJSValue.mm */; };
+		066CECC717DBFCDE0078829C /* XJSRuntimeThreadTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */; };
+		06735A5E17DC00DF00BB4993 /* XLCTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 06735A5D17DC00DF00BB4993 /* XLCTestUtils.m */; };
 		0692BC6517D9D612009BFC18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC6417D9D612009BFC18 /* Cocoa.framework */; };
-		0692BC6F17D9D612009BFC18 /* XJSBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 0692BC6E17D9D612009BFC18 /* XJSBinding.m */; };
 		0692BC7617D9D612009BFC18 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC7517D9D612009BFC18 /* XCTest.framework */; };
 		0692BC7717D9D612009BFC18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC6417D9D612009BFC18 /* Cocoa.framework */; };
 		0692BC7A17D9D612009BFC18 /* libXJSBinding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC6117D9D612009BFC18 /* libXJSBinding.a */; };
-		0692BC8017D9D612009BFC18 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0692BC7E17D9D612009BFC18 /* InfoPlist.strings */; };
-		0692BC8217D9D612009BFC18 /* XJSBindingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0692BC8117D9D612009BFC18 /* XJSBindingTests.m */; };
 		06A3FBAD17DAA0A700E936F1 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A3FBAC17DAA0A700E936F1 /* libjs_static.a */; };
 		06A3FBFB17DAA0D900E936F1 /* Anchor.h in Headers */ = {isa = PBXBuildFile; fileRef = 06A3FBB017DAA0D900E936F1 /* Anchor.h */; };
 		06A3FBFC17DAA0D900E936F1 /* CallArgs.h in Headers */ = {isa = PBXBuildFile; fileRef = 06A3FBB117DAA0D900E936F1 /* CallArgs.h */; };
@@ -89,6 +100,7 @@
 		06A3FC4217DAA0D900E936F1 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 06A3FBF917DAA0D900E936F1 /* Util.h */; };
 		06A3FC4317DAA0D900E936F1 /* WeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 06A3FBFA17DAA0D900E936F1 /* WeakPtr.h */; };
 		078B1E644BF947379BD2992E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19DCF33337D74A589F235EA8 /* libPods.a */; };
+		8BAA6F77B978462DA13C0F12 /* libPods-XJSBindingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B00A57B74E481C8E10386A /* libPods-XJSBindingTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,19 +115,29 @@
 
 /* Begin PBXFileReference section */
 		01A24B46E1224314BBFBBE88 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		0635FB4417DBFE1C00E77A85 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		066CECAE17DBFC6E0078829C /* XJSContext_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSContext_Private.h; sourceTree = "<group>"; };
+		066CECAF17DBFC6E0078829C /* XJSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSContext.h; sourceTree = "<group>"; };
+		066CECB017DBFC6E0078829C /* XJSContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSContext.mm; sourceTree = "<group>"; };
+		066CECB117DBFC6E0078829C /* XJSRuntime_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntime_Private.h; sourceTree = "<group>"; };
+		066CECB217DBFC6E0078829C /* XJSRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntime.h; sourceTree = "<group>"; };
+		066CECB317DBFC6E0078829C /* XJSRuntime.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntime.mm; sourceTree = "<group>"; };
+		066CECB417DBFC6E0078829C /* XJSRuntimeThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntimeThread.h; sourceTree = "<group>"; };
+		066CECB517DBFC6E0078829C /* XJSRuntimeThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeThread.mm; sourceTree = "<group>"; };
+		066CECB617DBFC6E0078829C /* XJSValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSValue.h; sourceTree = "<group>"; };
+		066CECB717DBFC6E0078829C /* XJSValue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSValue.mm; sourceTree = "<group>"; };
+		066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeThreadTests.mm; sourceTree = "<group>"; };
+		06735A5C17DC00DF00BB4993 /* XLCTestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLCTestUtils.h; sourceTree = "<group>"; };
+		06735A5D17DC00DF00BB4993 /* XLCTestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLCTestUtils.m; sourceTree = "<group>"; };
 		0692BC6117D9D612009BFC18 /* libXJSBinding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libXJSBinding.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0692BC6417D9D612009BFC18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0692BC6717D9D612009BFC18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0692BC6817D9D612009BFC18 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		0692BC6917D9D612009BFC18 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		0692BC6C17D9D612009BFC18 /* XJSBinding-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XJSBinding-Prefix.pch"; sourceTree = "<group>"; };
-		0692BC6D17D9D612009BFC18 /* XJSBinding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XJSBinding.h; sourceTree = "<group>"; };
-		0692BC6E17D9D612009BFC18 /* XJSBinding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XJSBinding.m; sourceTree = "<group>"; };
 		0692BC7417D9D612009BFC18 /* XJSBindingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XJSBindingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0692BC7517D9D612009BFC18 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		0692BC7D17D9D612009BFC18 /* XJSBindingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XJSBindingTests-Info.plist"; sourceTree = "<group>"; };
-		0692BC7F17D9D612009BFC18 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		0692BC8117D9D612009BFC18 /* XJSBindingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XJSBindingTests.m; sourceTree = "<group>"; };
 		06A3FBAC17DAA0A700E936F1 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = Spidermonkey/lib/libjs_static.a; sourceTree = "<group>"; };
 		06A3FBB017DAA0D900E936F1 /* Anchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Anchor.h; sourceTree = "<group>"; };
 		06A3FBB117DAA0D900E936F1 /* CallArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallArgs.h; sourceTree = "<group>"; };
@@ -191,7 +213,9 @@
 		06A3FBF817DAA0D900E936F1 /* TypeTraits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeTraits.h; sourceTree = "<group>"; };
 		06A3FBF917DAA0D900E936F1 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		06A3FBFA17DAA0D900E936F1 /* WeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakPtr.h; sourceTree = "<group>"; };
+		13B00A57B74E481C8E10386A /* libPods-XJSBindingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBindingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		19DCF33337D74A589F235EA8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBindingTests.xcconfig"; path = "Pods/Pods-XJSBindingTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +223,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0635FB4517DBFE1C00E77A85 /* libz.dylib in Frameworks */,
 				0692BC6517D9D612009BFC18 /* Cocoa.framework in Frameworks */,
 				078B1E644BF947379BD2992E /* libPods.a in Frameworks */,
 				06A3FBAD17DAA0A700E936F1 /* libjs_static.a in Frameworks */,
@@ -209,15 +234,48 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0635FB4617DBFE3300E77A85 /* libz.dylib in Frameworks */,
 				0692BC7A17D9D612009BFC18 /* libXJSBinding.a in Frameworks */,
 				0692BC7717D9D612009BFC18 /* Cocoa.framework in Frameworks */,
 				0692BC7617D9D612009BFC18 /* XCTest.framework in Frameworks */,
+				8BAA6F77B978462DA13C0F12 /* libPods-XJSBindingTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		066CECC317DBFC7B0078829C /* XJSContext */ = {
+			isa = PBXGroup;
+			children = (
+				066CECAE17DBFC6E0078829C /* XJSContext_Private.h */,
+				066CECAF17DBFC6E0078829C /* XJSContext.h */,
+				066CECB017DBFC6E0078829C /* XJSContext.mm */,
+			);
+			name = XJSContext;
+			sourceTree = "<group>";
+		};
+		066CECC417DBFC830078829C /* XJSRuntime */ = {
+			isa = PBXGroup;
+			children = (
+				066CECB117DBFC6E0078829C /* XJSRuntime_Private.h */,
+				066CECB217DBFC6E0078829C /* XJSRuntime.h */,
+				066CECB317DBFC6E0078829C /* XJSRuntime.mm */,
+				066CECB417DBFC6E0078829C /* XJSRuntimeThread.h */,
+				066CECB517DBFC6E0078829C /* XJSRuntimeThread.mm */,
+			);
+			name = XJSRuntime;
+			sourceTree = "<group>";
+		};
+		066CECC517DBFC8A0078829C /* XJSValue */ = {
+			isa = PBXGroup;
+			children = (
+				066CECB617DBFC6E0078829C /* XJSValue.h */,
+				066CECB717DBFC6E0078829C /* XJSValue.mm */,
+			);
+			name = XJSValue;
+			sourceTree = "<group>";
+		};
 		0692BC5817D9D612009BFC18 = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +284,7 @@
 				0692BC6317D9D612009BFC18 /* Frameworks */,
 				0692BC6217D9D612009BFC18 /* Products */,
 				01A24B46E1224314BBFBBE88 /* Pods.xcconfig */,
+				5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -241,11 +300,13 @@
 		0692BC6317D9D612009BFC18 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0635FB4417DBFE1C00E77A85 /* libz.dylib */,
 				0692BC6417D9D612009BFC18 /* Cocoa.framework */,
 				0692BC7517D9D612009BFC18 /* XCTest.framework */,
 				0692BC6617D9D612009BFC18 /* Other Frameworks */,
 				19DCF33337D74A589F235EA8 /* libPods.a */,
 				06A3FBAC17DAA0A700E936F1 /* libjs_static.a */,
+				13B00A57B74E481C8E10386A /* libPods-XJSBindingTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -263,9 +324,10 @@
 		0692BC6A17D9D612009BFC18 /* XJSBinding */ = {
 			isa = PBXGroup;
 			children = (
+				066CECC317DBFC7B0078829C /* XJSContext */,
+				066CECC417DBFC830078829C /* XJSRuntime */,
+				066CECC517DBFC8A0078829C /* XJSValue */,
 				06A3FBAE17DAA0C600E936F1 /* Spidermonkey */,
-				0692BC6D17D9D612009BFC18 /* XJSBinding.h */,
-				0692BC6E17D9D612009BFC18 /* XJSBinding.m */,
 				0692BC6B17D9D612009BFC18 /* Supporting Files */,
 			);
 			path = XJSBinding;
@@ -282,7 +344,9 @@
 		0692BC7B17D9D612009BFC18 /* XJSBindingTests */ = {
 			isa = PBXGroup;
 			children = (
-				0692BC8117D9D612009BFC18 /* XJSBindingTests.m */,
+				06735A5C17DC00DF00BB4993 /* XLCTestUtils.h */,
+				06735A5D17DC00DF00BB4993 /* XLCTestUtils.m */,
+				066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */,
 				0692BC7C17D9D612009BFC18 /* Supporting Files */,
 			);
 			path = XJSBindingTests;
@@ -292,7 +356,6 @@
 			isa = PBXGroup;
 			children = (
 				0692BC7D17D9D612009BFC18 /* XJSBindingTests-Info.plist */,
-				0692BC7E17D9D612009BFC18 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -418,7 +481,9 @@
 				06A3FC3F17DAA0D900E936F1 /* TypedEnum.h in Headers */,
 				06A3FC0D17DAA0D900E936F1 /* jsapi.h in Headers */,
 				06A3FC1B17DAA0D900E936F1 /* jspubtd.h in Headers */,
+				066CECBF17DBFC6E0078829C /* XJSRuntimeThread.h in Headers */,
 				06A3FC2C17DAA0D900E936F1 /* FloatingPoint.h in Headers */,
+				066CECBA17DBFC6E0078829C /* XJSContext.h in Headers */,
 				06A3FBFB17DAA0D900E936F1 /* Anchor.h in Headers */,
 				06A3FC0B17DAA0D900E936F1 /* js-config.h in Headers */,
 				06A3FC3917DAA0D900E936F1 /* RefPtr.h in Headers */,
@@ -430,10 +495,12 @@
 				06A3FC0417DAA0D900E936F1 /* PropertyKey.h in Headers */,
 				06A3FC2F17DAA0D900E936F1 /* Likely.h in Headers */,
 				06A3FC1A17DAA0D900E936F1 /* jsprvtd.h in Headers */,
+				066CECBC17DBFC6E0078829C /* XJSRuntime_Private.h in Headers */,
 				06A3FC3D17DAA0D900E936F1 /* StandardInteger.h in Headers */,
 				06A3FC0517DAA0D900E936F1 /* RequiredDefines.h in Headers */,
 				06A3FC0E17DAA0D900E936F1 /* jsclass.h in Headers */,
 				06A3FC0217DAA0D900E936F1 /* LegacyIntTypes.h in Headers */,
+				066CECC117DBFC6E0078829C /* XJSValue.h in Headers */,
 				06A3FC2317DAA0D900E936F1 /* Casting.h in Headers */,
 				06A3FC3717DAA0D900E936F1 /* Range.h in Headers */,
 				06A3FC1417DAA0D900E936F1 /* jslock.h in Headers */,
@@ -442,6 +509,7 @@
 				06A3FC0F17DAA0D900E936F1 /* jsclist.h in Headers */,
 				06A3FC4317DAA0D900E936F1 /* WeakPtr.h in Headers */,
 				06A3FC2917DAA0D900E936F1 /* Decimal.h in Headers */,
+				066CECBD17DBFC6E0078829C /* XJSRuntime.h in Headers */,
 				06A3FC3017DAA0D900E936F1 /* LinkedList.h in Headers */,
 				06A3FC0117DAA0D900E936F1 /* HeapAPI.h in Headers */,
 				06A3FC3E17DAA0D900E936F1 /* ThreadLocal.h in Headers */,
@@ -460,6 +528,7 @@
 				06A3FC1617DAA0D900E936F1 /* jsperf.h in Headers */,
 				06A3FC0317DAA0D900E936F1 /* MemoryMetrics.h in Headers */,
 				06A3FC2D17DAA0D900E936F1 /* GuardObjects.h in Headers */,
+				066CECB917DBFC6E0078829C /* XJSContext_Private.h in Headers */,
 				06A3FC2117DAA0D900E936F1 /* Attributes.h in Headers */,
 				06A3FC2617DAA0D900E936F1 /* Compiler.h in Headers */,
 				06A3FC3817DAA0D900E936F1 /* RangedPtr.h in Headers */,
@@ -505,9 +574,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0692BC8817D9D612009BFC18 /* Build configuration list for PBXNativeTarget "XJSBindingTests" */;
 			buildPhases = (
+				BED9FB68EF7F40439E46A352 /* Check Pods Manifest.lock */,
 				0692BC7017D9D612009BFC18 /* Sources */,
 				0692BC7117D9D612009BFC18 /* Frameworks */,
 				0692BC7217D9D612009BFC18 /* Resources */,
+				8E4587273A3B42EB8453FA2A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -551,7 +622,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0692BC8017D9D612009BFC18 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +629,36 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		0DD5340876524480ADBBFE9F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8E4587273A3B42EB8453FA2A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-XJSBindingTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BED9FB68EF7F40439E46A352 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -595,7 +695,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0692BC6F17D9D612009BFC18 /* XJSBinding.m in Sources */,
+				066CECBE17DBFC6E0078829C /* XJSRuntime.mm in Sources */,
+				066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */,
+				066CECC017DBFC6E0078829C /* XJSRuntimeThread.mm in Sources */,
+				066CECBB17DBFC6E0078829C /* XJSContext.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,7 +706,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0692BC8217D9D612009BFC18 /* XJSBindingTests.m in Sources */,
+				066CECC717DBFCDE0078829C /* XJSRuntimeThreadTests.mm in Sources */,
+				06735A5E17DC00DF00BB4993 /* XLCTestUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,17 +720,6 @@
 			targetProxy = 0692BC7817D9D612009BFC18 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		0692BC7E17D9D612009BFC18 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0692BC7F17D9D612009BFC18 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		0692BC8317D9D612009BFC18 /* Debug */ = {
@@ -705,6 +798,12 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/OCMock\"",
+					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"\"${SRCROOT}/Spidermonkey/include\"",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/xiliangchen/Documents/project/XJSBinding/Spidermonkey/lib,
@@ -719,6 +818,12 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/OCMock\"",
+					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"\"${SRCROOT}/Spidermonkey/include\"",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/xiliangchen/Documents/project/XJSBinding/Spidermonkey/lib,
@@ -729,6 +834,7 @@
 		};
 		0692BC8917D9D612009BFC18 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -741,6 +847,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/OCMock\"",
+					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"\"${SRCROOT}/Spidermonkey/include\"",
+				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
@@ -749,6 +861,7 @@
 		};
 		0692BC8A17D9D612009BFC18 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -757,6 +870,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/OCMock\"",
+					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"\"${SRCROOT}/Spidermonkey/include\"",
+				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
