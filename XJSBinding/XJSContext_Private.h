@@ -12,6 +12,7 @@
 
 @interface XJSContext ()
 
+@property (assign, readonly) JSContext *context;
 @property (strong) NSString *errorMessage;
 
 + (XJSContext *)contextForJSContext:(JSContext *)jscontext;

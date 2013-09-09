@@ -13,7 +13,7 @@
 
 #import "XJSRuntime_Private.h"
 
-static NSMutableDictionary *contextDic;
+static NSMutableDictionary *contextDict;
 
 static JSClass global_class = {
     "global",
@@ -32,24 +32,28 @@ static JSClass global_class = {
 /* The error reporter callback. */
 static void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
     NSString *errorString = [NSString stringWithFormat:@"%s:%u:%s", report->filename ? report->filename : "<no filename="">", (unsigned int) report->lineno, message];
-    XDLOG(@"%@", errorString);
-    [contextDic[[NSValue valueWithPointer:cx]] setErrorMessage:errorString];
+    XWLOG(@"%@", errorString);
+    [contextDict[[NSValue valueWithPointer:cx]] setErrorMessage:errorString];
 }
 
-@implementation XJSContext {
-    JSContext *_context;
-}
+@implementation XJSContext
 
 + (void)initialize
 {
     if (self == [XJSContext class]) {
-        contextDic = [NSMutableDictionary dictionary];
+        contextDict = [NSMutableDictionary dictionary];
     }
 }
 
 + (XJSContext *)contextForJSContext:(JSContext *)jscontext {
-    @synchronized(contextDic) {
-        return contextDic[[NSValue valueWithPointer:jscontext]];
+    NSValue *key = [NSValue valueWithPointer:jscontext];
+    @synchronized(contextDict) {
+        id (^block)(void) = contextDict[key];
+        id context = block();
+        if (!context) {
+            [contextDict removeObjectForKey:key];
+        }
+        return context;
     }
 }
 
@@ -63,11 +67,15 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 {
     self = [super init];
     if (self) {
-        [runtime performBlockAndWait:^{
+        _runtime = runtime;
+        
+        __weak __typeof__(self) weakSelf = self;
+        
+        [_runtime performBlockAndWait:^{
             _context = JS_NewContext(runtime.runtime, 8192);
             
-            @synchronized(contextDic) {
-                contextDic[[NSValue valueWithPointer:_context]] = self;
+            @synchronized(contextDict) {
+                contextDict[[NSValue valueWithPointer:_context]] = [^() { return weakSelf; } copy]; // weak ref value
             }
             
             JS_SetOptions(_context, JSOPTION_VAROBJFIX);
@@ -89,12 +97,12 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (void)dealloc
 {
-    [_runtime performBlock:^{
+    [_runtime performBlockAndWait:^{
         JS_DestroyContext(_context);
     }];
     
-    @synchronized(contextDic) {
-        [contextDic removeObjectForKey:[NSValue valueWithPointer:_context]];
+    @synchronized(contextDict) {
+        [contextDict removeObjectForKey:[NSValue valueWithPointer:_context]];
     }
 }
 

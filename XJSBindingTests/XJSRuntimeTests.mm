@@ -77,4 +77,30 @@
     XCTAssertEqualObjects(executeThread, runtime.thread, @"should be on runtime thread");
 }
 
+- (void)testPerformBlockNested
+{
+    __weak XJSRuntime *weakRuntime;
+    
+    __block BOOL executed = NO;
+    
+    @autoreleasepool {
+        XJSRuntime *runtime = [[XJSRuntime alloc] init];
+        weakRuntime = runtime;
+        
+        [runtime performBlock:^{
+            [runtime performBlockAndWait:^{
+                [runtime performBlockAndWait:^{
+                    [runtime performBlock:^{
+                        executed = YES;
+                    }];
+                }];
+            }];
+        }];
+        XLCAssertTrueBeforeTimeout(executed, 1, @"should perform block");
+    }
+
+    XCTAssertNil(weakRuntime, @"should not have retain cycle");
+    
+}
+
 @end
