@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0635FB4517DBFE1C00E77A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0635FB4417DBFE1C00E77A85 /* libz.dylib */; };
 		0635FB4617DBFE3300E77A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0635FB4417DBFE1C00E77A85 /* libz.dylib */; };
+		065B1A6D17DC136B00AC0D63 /* XJSRuntimeTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 065B1A6C17DC136B00AC0D63 /* XJSRuntimeTests.mm */; };
 		066CECB917DBFC6E0078829C /* XJSContext_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECAE17DBFC6E0078829C /* XJSContext_Private.h */; };
 		066CECBA17DBFC6E0078829C /* XJSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECAF17DBFC6E0078829C /* XJSContext.h */; };
 		066CECBB17DBFC6E0078829C /* XJSContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB017DBFC6E0078829C /* XJSContext.mm */; };
@@ -116,6 +117,7 @@
 /* Begin PBXFileReference section */
 		01A24B46E1224314BBFBBE88 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		0635FB4417DBFE1C00E77A85 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		065B1A6C17DC136B00AC0D63 /* XJSRuntimeTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeTests.mm; sourceTree = "<group>"; };
 		066CECAE17DBFC6E0078829C /* XJSContext_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSContext_Private.h; sourceTree = "<group>"; };
 		066CECAF17DBFC6E0078829C /* XJSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSContext.h; sourceTree = "<group>"; };
 		066CECB017DBFC6E0078829C /* XJSContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSContext.mm; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				06735A5C17DC00DF00BB4993 /* XLCTestUtils.h */,
 				06735A5D17DC00DF00BB4993 /* XLCTestUtils.m */,
 				066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */,
+				065B1A6C17DC136B00AC0D63 /* XJSRuntimeTests.mm */,
 				0692BC7C17D9D612009BFC18 /* Supporting Files */,
 			);
 			path = XJSBindingTests;
@@ -708,6 +711,7 @@
 			files = (
 				066CECC717DBFCDE0078829C /* XJSRuntimeThreadTests.mm in Sources */,
 				06735A5E17DC00DF00BB4993 /* XLCTestUtils.m in Sources */,
+				065B1A6D17DC136B00AC0D63 /* XJSRuntimeTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
