@@ -21,7 +21,7 @@
 		066CECC117DBFC6E0078829C /* XJSValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB617DBFC6E0078829C /* XJSValue.h */; };
 		066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB717DBFC6E0078829C /* XJSValue.mm */; };
 		066CECC717DBFCDE0078829C /* XJSRuntimeThreadTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */; };
-		06735A5E17DC00DF00BB4993 /* XLCTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 06735A5D17DC00DF00BB4993 /* XLCTestUtils.m */; };
+		06735A5E17DC00DF00BB4993 /* XLCTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 06735A5D17DC00DF00BB4993 /* XLCTestUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0692BC6517D9D612009BFC18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC6417D9D612009BFC18 /* Cocoa.framework */; };
 		0692BC7617D9D612009BFC18 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC7517D9D612009BFC18 /* XCTest.framework */; };
 		0692BC7717D9D612009BFC18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC6417D9D612009BFC18 /* Cocoa.framework */; };
