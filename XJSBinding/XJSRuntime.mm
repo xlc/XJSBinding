@@ -37,7 +37,11 @@
     if (block == nil) {
         return;
     }
-    [self performSelector:@selector(_performBlock:) onThread:self.thread withObject:block waitUntilDone:NO modes:@[NSRunLoopCommonModes]];
+    if ([[NSThread currentThread] isEqual:self.thread]) {
+        block();
+    } else {
+        [self performSelector:@selector(_performBlock:) onThread:self.thread withObject:block waitUntilDone:NO modes:@[NSRunLoopCommonModes]];
+    }
 }
 
 - (void)performBlockAndWait:(void (^)(void))block
@@ -45,12 +49,25 @@
     if (block == nil) {
         return;
     }
-    [self performSelector:@selector(_performBlock:) onThread:self.thread withObject:block waitUntilDone:YES modes:@[NSRunLoopCommonModes]];
+    if ([[NSThread currentThread] isEqual:self.thread]) {
+        block();
+    } else {
+        [self performSelector:@selector(_performBlock:) onThread:self.thread withObject:block waitUntilDone:YES modes:@[NSRunLoopCommonModes]];
+    }
 }
 
 - (void)_performBlock:(void (^)(void))block
 {
     block();
+}
+
+#pragma mark -
+
+- (void)gc
+{
+    [self performBlock:^{
+        JS_GC(self.runtime);
+    }];
 }
 
 @end

@@ -25,4 +25,6 @@
 - (void)performBlock:(void (^)(void))block;
 - (void)performBlockAndWait:(void (^)(void))block;
 
+- (void)gc;
+
 @end

@@ -27,6 +27,8 @@
  */
 - (id)initWithRuntime:(XJSRuntime *)runtime;
 
+- (void)gcIfNeed;
+
 //- (XJSValue *)evalutateScript:(NSString *)script;
 //- (XJSValue *)evalutateScriptAtURL:(NSURL *)url;
 //

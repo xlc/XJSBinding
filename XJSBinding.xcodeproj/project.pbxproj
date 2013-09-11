@@ -10,6 +10,10 @@
 		0635FB4517DBFE1C00E77A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0635FB4417DBFE1C00E77A85 /* libz.dylib */; };
 		0635FB4617DBFE3300E77A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0635FB4417DBFE1C00E77A85 /* libz.dylib */; };
 		065B1A6D17DC136B00AC0D63 /* XJSRuntimeTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 065B1A6C17DC136B00AC0D63 /* XJSRuntimeTests.mm */; };
+		0660B9CE17DF23A800A3DD0C /* XJSConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 0660B9CC17DF23A800A3DD0C /* XJSConvert.h */; };
+		0660B9CF17DF23A800A3DD0C /* XJSConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0660B9CD17DF23A800A3DD0C /* XJSConvert.mm */; };
+		0660B9D217E0584D00A3DD0C /* XJSValueTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0660B9D117E0584D00A3DD0C /* XJSValueTests.mm */; };
+		0660B9D517E05C0E00A3DD0C /* XJSTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0660B9D417E05C0E00A3DD0C /* XJSTestUtils.m */; };
 		0664602B17DDC4960071D23F /* XJSContextTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0664602A17DDC4960071D23F /* XJSContextTests.mm */; };
 		066CECB917DBFC6E0078829C /* XJSContext_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECAE17DBFC6E0078829C /* XJSContext_Private.h */; };
 		066CECBA17DBFC6E0078829C /* XJSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECAF17DBFC6E0078829C /* XJSContext.h */; };
@@ -119,6 +123,12 @@
 		01A24B46E1224314BBFBBE88 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		0635FB4417DBFE1C00E77A85 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		065B1A6C17DC136B00AC0D63 /* XJSRuntimeTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeTests.mm; sourceTree = "<group>"; };
+		0660B9CC17DF23A800A3DD0C /* XJSConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSConvert.h; sourceTree = "<group>"; };
+		0660B9CD17DF23A800A3DD0C /* XJSConvert.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSConvert.mm; sourceTree = "<group>"; };
+		0660B9D017E0553400A3DD0C /* XJSValue_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XJSValue_Private.h; sourceTree = "<group>"; };
+		0660B9D117E0584D00A3DD0C /* XJSValueTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSValueTests.mm; sourceTree = "<group>"; };
+		0660B9D317E05C0E00A3DD0C /* XJSTestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSTestUtils.h; sourceTree = "<group>"; };
+		0660B9D417E05C0E00A3DD0C /* XJSTestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSTestUtils.m; sourceTree = "<group>"; };
 		0664602A17DDC4960071D23F /* XJSContextTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSContextTests.mm; sourceTree = "<group>"; };
 		066CECAE17DBFC6E0078829C /* XJSContext_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSContext_Private.h; sourceTree = "<group>"; };
 		066CECAF17DBFC6E0078829C /* XJSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSContext.h; sourceTree = "<group>"; };
@@ -249,11 +259,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0660B9C317DF21DC00A3DD0C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0660B9CC17DF23A800A3DD0C /* XJSConvert.h */,
+				0660B9CD17DF23A800A3DD0C /* XJSConvert.mm */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		066CECC317DBFC7B0078829C /* XJSContext */ = {
 			isa = PBXGroup;
 			children = (
-				066CECAE17DBFC6E0078829C /* XJSContext_Private.h */,
 				066CECAF17DBFC6E0078829C /* XJSContext.h */,
+				066CECAE17DBFC6E0078829C /* XJSContext_Private.h */,
 				066CECB017DBFC6E0078829C /* XJSContext.mm */,
 			);
 			name = XJSContext;
@@ -262,8 +281,8 @@
 		066CECC417DBFC830078829C /* XJSRuntime */ = {
 			isa = PBXGroup;
 			children = (
-				066CECB117DBFC6E0078829C /* XJSRuntime_Private.h */,
 				066CECB217DBFC6E0078829C /* XJSRuntime.h */,
+				066CECB117DBFC6E0078829C /* XJSRuntime_Private.h */,
 				066CECB317DBFC6E0078829C /* XJSRuntime.mm */,
 				066CECB417DBFC6E0078829C /* XJSRuntimeThread.h */,
 				066CECB517DBFC6E0078829C /* XJSRuntimeThread.mm */,
@@ -275,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				066CECB617DBFC6E0078829C /* XJSValue.h */,
+				0660B9D017E0553400A3DD0C /* XJSValue_Private.h */,
 				066CECB717DBFC6E0078829C /* XJSValue.mm */,
 			);
 			name = XJSValue;
@@ -331,6 +351,7 @@
 				066CECC317DBFC7B0078829C /* XJSContext */,
 				066CECC417DBFC830078829C /* XJSRuntime */,
 				066CECC517DBFC8A0078829C /* XJSValue */,
+				0660B9C317DF21DC00A3DD0C /* Helpers */,
 				06A3FBAE17DAA0C600E936F1 /* Spidermonkey */,
 				0692BC6B17D9D612009BFC18 /* Supporting Files */,
 			);
@@ -350,9 +371,12 @@
 			children = (
 				06735A5C17DC00DF00BB4993 /* XLCTestUtils.h */,
 				06735A5D17DC00DF00BB4993 /* XLCTestUtils.m */,
+				0660B9D317E05C0E00A3DD0C /* XJSTestUtils.h */,
+				0660B9D417E05C0E00A3DD0C /* XJSTestUtils.m */,
 				066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */,
 				065B1A6C17DC136B00AC0D63 /* XJSRuntimeTests.mm */,
 				0664602A17DDC4960071D23F /* XJSContextTests.mm */,
+				0660B9D117E0584D00A3DD0C /* XJSValueTests.mm */,
 				0692BC7C17D9D612009BFC18 /* Supporting Files */,
 			);
 			path = XJSBindingTests;
@@ -480,6 +504,7 @@
 				06A3FC2E17DAA0D900E936F1 /* HashFunctions.h in Headers */,
 				06A3FBFD17DAA0D900E936F1 /* CharacterEncoding.h in Headers */,
 				06A3FC0A17DAA0D900E936F1 /* Vector.h in Headers */,
+				0660B9CE17DF23A800A3DD0C /* XJSConvert.h in Headers */,
 				06A3FC3C17DAA0D900E936F1 /* SplayTree.h in Headers */,
 				06A3FC1717DAA0D900E936F1 /* jsprf.h in Headers */,
 				06A3FC0817DAA0D900E936F1 /* Utility.h in Headers */,
@@ -704,6 +729,7 @@
 				066CECBE17DBFC6E0078829C /* XJSRuntime.mm in Sources */,
 				066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */,
 				066CECC017DBFC6E0078829C /* XJSRuntimeThread.mm in Sources */,
+				0660B9CF17DF23A800A3DD0C /* XJSConvert.mm in Sources */,
 				066CECBB17DBFC6E0078829C /* XJSContext.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -712,8 +738,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0660B9D217E0584D00A3DD0C /* XJSValueTests.mm in Sources */,
 				066CECC717DBFCDE0078829C /* XJSRuntimeThreadTests.mm in Sources */,
 				0664602B17DDC4960071D23F /* XJSContextTests.mm in Sources */,
+				0660B9D517E05C0E00A3DD0C /* XJSTestUtils.m in Sources */,
 				06735A5E17DC00DF00BB4993 /* XLCTestUtils.m in Sources */,
 				065B1A6D17DC136B00AC0D63 /* XJSRuntimeTests.mm in Sources */,
 			);

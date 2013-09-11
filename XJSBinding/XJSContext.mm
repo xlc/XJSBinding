@@ -106,4 +106,13 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     }
 }
 
+#pragma mark -
+
+- (void)gcIfNeed
+{
+    [self.runtime performBlock:^{
+        JS_MaybeGC(self.context);
+    }];
+}
+
 @end
