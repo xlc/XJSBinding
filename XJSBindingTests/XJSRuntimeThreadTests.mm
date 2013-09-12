@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "OCMock.h"
-#import "XLCTestUtils.h"
+#import "XLCUtils.h"
 
 #import "XJSRuntimeThread.h"
 #import "XJSRuntime_Private.h"

@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "XLCTestUtils.h"
+#import "XLCUtils.h"
 
 #import "XJSContext_Private.h"
 
@@ -35,7 +35,7 @@
     __weak XJSContext *weakContext;
     JSContext *jscontext;
     @autoreleasepool {
-        XJSContext *context = [[[XJSContext alloc] xlc_swizzleRetainRelease] init];
+        XJSContext *context = [[XJSContext alloc] init];
         weakContext = context;
         
         jscontext = context.context;

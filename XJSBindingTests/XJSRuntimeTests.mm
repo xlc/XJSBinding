@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "XLCTestUtils.h"
+#import "XLCUtils.h"
 
 #import "XJSRuntime_Private.h"
 

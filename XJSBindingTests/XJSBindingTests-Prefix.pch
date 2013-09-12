@@ -1,0 +1,12 @@
+//
+//  PrefixHeader.pch
+//  XJSBinding
+//
+//  Created by Xiliang Chen on 13-9-12.
+//  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
+//
+
+
+#ifdef __OBJC__
+    #import <XCTest/XCTest.h>
+#endif

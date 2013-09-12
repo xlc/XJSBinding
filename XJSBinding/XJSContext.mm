@@ -49,7 +49,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     NSValue *key = [NSValue valueWithPointer:jscontext];
     @synchronized(contextDict) {
         id (^block)(void) = contextDict[key];
-        id context = block();
+        id context = block ? block() : nil;
         if (!context) {
             [contextDict removeObjectForKey:key];
         }
