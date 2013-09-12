@@ -16,5 +16,6 @@ DerivedData
 .idea/
 project.xcworkspace/
 xcuserdata/
+*.xccheckout
 Podfile.lock
 Pods/
