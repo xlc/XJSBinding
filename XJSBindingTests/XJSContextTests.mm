@@ -42,13 +42,23 @@
         
         XCTAssert(jscontext != NULL, @"should have JSContext");
         XCTAssertNotNil(context.runtime, @"should have runtime");
-        XCTAssert([context.errorMessage length] == 0, @"should not have error message");
         
         XCTAssertEqual([XJSContext contextForJSContext:jscontext], context, @"should match");
     }
     
     XCTAssertNil(weakContext, @"should not have retain cycle");
     XCTAssertNil([XJSContext contextForJSContext:jscontext], @"should find nothing");
+}
+
+- (void)testEvalutateString
+{
+    XJSContext *context = [[XJSContext alloc] init];
+    
+    NSError *error;
+    XJSValue *value = [context evaluateString:@"1+1" error:&error];
+    
+    XCTAssertNil(error, @"should have no error");
+    XCTAssertNotNil(value, @"should have value");
 }
 
 @end

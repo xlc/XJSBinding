@@ -11,10 +11,18 @@
 #import "jsapi.h"
 
 @interface XJSContext ()
+{
+    NSMutableArray *_errorStack;
+    JSObject *_globalObject;
+}
 
 @property (assign, readonly) JSContext *context;
-@property (strong) NSString *errorMessage;
 
 + (XJSContext *)contextForJSContext:(JSContext *)jscontext;
+
+- (void)pushErrorStack;
+- (void)popErrorStack;
+- (void)addError:(NSError *)error;
+- (NSError *)error;
 
 @end

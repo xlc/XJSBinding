@@ -10,8 +10,10 @@
 
 #import "jsapi.h"
 #import "XLCAssertion.h"
+#import "NSError+XJSError.h"
 
 #import "XJSRuntime_Private.h"
+#import "XJSValue_Private.h"
 
 static NSMutableDictionary *contextDict;
 
@@ -31,9 +33,8 @@ static JSClass global_class = {
 
 /* The error reporter callback. */
 static void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
-    NSString *errorString = [NSString stringWithFormat:@"%s:%u:%s", report->filename ? report->filename : "<no filename="">", (unsigned int) report->lineno, message];
-    XWLOG(@"%@", errorString);
-    [contextDict[[NSValue valueWithPointer:cx]] setErrorMessage:errorString];
+    XILOG(@"%s:%u:%s", report->filename ? report->filename : "<no filename>", (unsigned int) report->lineno, message);
+    [contextDict[[NSValue valueWithPointer:cx]] addError:[NSError errorWithXJSDomainAndFileName:@(report->filename) lineNumber:report->lineno message:@(message)]];
 }
 
 @implementation XJSContext
@@ -68,6 +69,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     self = [super init];
     if (self) {
         _runtime = runtime;
+        _errorStack = [NSMutableArray array];
         
         __weak __typeof__(self) weakSelf = self;
         
@@ -83,13 +85,13 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
             JS_SetErrorReporter(_context, reportError);
             
             JSAutoRequest ar(_context);
-            JSObject *global = JS_NewGlobalObject(_context, &global_class, NULL);
-            XASSERT(global != NULL, @"fail to create gloabl object");
+            _globalObject = JS_NewGlobalObject(_context, &global_class, NULL);
+            XASSERT(_globalObject != NULL, @"fail to create gloabl object");
             
-            JSAutoCompartment ac(_context, global);
-            JS_SetGlobalObject(_context, global);
+            JSAutoCompartment ac(_context, _globalObject);
+            JS_SetGlobalObject(_context, _globalObject);
             
-            JS_InitStandardClasses(_context, global);
+            JS_InitStandardClasses(_context, _globalObject);
         }];
     }
     return self;
@@ -113,6 +115,76 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     [self.runtime performBlock:^{
         JS_MaybeGC(self.context);
     }];
+}
+
+#pragma mark -
+
+- (void)pushErrorStack
+{
+    [_errorStack addObject:[NSMutableArray array]];
+}
+
+- (void)popErrorStack
+{
+    [_errorStack removeLastObject];
+}
+
+- (void)addError:(NSError *)error
+{
+    if (self.errorHandler) {
+        self.errorHandler(self, error);
+    }
+    [[_errorStack lastObject] addObject:error];
+}
+
+- (NSError *)error
+{
+    NSArray *errors = [_errorStack lastObject];
+    if (errors.count == 0) {
+        return nil;
+    }
+    if (errors.count == 1) {
+        return [errors lastObject];
+    }
+    return [NSError errorWithXJSDomainAndDetailedErrors:errors];
+}
+
+#pragma mark -
+
+
+- (XJSValue *)evaluateString:(NSString *)script error:(NSError **)error
+{
+    return [self evaluateString:script fileName:nil lineNumber:0 error:error];
+}
+
+- (XJSValue *)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)error
+{
+    jsval outVal;
+    [self pushErrorStack];
+    BOOL ok = JS_EvaluateScript(self.context, _globalObject, [script UTF8String], (unsigned)[script length], [filename UTF8String], (unsigned)lineno, &outVal);
+    if (error) {
+        *error = [self error];
+    }
+    [self popErrorStack];
+    if (ok) {
+        return [[XJSValue alloc] initWithContext:self value:outVal];
+    }
+    return nil;
+    
+}
+
+- (XJSValue *)evaluateScriptFile:(NSString *)path error:(NSError **)error
+{
+    return [self evaluateScriptFile:path encoding:NSUTF8StringEncoding error:error];
+}
+
+- (XJSValue *)evaluateScriptFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error
+{
+    NSString *script = [NSString stringWithContentsOfFile:path encoding:enc error:error];
+    if (!script) {
+        return nil;
+    }
+    return [self evaluateString:script fileName:path lineNumber:0 error:error];
 }
 
 @end

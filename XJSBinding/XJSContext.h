@@ -14,8 +14,8 @@
 @interface XJSContext : NSObject
 
 @property (strong, readonly) XJSRuntime *runtime;
-@property (strong, readonly) NSString *errorMessage;
-@property (strong, readonly) XJSValue *globalObject;
+
+@property (strong) void (^errorHandler)(XJSContext *context, NSError *error);
 
 /**
  * Create a JS context with a new JS runtime
@@ -29,8 +29,10 @@
 
 - (void)gcIfNeed;
 
-//- (XJSValue *)evalutateScript:(NSString *)script;
-//- (XJSValue *)evalutateScriptAtURL:(NSURL *)url;
+- (XJSValue *)evaluateString:(NSString *)script error:(NSError **)error;
+- (XJSValue *)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)error;
+- (XJSValue *)evaluateScriptFile:(NSString *)path error:(NSError **)error;
+- (XJSValue *)evaluateScriptFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error;
 //
 ////-------
 //
