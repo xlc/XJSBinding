@@ -27,4 +27,6 @@
 
 - (void)gc;
 
+- (BOOL)isRuntimeThread;
+
 @end

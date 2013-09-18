@@ -10,23 +10,31 @@
 
 #import "XLCUtils.h"
 
+#import "NSError+XJSError.h"
+
 #import "XJSContext_Private.h"
+#import "XJSValue.h"
 
 @interface XJSContextTests : XCTestCase
 
 @end
 
 @implementation XJSContextTests
+{
+    XJSContext *_context;
+}
 
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here; it will be run once, before the first test case.
+    
+    _context = [[XJSContext alloc] init];
 }
 
 - (void)tearDown
 {
-    // Put teardown code here; it will be run once, after the last test case.
+    _context = nil;
+    
     [super tearDown];
 }
 
@@ -52,13 +60,81 @@
 
 - (void)testEvalutateString
 {
-    XJSContext *context = [[XJSContext alloc] init];
-    
     NSError *error;
-    XJSValue *value = [context evaluateString:@"1+1" error:&error];
+    XJSValue *value = [_context evaluateString:@"1+1" error:&error];
     
     XCTAssertNil(error, @"should have no error");
-    XCTAssertNotNil(value, @"should have value");
+    XCTAssertEqual([value toInt32], 2, @"1+1 should be 2");
+}
+
+- (void)testEvaluateStringWithError
+{
+    NSError *error;
+    XJSValue *value = [_context evaluateString:@"1+" error:&error];
+    
+    XCTAssertNotNil(error, @"should have error");
+    XCTAssertNil(value, @"should have no result");
+    
+    NSUInteger lineno = [error.userInfo[XJSErrorLineNumberKey] unsignedIntegerValue];
+    XCTAssertEqual(lineno, (NSUInteger)0, @"line number should be 0");
+    
+    NSString *filename = error.userInfo[XJSErrorFileNameKey];
+    XCTAssertEqual([filename length], (NSUInteger)0, @"should have no filename");
+    
+    NSString *message = error.userInfo[XJSErrorMessageKey];
+    XCTAssertEqualObjects(message, @"SyntaxError: syntax error", @"should be syntax error");
+}
+
+- (void)testEvaluateStringWithError2
+{
+    NSError *error;
+    XJSValue *value = [_context evaluateString:@"\n1+" fileName:@"file" lineNumber:1 error:&error];
+    
+    XCTAssertNotNil(error, @"should have error");
+    XCTAssertNil(value, @"should have no result");
+    
+    NSUInteger lineno = [error.userInfo[XJSErrorLineNumberKey] unsignedIntegerValue];
+    XCTAssertEqual(lineno, (NSUInteger)2, @"line number should be 2");
+    
+    NSString *filename = error.userInfo[XJSErrorFileNameKey];
+    XCTAssertEqualObjects(filename, @"file", @"file name should same");
+    
+    NSString *message = error.userInfo[XJSErrorMessageKey];
+    XCTAssertEqualObjects(message, @"SyntaxError: syntax error", @"should be syntax error");
+}
+
+- (void)testEvaluateScriptFile
+{
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"test.js"];
+    [@"1+1" writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+    
+    NSError *error;
+    XJSValue *value = [_context evaluateScriptFile:path error:&error];
+    
+    XCTAssertNil(error, @"should have no error");
+    XCTAssertEqual([value toInt32], 2, @"1+1 should be 2");
+}
+
+- (void)testEvaluateScriptFileWithError
+{
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"test.js"];
+    [@"\n\n!" writeToFile:path atomically:YES encoding:NSUTF16StringEncoding error:NULL];
+    
+    NSError *error;
+    XJSValue *value = [_context evaluateScriptFile:path encoding:NSUTF16StringEncoding error:&error];
+    
+    XCTAssertNotNil(error, @"should have error");
+    XCTAssertNil(value, @"should have no result");
+    
+    NSUInteger lineno = [error.userInfo[XJSErrorLineNumberKey] unsignedIntegerValue];
+    XCTAssertEqual(lineno, (NSUInteger)2, @"line number should be 2");
+    
+    NSString *filename = error.userInfo[XJSErrorFileNameKey];
+    XCTAssertEqualObjects(filename, path, @"file name should same");
+    
+    NSString *message = error.userInfo[XJSErrorMessageKey];
+    XCTAssertEqualObjects(message, @"SyntaxError: syntax error", @"should be syntax error");
+
 }
 
 @end

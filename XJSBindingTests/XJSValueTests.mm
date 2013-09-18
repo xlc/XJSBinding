@@ -21,6 +21,58 @@
 
 @implementation XJSValueTests {
     XJSContext *_context;
+    XJSValue *_value;
+    XJSValue *_value2;
+    BOOL _hasError;
+}
+
+- (void)setUp
+{
+    _context = [[XJSContext alloc] init];
+    __weak __typeof__(self) weakSelf = self;
+    [_context setErrorHandler:^(XJSContext *, NSError *) {
+        __typeof__(self) strongSelf = weakSelf;
+        strongSelf->_hasError = YES;
+    }];
+}
+
+- (void)tearDown
+{
+    XCTAssertFalse(_hasError, @"should have no error");
+    _context = nil;
+    _value = nil;
+    _value2 = nil;
+}
+
+- (void)testValueWithString
+{
+    _value = [XJSValue valueWithString:@"string" inContext:_context];
+    XCTAssertEqualObjects(_value.toString, @"string", @"should be same");
+}
+
+- (void)testValueWithBool
+{
+    _value = [XJSValue valueWithBool:YES inContext:_context];
+    XCTAssertEqual(_value.toBool, YES, @"should be same");
+    
+    _value = [XJSValue valueWithBool:NO inContext:_context];
+    XCTAssertEqual(_value.toBool, NO, @"should be same");
+}
+
+- (void)testValueWithDouble
+{
+    _value = [XJSValue valueWithDouble:0 inContext:_context];
+    XCTAssertEqual(_value.toDouble, (double)0, @"should be same");
+}
+
+@end
+
+@interface XJSValueInitTests : XCTestCase
+
+@end
+
+@implementation XJSValueInitTests {
+    XJSContext *_context;
     JSContext *_cx;
 }
 
@@ -88,5 +140,6 @@
     
     XCTAssertNil(weakContext, @"should be released");
 }
+
 
 @end

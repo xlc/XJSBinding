@@ -25,7 +25,7 @@ NSString * const XJSErrorMessageKey = @"XJSErrorMessageKey";
 + (NSError *)errorWithXJSDomainAndFileName:(NSString *)filename lineNumber:(NSUInteger)lineno message:(NSString *)message
 {
     return [self errorWithXJSDomainAndUserInfo:@{
-                                                 XJSErrorFileNameKey: filename ?: @"noname",
+                                                 XJSErrorFileNameKey: filename ?: @"",
                                                  XJSErrorLineNumberKey: @(lineno),
                                                  XJSErrorMessageKey: message,
                                                  }];

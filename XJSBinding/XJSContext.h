@@ -29,10 +29,19 @@
 
 - (void)gcIfNeed;
 
+// handler will be invoked on the caller thread if possible.
+// otherwise dispatch queue returned from dispatch_get_current_queue
+
+- (void)evaluateString:(NSString *)script completionHandler:(void(^)(XJSValue *value, NSError *error))handler;
+- (void)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno completionHandler:(void(^)(XJSValue *value, NSError *error))handler;
+- (void)evaluateScriptFile:(NSString *)path completionHandler:(void(^)(XJSValue *value, NSError *error))handler;
+- (void)evaluateScriptFile:(NSString *)path encoding:(NSStringEncoding)enc completionHandler:(void(^)(XJSValue *value, NSError *error))handler;
+
 - (XJSValue *)evaluateString:(NSString *)script error:(NSError **)error;
 - (XJSValue *)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)error;
 - (XJSValue *)evaluateScriptFile:(NSString *)path error:(NSError **)error;
 - (XJSValue *)evaluateScriptFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error;
+
 //
 ////-------
 //

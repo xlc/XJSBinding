@@ -37,7 +37,7 @@
     if (block == nil) {
         return;
     }
-    if ([[NSThread currentThread] isEqual:self.thread]) {
+    if ([self isRuntimeThread]) {
         block();
     } else {
         [self performSelector:@selector(_performBlock:) onThread:self.thread withObject:block waitUntilDone:NO modes:@[NSRunLoopCommonModes]];
@@ -49,7 +49,7 @@
     if (block == nil) {
         return;
     }
-    if ([[NSThread currentThread] isEqual:self.thread]) {
+    if ([self isRuntimeThread]) {
         block();
     } else {
         [self performSelector:@selector(_performBlock:) onThread:self.thread withObject:block waitUntilDone:YES modes:@[NSRunLoopCommonModes]];
@@ -68,6 +68,11 @@
     [self performBlock:^{
         JS_GC(self.runtime);
     }];
+}
+
+- (BOOL)isRuntimeThread
+{
+    return [[NSThread currentThread] isEqual:self.thread];
 }
 
 @end

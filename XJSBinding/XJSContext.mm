@@ -34,7 +34,7 @@ static JSClass global_class = {
 /* The error reporter callback. */
 static void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
     XILOG(@"%s:%u:%s", report->filename ? report->filename : "<no filename>", (unsigned int) report->lineno, message);
-    [contextDict[[NSValue valueWithPointer:cx]] addError:[NSError errorWithXJSDomainAndFileName:@(report->filename) lineNumber:report->lineno message:@(message)]];
+    [[XJSContext contextForJSContext:cx] addError:[NSError errorWithXJSDomainAndFileName:@(report->filename ?: "") lineNumber:report->lineno message:@(message)]];
 }
 
 @implementation XJSContext
@@ -151,26 +151,76 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 #pragma mark -
 
+- (void)evaluateString:(NSString *)script completionHandler:(void(^)(XJSValue *value, NSError *error))handler
+{
+    [self evaluateString:script fileName:nil lineNumber:0 completionHandler:handler];
+}
+
+- (void)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno completionHandler:(void(^)(XJSValue *value, NSError *error))handler
+{
+    [self.runtime performBlock:^{
+        jsval outVal;
+        [self pushErrorStack];
+        BOOL ok = JS_EvaluateScript(self.context, _globalObject, [script UTF8String], (unsigned)[script length], [filename UTF8String], (unsigned)lineno, &outVal);
+        NSError *error = [self error];
+        if (handler) {
+            XJSValue *value = ok ? [[XJSValue alloc] initWithContext:self value:outVal] : nil;
+            handler(value, error);
+        }
+        [self popErrorStack];
+    }];
+}
+
+- (void)evaluateScriptFile:(NSString *)path completionHandler:(void(^)(XJSValue *value, NSError *error))handler
+{
+    [self evaluateScriptFile:path encoding:NSUTF8StringEncoding completionHandler:handler];
+}
+
+- (void)evaluateScriptFile:(NSString *)path encoding:(NSStringEncoding)enc completionHandler:(void(^)(XJSValue *value, NSError *error))handler
+{
+    NSError *error;
+    NSString *script = [NSString stringWithContentsOfFile:path encoding:enc error:&error];
+    if (!script) {
+        if (handler) {
+            handler(nil, error);
+        }
+    } else {
+        [self evaluateString:script fileName:path lineNumber:1 completionHandler:handler];
+    }
+}
+
 
 - (XJSValue *)evaluateString:(NSString *)script error:(NSError **)error
 {
     return [self evaluateString:script fileName:nil lineNumber:0 error:error];
 }
 
-- (XJSValue *)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)error
+- (XJSValue *)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)outError
 {
-    jsval outVal;
-    [self pushErrorStack];
-    BOOL ok = JS_EvaluateScript(self.context, _globalObject, [script UTF8String], (unsigned)[script length], [filename UTF8String], (unsigned)lineno, &outVal);
-    if (error) {
-        *error = [self error];
-    }
-    [self popErrorStack];
-    if (ok) {
-        return [[XJSValue alloc] initWithContext:self value:outVal];
-    }
-    return nil;
+    __block XJSValue *retVal;
+    __block NSError *retErr;
     
+    NSConditionLock *lock;
+    if (![self.runtime isRuntimeThread]) {
+        lock = [[NSConditionLock alloc] initWithCondition:0];
+    }
+    
+    [self evaluateString:script fileName:filename lineNumber:lineno completionHandler:^(XJSValue *value, NSError *error) {
+        retVal = value;
+        retErr = error;
+        
+        [lock lock];
+        [lock unlockWithCondition:1];
+    }];
+    
+    [lock lockWhenCondition:1];
+    [lock unlock];
+    
+    if (outError) {
+        *outError = retErr;
+    }
+    
+    return retVal;
 }
 
 - (XJSValue *)evaluateScriptFile:(NSString *)path error:(NSError **)error

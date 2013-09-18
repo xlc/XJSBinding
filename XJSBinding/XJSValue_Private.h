@@ -12,11 +12,12 @@
 
 @interface XJSValue ()
 
-@property (strong, readonly) XJSContext *context;
 @property (assign, readonly) jsval value;
 @property (assign, readonly) JSObject *object;
 
 - (id)initWithContext:(XJSContext *)context value:(jsval)val;
 - (id)initWithContext:(XJSContext *)context JSObject:(JSObject *)object;
+
+- (void)reportErrorWithSelector:(SEL)sel;
 
 @end
