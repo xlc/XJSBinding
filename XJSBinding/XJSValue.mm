@@ -36,10 +36,10 @@
 
 + (XJSValue *)valueWithString:(NSString *)value inContext:(XJSContext *)context
 {
-    __block jsval val;
-    [context.runtime performBlockAndWait:^{
+    jsval val;
+    @synchronized(context.runtime) {
         val = XJSConvertStringToJSValue(context.context, value);
-    }];
+    }
     return [[self alloc] initWithContext:context value:val];
 }
 
@@ -67,8 +67,9 @@
         _context = context;
         _value = val;
         
-        JSAutoRequest request(_context.context);
-        JS_AddValueRoot(_context.context, &_value);
+        @synchronized(_context.runtime) {
+            JS_AddValueRoot(_context.context, &_value);
+        }
         
         if (!JSVAL_IS_PRIMITIVE(_value)) {
             _object = JSVAL_TO_OBJECT(_value);
@@ -79,15 +80,18 @@
 
 - (void)dealloc
 {
-    JSAutoRequest request(_context.context);
-    JS_RemoveValueRoot(_context.context, &_value);
+    @synchronized(_context.runtime) {
+        JS_RemoveValueRoot(_context.context, &_value);
+    }
 }
 
 #pragma mark -
 
 - (NSString *)description
 {
-    return XJSConvertJSValueToSource(self.context.context, _value);
+    @synchronized(_context.runtime) {
+        return XJSConvertJSValueToSource(_context.context, _value);
+    }
 }
 
 - (NSString *)debugDescription
@@ -110,10 +114,11 @@
     if (object == self) return true;
     
     JSBool equal;
-    if (JS_StrictlyEqual(_context.context, _value, object.value, &equal)) {
-        return equal;
+    JSBool success;
+    @synchronized(_context.runtime) {
+        success = JS_StrictlyEqual(_context.context, _value, object.value, &equal);
     }
-    return NO;
+    return success && equal;
 }
 
 - (BOOL)isLooselyEqualToValue:(XJSValue *)object
@@ -121,10 +126,11 @@
     if (object == self) return true;
     
     JSBool equal;
-    if (JS_LooselyEqual(_context.context, _value, object.value, &equal)) {
-        return equal;
+    JSBool success;
+    @synchronized(_context.runtime) {
+        success = JS_LooselyEqual(_context.context, _value, object.value, &equal);
     }
-    return NO;
+    return success && equal;
 }
 
 - (BOOL)isSameValue:(XJSValue *)object
@@ -132,10 +138,11 @@
     if (object == self) return true;
     
     JSBool equal;
-    if (JS_SameValue(_context.context, _value, object.value, &equal)) {
-        return equal;
+    JSBool success;
+    @synchronized(_context.runtime) {
+        success = JS_SameValue(_context.context, _value, object.value, &equal);
     }
-    return NO;
+    return success && equal;
 }
 
 #pragma mark -
@@ -173,7 +180,9 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 - (NSString *)toString
 {
     if (_value.isString()) {
-        return XJSConvertJSValueToString(self.context.context, _value);
+        @synchronized(_context.runtime) {
+            return XJSConvertJSValueToString(_context.context, _value);
+        }
     } else {
         [self reportErrorWithSelector:_cmd];
         return nil;

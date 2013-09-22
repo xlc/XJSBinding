@@ -24,7 +24,6 @@
 		0660B9DF17E094CA00A3DD0C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0660B9DE17E094CA00A3DD0C /* UIKit.framework */; };
 		0660B9ED17E094F500A3DD0C /* XJSTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0660B9D417E05C0E00A3DD0C /* XJSTestUtils.m */; };
 		0660B9EE17E094FA00A3DD0C /* XJSRuntimeTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 065B1A6C17DC136B00AC0D63 /* XJSRuntimeTests.mm */; };
-		0660B9EF17E094FD00A3DD0C /* XJSRuntimeThreadTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */; };
 		0660B9F017E0950200A3DD0C /* XJSContextTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0664602A17DDC4960071D23F /* XJSContextTests.mm */; };
 		0660B9F117E0950500A3DD0C /* XJSValueTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0660B9D117E0584D00A3DD0C /* XJSValueTests.mm */; };
 		0664602B17DDC4960071D23F /* XJSContextTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0664602A17DDC4960071D23F /* XJSContextTests.mm */; };
@@ -34,11 +33,8 @@
 		066CECBC17DBFC6E0078829C /* XJSRuntime_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB117DBFC6E0078829C /* XJSRuntime_Private.h */; };
 		066CECBD17DBFC6E0078829C /* XJSRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB217DBFC6E0078829C /* XJSRuntime.h */; };
 		066CECBE17DBFC6E0078829C /* XJSRuntime.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB317DBFC6E0078829C /* XJSRuntime.mm */; };
-		066CECBF17DBFC6E0078829C /* XJSRuntimeThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB417DBFC6E0078829C /* XJSRuntimeThread.h */; };
-		066CECC017DBFC6E0078829C /* XJSRuntimeThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB517DBFC6E0078829C /* XJSRuntimeThread.mm */; };
 		066CECC117DBFC6E0078829C /* XJSValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB617DBFC6E0078829C /* XJSValue.h */; };
 		066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB717DBFC6E0078829C /* XJSValue.mm */; };
-		066CECC717DBFCDE0078829C /* XJSRuntimeThreadTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */; };
 		0692BC6517D9D612009BFC18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC6417D9D612009BFC18 /* Cocoa.framework */; };
 		0692BC7617D9D612009BFC18 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC7517D9D612009BFC18 /* XCTest.framework */; };
 		0692BC7717D9D612009BFC18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC6417D9D612009BFC18 /* Cocoa.framework */; };
@@ -121,13 +117,13 @@
 		06CFF4D017E1BFD10081F388 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0627CD2417E1BA4A00D0BB7C /* Foundation.framework */; };
 		06CFF4F117E1C0A90081F388 /* XJSContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB017DBFC6E0078829C /* XJSContext.mm */; };
 		06CFF4F217E1C0AA0081F388 /* XJSRuntime.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB317DBFC6E0078829C /* XJSRuntime.mm */; };
-		06CFF4F317E1C0AC0081F388 /* XJSRuntimeThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB517DBFC6E0078829C /* XJSRuntimeThread.mm */; };
 		06CFF4F417E1C0AE0081F388 /* XJSValue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB717DBFC6E0078829C /* XJSValue.mm */; };
 		06CFF4F517E1C0B10081F388 /* XJSConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0660B9CD17DF23A800A3DD0C /* XJSConvert.mm */; };
 		06CFF4F717E1C0BF0081F388 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A3FBAC17DAA0A700E936F1 /* libjs_static.a */; };
 		06CFF4F817E1C1CB0081F388 /* libXJSBinding-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CFF4CF17E1BFD10081F388 /* libXJSBinding-ios.a */; };
 		078B1E644BF947379BD2992E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19DCF33337D74A589F235EA8 /* libPods.a */; };
 		0D6311F05AF64626936572FE /* libPods-XJSBinding-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF8E49DA5B2345D6A9A1C654 /* libPods-XJSBinding-ios.a */; };
+		869C10B1AFF5475D890D61F2 /* libPods-XJSBinding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E34A372E8FC46218FB0FEA9 /* libPods-XJSBinding.a */; };
 		8BAA6F77B978462DA13C0F12 /* libPods-XJSBindingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B00A57B74E481C8E10386A /* libPods-XJSBindingTests.a */; };
 		96D46D894CDD47ACAF8E0C9F /* libPods-XJSBindingTests-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 011E04E2669844BCB2BD6A8E /* libPods-XJSBindingTests-ios.a */; };
 /* End PBXBuildFile section */
@@ -156,7 +152,6 @@
 
 /* Begin PBXFileReference section */
 		011E04E2669844BCB2BD6A8E /* libPods-XJSBindingTests-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBindingTests-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		01A24B46E1224314BBFBBE88 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		06208BCC17E1C2E100F60D39 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		06208BD717E4084600F60D39 /* NSError+XJSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+XJSError.h"; sourceTree = "<group>"; };
 		06208BD817E4084600F60D39 /* NSError+XJSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+XJSError.m"; sourceTree = "<group>"; };
@@ -180,11 +175,8 @@
 		066CECB117DBFC6E0078829C /* XJSRuntime_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntime_Private.h; sourceTree = "<group>"; };
 		066CECB217DBFC6E0078829C /* XJSRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntime.h; sourceTree = "<group>"; };
 		066CECB317DBFC6E0078829C /* XJSRuntime.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntime.mm; sourceTree = "<group>"; };
-		066CECB417DBFC6E0078829C /* XJSRuntimeThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntimeThread.h; sourceTree = "<group>"; };
-		066CECB517DBFC6E0078829C /* XJSRuntimeThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeThread.mm; sourceTree = "<group>"; };
 		066CECB617DBFC6E0078829C /* XJSValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSValue.h; sourceTree = "<group>"; };
 		066CECB717DBFC6E0078829C /* XJSValue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSValue.mm; sourceTree = "<group>"; };
-		066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeThreadTests.mm; sourceTree = "<group>"; };
 		0692BC6117D9D612009BFC18 /* libXJSBinding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libXJSBinding.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0692BC6417D9D612009BFC18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0692BC6717D9D612009BFC18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -273,7 +265,9 @@
 		06CFF4F917E1C24E0081F388 /* XJSBinding-ios-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "XJSBinding-ios-Prefix.pch"; path = "XJSBinding/XJSBinding-ios-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		13B00A57B74E481C8E10386A /* libPods-XJSBindingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBindingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		19DCF33337D74A589F235EA8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E34A372E8FC46218FB0FEA9 /* libPods-XJSBinding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBinding.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBindingTests.xcconfig"; path = "Pods/Pods-XJSBindingTests.xcconfig"; sourceTree = "<group>"; };
+		6C8587EDBAD849DE9054F8B6 /* Pods-XJSBinding.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding.xcconfig"; path = "Pods/Pods-XJSBinding.xcconfig"; sourceTree = "<group>"; };
 		B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBindingTests-ios.xcconfig"; path = "Pods/Pods-XJSBindingTests-ios.xcconfig"; sourceTree = "<group>"; };
 		CF8E49DA5B2345D6A9A1C654 /* libPods-XJSBinding-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBinding-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E92E519FA01444FB9DD45FEC /* Pods-XJSBinding-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-ios.xcconfig"; path = "Pods/Pods-XJSBinding-ios.xcconfig"; sourceTree = "<group>"; };
@@ -302,6 +296,7 @@
 				0692BC6517D9D612009BFC18 /* Cocoa.framework in Frameworks */,
 				078B1E644BF947379BD2992E /* libPods.a in Frameworks */,
 				06A3FBAD17DAA0A700E936F1 /* libjs_static.a in Frameworks */,
+				869C10B1AFF5475D890D61F2 /* libPods-XJSBinding.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,8 +353,6 @@
 				066CECB217DBFC6E0078829C /* XJSRuntime.h */,
 				066CECB117DBFC6E0078829C /* XJSRuntime_Private.h */,
 				066CECB317DBFC6E0078829C /* XJSRuntime.mm */,
-				066CECB417DBFC6E0078829C /* XJSRuntimeThread.h */,
-				066CECB517DBFC6E0078829C /* XJSRuntimeThread.mm */,
 			);
 			name = XJSRuntime;
 			sourceTree = "<group>";
@@ -381,10 +374,10 @@
 				0692BC7B17D9D612009BFC18 /* XJSBindingTests */,
 				0692BC6317D9D612009BFC18 /* Frameworks */,
 				0692BC6217D9D612009BFC18 /* Products */,
-				01A24B46E1224314BBFBBE88 /* Pods.xcconfig */,
 				5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */,
 				B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */,
 				E92E519FA01444FB9DD45FEC /* Pods-XJSBinding-ios.xcconfig */,
+				6C8587EDBAD849DE9054F8B6 /* Pods-XJSBinding.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -415,6 +408,7 @@
 				13B00A57B74E481C8E10386A /* libPods-XJSBindingTests.a */,
 				011E04E2669844BCB2BD6A8E /* libPods-XJSBindingTests-ios.a */,
 				CF8E49DA5B2345D6A9A1C654 /* libPods-XJSBinding-ios.a */,
+				2E34A372E8FC46218FB0FEA9 /* libPods-XJSBinding.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -456,7 +450,6 @@
 			children = (
 				0660B9D317E05C0E00A3DD0C /* XJSTestUtils.h */,
 				0660B9D417E05C0E00A3DD0C /* XJSTestUtils.m */,
-				066CECC617DBFCDE0078829C /* XJSRuntimeThreadTests.mm */,
 				065B1A6C17DC136B00AC0D63 /* XJSRuntimeTests.mm */,
 				0664602A17DDC4960071D23F /* XJSContextTests.mm */,
 				0660B9D117E0584D00A3DD0C /* XJSValueTests.mm */,
@@ -596,7 +589,6 @@
 				06A3FC3F17DAA0D900E936F1 /* TypedEnum.h in Headers */,
 				06A3FC0D17DAA0D900E936F1 /* jsapi.h in Headers */,
 				06A3FC1B17DAA0D900E936F1 /* jspubtd.h in Headers */,
-				066CECBF17DBFC6E0078829C /* XJSRuntimeThread.h in Headers */,
 				06A3FC2C17DAA0D900E936F1 /* FloatingPoint.h in Headers */,
 				066CECBA17DBFC6E0078829C /* XJSContext.h in Headers */,
 				06A3FBFB17DAA0D900E936F1 /* Anchor.h in Headers */,
@@ -901,7 +893,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Pods-XJSBinding-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F2841BD441ED49A0A7F7B3CA /* Copy Pods Resources */ = {
@@ -929,7 +921,6 @@
 				0660B9F017E0950200A3DD0C /* XJSContextTests.mm in Sources */,
 				0660B9ED17E094F500A3DD0C /* XJSTestUtils.m in Sources */,
 				0660B9EE17E094FA00A3DD0C /* XJSRuntimeTests.mm in Sources */,
-				0660B9EF17E094FD00A3DD0C /* XJSRuntimeThreadTests.mm in Sources */,
 				0660B9F117E0950500A3DD0C /* XJSValueTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -941,7 +932,6 @@
 				066CECBE17DBFC6E0078829C /* XJSRuntime.mm in Sources */,
 				066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */,
 				06208BDA17E4084600F60D39 /* NSError+XJSError.m in Sources */,
-				066CECC017DBFC6E0078829C /* XJSRuntimeThread.mm in Sources */,
 				0660B9CF17DF23A800A3DD0C /* XJSConvert.mm in Sources */,
 				066CECBB17DBFC6E0078829C /* XJSContext.mm in Sources */,
 			);
@@ -952,7 +942,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0660B9D217E0584D00A3DD0C /* XJSValueTests.mm in Sources */,
-				066CECC717DBFCDE0078829C /* XJSRuntimeThreadTests.mm in Sources */,
 				0664602B17DDC4960071D23F /* XJSContextTests.mm in Sources */,
 				0660B9D517E05C0E00A3DD0C /* XJSTestUtils.m in Sources */,
 				065B1A6D17DC136B00AC0D63 /* XJSRuntimeTests.mm in Sources */,
@@ -966,7 +955,6 @@
 				06CFF4F117E1C0A90081F388 /* XJSContext.mm in Sources */,
 				06CFF4F217E1C0AA0081F388 /* XJSRuntime.mm in Sources */,
 				06208BDB17E4084600F60D39 /* NSError+XJSError.m in Sources */,
-				06CFF4F317E1C0AC0081F388 /* XJSRuntimeThread.mm in Sources */,
 				06CFF4F417E1C0AE0081F388 /* XJSValue.mm in Sources */,
 				06CFF4F517E1C0B10081F388 /* XJSConvert.mm in Sources */,
 			);
@@ -1122,14 +1110,12 @@
 		};
 		0692BC8617D9D612009BFC18 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01A24B46E1224314BBFBBE88 /* Pods.xcconfig */;
+			baseConfigurationReference = 6C8587EDBAD849DE9054F8B6 /* Pods-XJSBinding.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"$(inherited)",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -1137,19 +1123,18 @@
 					/Users/xiliangchen/Documents/project/XJSBinding/Spidermonkey/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		0692BC8717D9D612009BFC18 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01A24B46E1224314BBFBBE88 /* Pods.xcconfig */;
+			baseConfigurationReference = 6C8587EDBAD849DE9054F8B6 /* Pods-XJSBinding.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"$(inherited)",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -1157,6 +1142,7 @@
 					/Users/xiliangchen/Documents/project/XJSBinding/Spidermonkey/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

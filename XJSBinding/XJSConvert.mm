@@ -25,6 +25,5 @@ NSString *XJSConvertJSValueToSource(JSContext *cx, jsval val)
 
 jsval XJSConvertStringToJSValue(JSContext *cx, NSString *string)
 {
-    JSAutoRequest request(cx);
     return STRING_TO_JSVAL(JS_NewStringCopyN(cx, [string UTF8String], [string length]));
 }

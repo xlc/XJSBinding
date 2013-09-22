@@ -73,18 +73,19 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
         
         __weak __typeof__(self) weakSelf = self;
         
-        [_runtime performBlockAndWait:^{
+        @synchronized(_runtime) {
             _context = JS_NewContext(runtime.runtime, 8192);
-            
-            @synchronized(contextDict) {
-                contextDict[[NSValue valueWithPointer:_context]] = [^() { return weakSelf; } copy]; // weak ref value
-            }
-            
             JS_SetOptions(_context, JSOPTION_VAROBJFIX);
             JS_SetVersion(_context, JSVERSION_LATEST);
             JS_SetErrorReporter(_context, reportError);
             
-            JSAutoRequest ar(_context);
+        }
+        
+        @synchronized(contextDict) {
+            contextDict[[NSValue valueWithPointer:_context]] = [^() { return weakSelf; } copy]; // weak ref value
+        }
+        
+        @synchronized(_runtime) {
             _globalObject = JS_NewGlobalObject(_context, &global_class, NULL);
             XASSERT(_globalObject != NULL, @"fail to create gloabl object");
             
@@ -92,16 +93,16 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
             JS_SetGlobalObject(_context, _globalObject);
             
             JS_InitStandardClasses(_context, _globalObject);
-        }];
+        };
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [_runtime performBlockAndWait:^{
+    @synchronized(_runtime) {
         JS_DestroyContext(_context);
-    }];
+    }
     
     @synchronized(contextDict) {
         [contextDict removeObjectForKey:[NSValue valueWithPointer:_context]];
@@ -112,9 +113,9 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (void)gcIfNeed
 {
-    [self.runtime performBlock:^{
-        JS_MaybeGC(self.context);
-    }];
+    @synchronized(_runtime) {
+        JS_MaybeGC(_context);
+    };
 }
 
 #pragma mark -
@@ -151,76 +152,28 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 #pragma mark -
 
-- (void)evaluateString:(NSString *)script completionHandler:(void(^)(XJSValue *value, NSError *error))handler
-{
-    [self evaluateString:script fileName:nil lineNumber:0 completionHandler:handler];
-}
-
-- (void)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno completionHandler:(void(^)(XJSValue *value, NSError *error))handler
-{
-    [self.runtime performBlock:^{
-        jsval outVal;
-        [self pushErrorStack];
-        BOOL ok = JS_EvaluateScript(self.context, _globalObject, [script UTF8String], (unsigned)[script length], [filename UTF8String], (unsigned)lineno, &outVal);
-        NSError *error = [self error];
-        if (handler) {
-            XJSValue *value = ok ? [[XJSValue alloc] initWithContext:self value:outVal] : nil;
-            handler(value, error);
-        }
-        [self popErrorStack];
-    }];
-}
-
-- (void)evaluateScriptFile:(NSString *)path completionHandler:(void(^)(XJSValue *value, NSError *error))handler
-{
-    [self evaluateScriptFile:path encoding:NSUTF8StringEncoding completionHandler:handler];
-}
-
-- (void)evaluateScriptFile:(NSString *)path encoding:(NSStringEncoding)enc completionHandler:(void(^)(XJSValue *value, NSError *error))handler
-{
-    NSError *error;
-    NSString *script = [NSString stringWithContentsOfFile:path encoding:enc error:&error];
-    if (!script) {
-        if (handler) {
-            handler(nil, error);
-        }
-    } else {
-        [self evaluateString:script fileName:path lineNumber:1 completionHandler:handler];
-    }
-}
-
-
 - (XJSValue *)evaluateString:(NSString *)script error:(NSError **)error
 {
     return [self evaluateString:script fileName:nil lineNumber:0 error:error];
 }
 
-- (XJSValue *)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)outError
+- (XJSValue *)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)error
 {
-    __block XJSValue *retVal;
-    __block NSError *retErr;
+
+    jsval outVal;
+    [self pushErrorStack];
     
-    NSConditionLock *lock;
-    if (![self.runtime isRuntimeThread]) {
-        lock = [[NSConditionLock alloc] initWithCondition:0];
+    BOOL ok;
+    
+    @synchronized(_runtime) {
+        ok = JS_EvaluateScript(_context, _globalObject, [script UTF8String], (unsigned)[script length], [filename UTF8String], (unsigned)lineno, &outVal);
     }
     
-    [self evaluateString:script fileName:filename lineNumber:lineno completionHandler:^(XJSValue *value, NSError *error) {
-        retVal = value;
-        retErr = error;
-        
-        [lock lock];
-        [lock unlockWithCondition:1];
-    }];
+    *error = [self error];
+    XJSValue *value = ok ? [[XJSValue alloc] initWithContext:self value:outVal] : nil;
+    [self popErrorStack];
     
-    [lock lockWhenCondition:1];
-    [lock unlock];
-    
-    if (outError) {
-        *outError = retErr;
-    }
-    
-    return retVal;
+    return value;
 }
 
 - (XJSValue *)evaluateScriptFile:(NSString *)path error:(NSError **)error

@@ -37,8 +37,7 @@
         XJSRuntime *runtime = [[XJSRuntime alloc] init];
         weakRuntime = runtime;
         
-        XCTAssertNotNil(runtime.thread, @"should have thread");
-        XLCAssertTrueBeforeTimeout(runtime.runtime != NULL, 1, @"should be assigned to a JSRuntime");
+        XCTAssertNotEqual(runtime.runtime, NULL, @"should be assigned to a JSRuntime");
     }
     
     XCTAssertNil(weakRuntime, @"should not have retain cycle");
@@ -48,55 +47,35 @@
 {
     XJSRuntime *runtime = [[XJSRuntime alloc] init];
     
-    __block BOOL executed = NO;
-    __block NSThread *executeThread;
+    __block int executed = 0;
     
     [runtime performBlock:^{
-        executeThread = [NSThread currentThread];
-        executed = YES;
+        executed++;
     }];
     
-    XLCAssertTrueBeforeTimeout(executed, 1, @"should perform block");
-    XCTAssertEqualObjects(executeThread, runtime.thread, @"should be on runtime thread");
-}
-
-- (void)testPerformBlockAndWait
-{
-    XJSRuntime *runtime = [[XJSRuntime alloc] init];
-    
-    __block BOOL executed = NO;
-    __block NSThread *executeThread;
-    
-    [runtime performBlockAndWait:^{
-        [NSThread sleepForTimeInterval:0.01];   // so main thread have to wait for some amount of time
-        executeThread = [NSThread currentThread];
-        executed = YES;
-    }];
-    
-    XCTAssertTrue(executed, @"should be executed by now");
-    XCTAssertEqualObjects(executeThread, runtime.thread, @"should be on runtime thread");
+    XCTAssertEqual(executed, 1, @"should perform block once");
 }
 
 - (void)testPerformBlockNested
 {
     __weak XJSRuntime *weakRuntime;
     
-    __block BOOL executed = NO;
+    __block int executed = 0;
     
     @autoreleasepool {
         XJSRuntime *runtime = [[XJSRuntime alloc] init];
         weakRuntime = runtime;
         
         [runtime performBlock:^{
-            [runtime performBlockAndWait:^{
-                [runtime performBlockAndWait:^{
+            [runtime performBlock:^{
+                [runtime performBlock:^{
                     [runtime performBlock:^{
-                        executed = YES;
+                        executed++;
                     }];
                 }];
             }];
         }];
-        XLCAssertTrueBeforeTimeout(executed, 1, @"should perform block");
+        XCTAssertEqual(executed, 1, @"should perform block once");
     }
 
     XCTAssertNil(weakRuntime, @"should not have retain cycle");

@@ -10,11 +10,8 @@
 
 #import "jsapi.h"
 
-@class XJSRuntimeThread;
-
 @interface XJSRuntime ()
 
 @property (assign) JSRuntime *runtime;
-@property (strong, readonly) XJSRuntimeThread *thread;
 
 @end

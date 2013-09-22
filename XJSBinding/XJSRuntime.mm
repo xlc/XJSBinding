@@ -11,23 +11,21 @@
 #import "jsapi.h"
 #import "XLCAssertion.h"
 
-#import "XJSRuntimeThread.h"
-
 @implementation XJSRuntime
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        _thread = [[XJSRuntimeThread alloc] initWithRuntime:self];
-        [_thread start];
+        _runtime = JS_NewRuntime(8L * 1024L * 1024L, JS_NO_HELPER_THREADS);
+        
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [self.thread stop];
+    JS_DestroyRuntime(_runtime);
 }
 
 #pragma mark -
@@ -37,42 +35,19 @@
     if (block == nil) {
         return;
     }
-    if ([self isRuntimeThread]) {
+    
+    @synchronized(self) {
         block();
-    } else {
-        [self performSelector:@selector(_performBlock:) onThread:self.thread withObject:block waitUntilDone:NO modes:@[NSRunLoopCommonModes]];
     }
-}
-
-- (void)performBlockAndWait:(void (^)(void))block
-{
-    if (block == nil) {
-        return;
-    }
-    if ([self isRuntimeThread]) {
-        block();
-    } else {
-        [self performSelector:@selector(_performBlock:) onThread:self.thread withObject:block waitUntilDone:YES modes:@[NSRunLoopCommonModes]];
-    }
-}
-
-- (void)_performBlock:(void (^)(void))block
-{
-    block();
 }
 
 #pragma mark -
 
 - (void)gc
 {
-    [self performBlock:^{
+    @synchronized(self) {
         JS_GC(self.runtime);
-    }];
-}
-
-- (BOOL)isRuntimeThread
-{
-    return [[NSThread currentThread] isEqual:self.thread];
+    }
 }
 
 @end
