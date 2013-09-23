@@ -13,7 +13,7 @@
 NSString *XJSConvertJSValueToString(JSContext *cx, jsval val)
 {
     JSAutoByteString str;
-    return @(str.encodeUtf8(cx, JSVAL_TO_STRING(val)));
+    return @(str.encodeUtf8(cx, JS_ValueToString(cx, val)));
 }
 
 NSString *XJSConvertJSValueToSource(JSContext *cx, jsval val)

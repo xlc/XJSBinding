@@ -179,13 +179,8 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 
 - (NSString *)toString
 {
-    if (_value.isString()) {
-        @synchronized(_context.runtime) {
-            return XJSConvertJSValueToString(_context.context, _value);
-        }
-    } else {
-        [self reportErrorWithSelector:_cmd];
-        return nil;
+    @synchronized(_context.runtime) {
+        return XJSConvertJSValueToString(_context.context, _value);
     }
 }
 
