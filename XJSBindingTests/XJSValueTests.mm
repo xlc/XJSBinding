@@ -323,6 +323,30 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     _testValueConvert<NSString *, sizeof(expected)/sizeof(expected[0])>(self, _cmd, _context, @selector(toString), expected);
 }
 
+- (void)testEqual
+{
+    XJSValue *value = [XJSValue valueWithInt32:1 inContext:_context];
+    XJSValue *value2 = [XJSValue valueWithString:@"1" inContext:_context];
+    
+    XCTAssertEqualObjects(value, value2, @"isEqual is loosely equal");
+}
+
+- (void)testLooselyEqual
+{
+    XJSValue *value = [XJSValue valueWithInt32:1 inContext:_context];
+    XJSValue *value2 = [XJSValue valueWithString:@"1" inContext:_context];
+    
+    XCTAssertEqualObjects(value, value2, @" 1 == '1' should be true ");
+}
+
+- (void)testStrictlyEqual
+{
+    XJSValue *value = [XJSValue valueWithInt32:1 inContext:_context];
+    XJSValue *value2 = [XJSValue valueWithString:@"1" inContext:_context];
+    
+    XCTAssertFalse([value isStrictlyEqualToValue:value2], @" 1 === '1' should be false");
+}
+
 @end
 
 @interface XJSValueInitTests : XCTestCase
