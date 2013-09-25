@@ -169,7 +169,10 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
         ok = JS_EvaluateScript(_context, _globalObject, [script UTF8String], (unsigned)[script length], [filename UTF8String], (unsigned)lineno, &outVal);
     }
     
-    *error = [self error];
+    if (error) {
+        *error = [self error];
+    }
+    
     XJSValue *value = ok ? [[XJSValue alloc] initWithContext:self value:outVal] : nil;
     [self popErrorStack];
     

@@ -55,11 +55,6 @@
 
 #pragma mark -
 
-- (id)initWithContext:(XJSContext *)context JSObject:(JSObject *)object
-{
-    return [self initWithContext:context value:OBJECT_TO_JSVAL(object)];
-}
-
 - (id)initWithContext:(XJSContext *)context value:(jsval)val
 {
     self = [super init];
@@ -71,8 +66,8 @@
             JS_AddValueRoot(_context.context, &_value);
         }
         
-        if (!JSVAL_IS_PRIMITIVE(_value)) {
-            _object = JSVAL_TO_OBJECT(_value);
+        if (_value.isObject()) {
+            _object = _value.toObjectOrNull();
         }
     }
     return self;
@@ -234,6 +229,92 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 - (BOOL)isPrimitive
 {
     return _value.isPrimitive();
+}
+
+@end
+
+#pragma mark - SubscriptSupport
+
+@implementation XJSValue (SubscriptSupport)
+
+- (XJSValue *)objectForKeyedSubscript:(id)key
+{
+    if (!_object) {
+        return nil;
+    }
+    
+    NSString *stringKey;
+    if ([key respondsToSelector:@selector(toString)]) {
+        stringKey = [key toString];
+    } else {
+        stringKey = [key description];
+    }
+    
+    jsval outval;
+    
+    @synchronized(_context.runtime) {
+        if (JS_GetProperty(_context.context, _object, [stringKey UTF8String], &outval)) {
+            return [[XJSValue alloc] initWithContext:_context value:outval];
+        }
+    }
+    
+    return nil;
+}
+
+- (XJSValue *)objectAtIndexedSubscript:(uint32_t)index
+{
+    if (!_object) {
+        return nil;
+    }
+    
+    jsval outval;
+    
+    @synchronized(_context.runtime) {
+        if (JS_GetElement(_context.context, _object, index, &outval)) {
+            return [[XJSValue alloc] initWithContext:_context value:outval];
+        }
+    }
+    
+    return nil;
+}
+
+- (void)setObject:(id)object forKeyedSubscript:(id)key
+{
+    if (!_object) {
+        return;
+    }
+    
+    NSString *stringKey;
+    if ([key respondsToSelector:@selector(toString)]) {
+        stringKey = [key toString];
+    } else {
+        stringKey = [key description];
+    }
+    
+    XJSValue *value;
+    
+    if ([object isKindOfClass:[XJSValue class]]) {
+        value = object;
+    }
+    
+    jsval inval = value.value;
+    JS_SetProperty(_context.context, _object, [stringKey UTF8String], &inval);
+}
+
+- (void)setObject:(id)object atIndexedSubscript:(uint32_t)index
+{
+    if (!_object) {
+        return;
+    }
+    
+    XJSValue *value;
+    
+    if ([object isKindOfClass:[XJSValue class]]) {
+        value = object;
+    }
+    
+    jsval inval = value.value;
+    JS_SetElement(_context.context, _object, index, &inval);
 }
 
 @end

@@ -16,7 +16,6 @@
 @property (assign, readonly) JSObject *object;
 
 - (id)initWithContext:(XJSContext *)context value:(jsval)val;
-- (id)initWithContext:(XJSContext *)context JSObject:(JSObject *)object;
 
 - (void)reportErrorWithSelector:(SEL)sel;
 

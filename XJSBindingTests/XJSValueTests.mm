@@ -347,6 +347,40 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     XCTAssertFalse([value isStrictlyEqualToValue:value2], @" 1 === '1' should be false");
 }
 
+- (void)testKeyedSubscript
+{
+    _value = [_context evaluateString:@"({})" error:NULL];
+    
+    XCTAssertTrue(_value[@"a"].isUndefined, @"({})['a'] should be undefined");
+    
+    _value[@"a"] = [XJSValue valueWithString:@"b" inContext:_context];
+    
+    XCTAssertEqualObjects([_value[@"a"] toString], @"b", @"");
+    
+    _value[@"a"] = [XJSValue valueWithInt32:1 inContext:_context];
+    
+    XCTAssertEqual([_value[@"a"] toInt32], 1, @"");
+}
+
+- (void)testIndexedSubscript
+{
+    _value = [_context evaluateString:@"([])" error:NULL];
+    
+    XCTAssertTrue(_value[1].isUndefined, @"([])[1] should be undefined");
+    
+    _value[1] = [XJSValue valueWithString:@"b" inContext:_context];
+    
+    XCTAssertEqualObjects([_value[1] toString], @"b", @"");
+    
+    _value[1] = [XJSValue valueWithInt32:1 inContext:_context];
+    
+    XCTAssertEqual([_value[1] toInt32], 1, @"");
+    
+    XCTAssertTrue(_value[0].isUndefined, @"");
+    
+    XCTAssertEqual([_value[@"length"] toInt32], 2, @"array length should be 2");
+}
+
 @end
 
 @interface XJSValueInitTests : XCTestCase
@@ -401,27 +435,5 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     XCTAssertNil(weakContext, @"should be released");
 }
-
-- (void)testInitWithObject
-{
-    __weak id weakContext;
-    @autoreleasepool {
-        [self _setUp];
-        weakContext = _context;
-        
-        JSObject *obj = JS_NewObject(_cx, NULL, NULL, NULL);
-        
-        XJSValue *value = [[XJSValue alloc] initWithContext:_context JSObject:obj];
-        
-        XCTAssertEqual(value.object, obj, @"should assign object");
-        XCTAssertEqual(value.context, _context, @"context should be same");
-        XJSAssertEqualValue(_cx, OBJECT_TO_JSVAL(obj), value.value, @"value should be same");
-        
-        [self _tearDown];
-    }
-    
-    XCTAssertNil(weakContext, @"should be released");
-}
-
 
 @end

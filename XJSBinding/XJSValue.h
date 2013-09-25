@@ -70,9 +70,9 @@
 
 @interface XJSValue(SubscriptSupport)
 
-//- (XJSValue *)objectForKeyedSubscript:(id)key;
-//- (XJSValue *)objectAtIndexedSubscript:(NSUInteger)index;
-//- (void)setObject:(id)object forKeyedSubscript:(id)key;
-//- (void)setObject:(id)object atIndexedSubscript:(NSUInteger)index;
+- (XJSValue *)objectForKeyedSubscript:(id)key;
+- (XJSValue *)objectAtIndexedSubscript:(uint32_t)index;
+- (void)setObject:(id)object forKeyedSubscript:(id)key;
+- (void)setObject:(id)object atIndexedSubscript:(uint32_t)index;
 
 @end
