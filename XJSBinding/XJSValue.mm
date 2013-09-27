@@ -10,7 +10,7 @@
 
 #import "jsapi.h"
 
-#import "XLCLogging.h"
+#import "XLCAssertion.h"
 #import "NSError+XJSError.h"
 
 #import "XJSConvert.h"
@@ -39,6 +39,14 @@
     @synchronized(context.runtime) {
         jsval val = XJSConvertStringToJSValue(context.context, value);
         return [[self alloc] initWithContext:context value:val];
+    }
+}
+
++ (XJSValue *)valueWithDate:(NSDate *)date inContext:(XJSContext *)context
+{
+    @synchronized(context.runtime) {
+        JSObject *obj = JS_NewDateObjectMsec(context.context, date.timeIntervalSince1970);
+        return [[self alloc] initWithContext:context value:JS::ObjectOrNullValue(obj)];
     }
 }
 
@@ -194,6 +202,22 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     }
 }
 
+- (NSDate *)toDate
+{
+    if (self.isDate) {
+        jsval val;
+        JSBool success;
+        @synchronized(_context.runtime) {
+            success = JS_CallFunctionName(_context.context, _object, "getTime", 0, NULL, &val);
+        }
+        if (success) {
+            XLCASSERT(val.isNumber(), @"date.getTime() did not return a number");
+            return [NSDate dateWithTimeIntervalSince1970:val.toNumber()];
+        }
+    }
+    return nil;
+}
+
 #pragma mark -
 
 - (BOOL)isUndefined
@@ -244,6 +268,16 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 - (BOOL)isPrimitive
 {
     return _value.isPrimitive();
+}
+
+- (BOOL)isDate
+{
+    if (!_object) {
+        return NO;
+    }
+    @synchronized(_context.runtime) {
+        return JS_ObjectIsDate(_context.context, _object);
+    }
 }
 
 @end

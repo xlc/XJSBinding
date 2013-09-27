@@ -35,4 +35,10 @@
 
 @end
 
-// TODO NSArray NSDictionary NSValue NSDate
+@interface NSDate (XJSValueConvert)
+
+- (XJSValue *)xjs_toValueInContext:(XJSContext *)context;
+
+@end
+
+// TODO NSArray NSDictionary NSValue

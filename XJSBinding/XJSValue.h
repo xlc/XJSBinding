@@ -18,6 +18,7 @@
 //+ (XJSValue *)valueWithObject:(id)value inContext:(XJSContext *)context;
 
 + (XJSValue *)valueWithString:(NSString *)value inContext:(XJSContext *)context;
++ (XJSValue *)valueWithDate:(NSDate *)date inContext:(XJSContext *)context;
 
 + (XJSValue *)valueWithBool:(BOOL)value inContext:(XJSContext *)context;
 + (XJSValue *)valueWithDouble:(double)value inContext:(XJSContext *)context;
@@ -36,6 +37,7 @@
 - (double)toDouble;
 - (BOOL)toBool;
 - (NSString *)toString;
+- (NSDate *)toDate;
 
 //- (NSDate *)toDate;
 //// If the value is null or undefined then nil is returned.
@@ -54,15 +56,19 @@
 
 - (BOOL)isUndefined;
 - (BOOL)isNull;
+- (BOOL)isNullOrUndefined;
+
 - (BOOL)isBoolean;
 - (BOOL)isNumber;
-- (BOOL)isString;
-- (BOOL)isObject;
-
-- (BOOL)isNullOrUndefined;
 - (BOOL)isInt32;
 - (BOOL)isDouble;
+
 - (BOOL)isPrimitive;
+
+- (BOOL)isString;
+- (BOOL)isDate;
+
+- (BOOL)isObject;
 
 - (BOOL)isEqual:(id)object; // lossely equal
 - (BOOL)isStrictlyEqualToValue:(XJSValue *)object; // ===

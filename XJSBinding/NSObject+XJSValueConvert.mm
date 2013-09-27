@@ -106,3 +106,12 @@
 }
 
 @end
+
+@implementation NSDate (XJSValueConvert)
+
+- (XJSValue *)xjs_toValueInContext:(XJSContext *)context
+{
+    return [XJSValue valueWithDate:self inContext:context];
+}
+
+@end

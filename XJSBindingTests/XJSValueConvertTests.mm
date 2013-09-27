@@ -78,4 +78,25 @@
     XCTAssertTrue([[NSNull null] xjs_toValueInContext:_context].isNull, @"");
 }
 
+- (void)testDate
+{
+    NSDate *date;
+    
+    date = [NSDate date];
+    _value = [date xjs_toValueInContext:_context];
+    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001, @"");
+    
+    date = [NSDate dateWithTimeIntervalSinceNow:100];
+    _value = [date xjs_toValueInContext:_context];
+    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001, @"");
+    
+    date = [NSDate dateWithTimeIntervalSince1970:0];
+    _value = [date xjs_toValueInContext:_context];
+    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001, @"");
+    
+    date = [NSDate dateWithTimeIntervalSince1970:-100];
+    _value = [date xjs_toValueInContext:_context];
+    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001, @"");
+}
+
 @end
