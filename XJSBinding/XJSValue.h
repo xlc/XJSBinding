@@ -39,7 +39,6 @@
 - (NSString *)toString;
 - (NSDate *)toDate;
 
-//- (NSDate *)toDate;
 //// If the value is null or undefined then nil is returned.
 //// If the value is not an object then a JavaScript TypeError will be thrown.
 //// The property "length" is read from the object, converted to an unsigned
@@ -67,6 +66,7 @@
 
 - (BOOL)isString;
 - (BOOL)isDate;
+- (BOOL)isCallable;
 
 - (BOOL)isObject;
 
@@ -74,6 +74,15 @@
 - (BOOL)isStrictlyEqualToValue:(XJSValue *)object; // ===
 - (BOOL)isLooselyEqualToValue:(XJSValue *)object;  // ==
 - (BOOL)isSameValue:(XJSValue *)object; // NaN is same as NaN and -0 is not same as +0
+
+// Call this value as a function passing the specified arguments. Return nil on error.
+- (XJSValue *)callWithArguments:(NSArray *)arguments;
+// Call this value as a constructor passing the specified arguments.
+//- (XJSValue *)constructWithArguments:(NSArray *)arguments;
+// Access the property named "method" from this value; call the value resulting
+// from the property access as a function, passing this value as the "this"
+// value, and the specified arguments.
+//- (XJSValue *)invokeMethod:(NSString *)method withArguments:(NSArray *)arguments;
 
 @end
 

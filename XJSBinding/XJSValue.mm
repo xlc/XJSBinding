@@ -12,6 +12,7 @@
 
 #import "XLCAssertion.h"
 #import "NSError+XJSError.h"
+#import "NSObject+XJSValueConvert.h"
 
 #import "XJSConvert.h"
 #import "XJSContext_Private.h"
@@ -278,6 +279,38 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     @synchronized(_context.runtime) {
         return JS_ObjectIsDate(_context.context, _object);
     }
+}
+
+- (BOOL)isCallable
+{
+    if (!_object) {
+        return NO;
+    }
+    @synchronized(_context.runtime) {
+        return JS_ObjectIsCallable(_context.context, _object);
+    }
+}
+
+#pragma mark - invoke function
+
+- (XJSValue *)callWithArguments:(NSArray *)arguments
+{   
+    jsval args[arguments.count];
+    
+    for (int i = 0; i < arguments.count; i++) {
+        // the temporary XJSValue is autoreleased so jsval will be rooted before method returned
+        args[i] = [arguments[i] xjs_toValueInContext:_context].value;
+    }
+    
+    jsval outval;
+    JSBool success;
+    @synchronized(_context.runtime) {
+        success = JS_CallFunctionValue(_context.context, NULL, _value, arguments.count, args, &outval);
+    }
+    if (success) {
+        return [[XJSValue alloc] initWithContext:_context value:outval];
+    }
+    return nil;
 }
 
 @end

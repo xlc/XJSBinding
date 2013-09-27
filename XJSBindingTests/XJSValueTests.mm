@@ -382,6 +382,31 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     XCTAssertEqual([_value[@"length"] toInt32], 2, @"array length should be 2");
 }
 
+- (void)testCallWithArguments
+{
+    XJSValue *ret;
+    
+    _value = [_context evaluateString:@"(function () { })" error:NULL];
+    ret = [_value callWithArguments:nil];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertTrue(ret.isUndefined, @"");
+    
+    _value = [_context evaluateString:@"(function () { return 1; })" error:NULL];
+    ret = [_value callWithArguments:nil];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertEqual(ret.toInt32, 1, @"");
+    
+    _value = [_context evaluateString:@"(function (a) { return a+1; })" error:NULL];
+    ret = [_value callWithArguments:@[@1]];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertEqual(ret.toInt32, 2, @"");
+    
+    _value = [_context evaluateString:@"(function (a, b) { return a+b; })" error:NULL];
+    ret = [_value callWithArguments:@[@1, @2]];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertEqual(ret.toInt32, 3, @"");
+}
+
 @end
 
 @interface XJSValueInitTests : XCTestCase
