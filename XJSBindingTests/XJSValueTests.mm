@@ -19,7 +19,8 @@
 
 @end
 
-@implementation XJSValueTests {
+@implementation XJSValueTests
+{
     XJSContext *_context;
     XJSValue *_value;
     BOOL _hasError;
