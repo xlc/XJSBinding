@@ -23,6 +23,9 @@
 + (XJSValue *)valueWithDouble:(double)value inContext:(XJSContext *)context;
 + (XJSValue *)valueWithInt32:(int32_t)value inContext:(XJSContext *)context;
 
++ (XJSValue *)valueWithNewObjectInContext:(XJSContext *)context;
++ (XJSValue *)valueWithNewArrayInContext:(XJSContext *)context;
+
 + (XJSValue *)valueWithNullInContext:(XJSContext *)context;
 + (XJSValue *)valueWithUndefinedInContext:(XJSContext *)context;
 

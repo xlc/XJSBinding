@@ -36,11 +36,26 @@
 
 + (XJSValue *)valueWithString:(NSString *)value inContext:(XJSContext *)context
 {
-    jsval val;
     @synchronized(context.runtime) {
-        val = XJSConvertStringToJSValue(context.context, value);
+        jsval val = XJSConvertStringToJSValue(context.context, value);
+        return [[self alloc] initWithContext:context value:val];
     }
-    return [[self alloc] initWithContext:context value:val];
+}
+
++ (XJSValue *)valueWithNewObjectInContext:(XJSContext *)context
+{
+    @synchronized(context.runtime) {
+        JSObject *obj = JS_NewObject(context.context, NULL, NULL, NULL);
+        return [[self alloc] initWithContext:context value:JS::ObjectOrNullValue(obj)];
+    }
+}
+
++ (XJSValue *)valueWithNewArrayInContext:(XJSContext *)context
+{
+    @synchronized(context.runtime) {
+        JSObject *obj = JS_NewArrayObject(context.context, 0, NULL);
+        return [[self alloc] initWithContext:context value:JS::ObjectOrNullValue(obj)];
+    }
 }
 
 + (XJSValue *)valueWithNullInContext:(XJSContext *)context

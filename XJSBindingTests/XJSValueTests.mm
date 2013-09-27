@@ -350,7 +350,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
 
 - (void)testKeyedSubscript
 {
-    _value = [_context evaluateString:@"({})" error:NULL];
+    _value = [XJSValue valueWithNewObjectInContext:_context];
     
     XCTAssertTrue(_value[@"a"].isUndefined, @"({})['a'] should be undefined");
     
@@ -365,7 +365,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
 
 - (void)testIndexedSubscript
 {
-    _value = [_context evaluateString:@"([])" error:NULL];
+    _value = [XJSValue valueWithNewArrayInContext:_context];
     
     XCTAssertTrue(_value[1].isUndefined, @"([])[1] should be undefined");
     
