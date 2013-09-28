@@ -291,6 +291,19 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     }
 }
 
+- (BOOL)isInstanceOf:(XJSValue *)value
+{
+    if (!value.object) {
+        return NO;
+    }
+    JSBool success;
+    JSBool result;
+    @synchronized(_context.runtime) {
+        success = JS_HasInstance(_context.context, value.object, _value, &result);
+    }
+    return success && result;
+}
+
 #pragma mark - invoke function
 
 - (XJSValue *)callWithArguments:(NSArray *)arguments
@@ -309,6 +322,29 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     }
     if (success) {
         return [[XJSValue alloc] initWithContext:_context value:outval];
+    }
+    return nil;
+}
+
+- (XJSValue *)constructWithArguments:(NSArray *)arguments
+{
+    if (!_object) {
+        return NO;
+    }
+    
+    jsval args[arguments.count];
+    
+    for (int i = 0; i < arguments.count; i++) {
+        // the temporary XJSValue is autoreleased so jsval will be rooted before method returned
+        args[i] = [arguments[i] xjs_toValueInContext:_context].value;
+    }
+    
+    JSObject *obj;
+    @synchronized(_context.runtime) {
+        obj = JS_New(_context.context, _object, arguments.count, args);
+    }
+    if (obj) {
+        return [[XJSValue alloc] initWithContext:_context value:js::ObjectOrNullValue(obj)];
     }
     return nil;
 }

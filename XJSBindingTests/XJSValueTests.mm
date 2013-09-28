@@ -382,6 +382,22 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     XCTAssertEqual([_value[@"length"] toInt32], 2, @"array length should be 2");
 }
 
+- (void)testIsInstanceOf
+{
+    XJSValue *object = [_context evaluateString:@"Object" error:NULL];
+    XJSValue *array = [_context evaluateString:@"Array" error:NULL];
+    
+    _value = [XJSValue valueWithNewObjectInContext:_context];
+
+    XCTAssertTrue([_value isInstanceOf:object], @"");
+    XCTAssertFalse([_value isInstanceOf:array], @"not array");
+    
+    _value = [XJSValue valueWithNewArrayInContext:_context];
+
+    XCTAssertTrue([_value isInstanceOf:object], @"");
+    XCTAssertTrue([_value isInstanceOf:array], @"");
+}
+
 - (void)testCallWithArguments
 {
     XJSValue *ret;
@@ -405,6 +421,28 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     ret = [_value callWithArguments:@[@1, @2]];
     XCTAssertNotNil(ret, @"");
     XCTAssertEqual(ret.toInt32, 3, @"");
+}
+
+- (void)testConstructWithArguments
+{
+    XJSValue *ret;
+    
+    _value = [_context evaluateString:@"Array" error:NULL];
+    
+    ret = [_value constructWithArguments:nil];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertTrue([ret isInstanceOf:_value], @"instanceof Array");
+    XCTAssertEqual(ret[@"length"].toInt32, 0, @"array with length 0");
+    
+    ret = [_value constructWithArguments:@[@5]];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertTrue([ret isInstanceOf:_value], @"instanceof Array");
+    XCTAssertEqual(ret[@"length"].toInt32, 5, @"array with length 0");
+    
+    ret = [_value constructWithArguments:@[@1, @2, @3, @4]];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertTrue([ret isInstanceOf:_value], @"instanceof Array");
+    XCTAssertEqual(ret[@"length"].toInt32, 4, @"array with length 0");
 }
 
 @end
