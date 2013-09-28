@@ -39,13 +39,12 @@
 //
 //+ (XJSContext *)currentContext;
 //
-//+ (XJSContext *)defaultContext;
-//+ (void)setDefaultContext:(XJSContext *)context;
-//
-////-------
-//
-//// key will be converted to string first
-//- (XJSValue *)objectForKeyedSubscript:(id)key;
-//- (void)setObject:(id)object forKeyedSubscript:(id)key;
+
+@end
+
+@interface XJSContext(SubscriptSupport)
+
+- (XJSValue *)objectForKeyedSubscript:(NSString *)key;
+- (void)setObject:(id)object forKeyedSubscript:(NSString *)key;
 
 @end

@@ -194,3 +194,38 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 }
 
 @end
+
+#pragma mark - SubscriptSupport
+
+@implementation XJSContext(SubscriptSupport)
+
+- (XJSValue *)objectForKeyedSubscript:(NSString *)key
+{
+    jsval outval;
+    
+    @synchronized(_runtime) {
+        if (JS_GetProperty(_context, _globalObject, [key UTF8String], &outval)) {
+            return [[XJSValue alloc] initWithContext:self value:outval];
+        }
+    }
+    
+    return nil;
+}
+
+- (void)setObject:(id)object forKeyedSubscript:(NSString *)key
+{
+    XJSValue *value;
+    
+    if ([object isKindOfClass:[XJSValue class]]) {
+        value = object;
+    }
+    
+    jsval inval = value.value;
+    
+    @synchronized(_runtime) {
+        JS_SetProperty(_context, _globalObject, [key UTF8String], &inval);
+    }
+
+}
+
+@end

@@ -416,7 +416,10 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     }
     
     jsval inval = value.value;
-    JS_SetProperty(_context.context, _object, [stringKey UTF8String], &inval);
+    
+    @synchronized(_context.runtime) {
+        JS_SetProperty(_context.context, _object, [stringKey UTF8String], &inval);
+    }
 }
 
 - (void)setObject:(id)object atIndexedSubscript:(uint32_t)index
@@ -432,7 +435,10 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     }
     
     jsval inval = value.value;
-    JS_SetElement(_context.context, _object, index, &inval);
+    
+    @synchronized(_context.runtime) {
+        JS_SetElement(_context.context, _object, index, &inval);
+    }
 }
 
 @end
