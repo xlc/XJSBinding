@@ -349,6 +349,33 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     return nil;
 }
 
+- (XJSValue *)invokeMethod:(NSString *)method withArguments:(NSArray *)arguments
+{
+    if (!_object) {
+        return NO;
+    }
+    
+    jsval args[arguments.count];
+    
+    for (int i = 0; i < arguments.count; i++) {
+        // the temporary XJSValue is autoreleased so jsval will be rooted before method returned
+        args[i] = [arguments[i] xjs_toValueInContext:_context].value;
+    }
+    
+    jsval outval;
+    JSBool success;
+    
+    @synchronized(_context.runtime) {
+        success = JS_CallFunctionName(_context.context, _object, [method UTF8String], arguments.count, args, &outval);
+    }
+    
+    if (success) {
+        return [[XJSValue alloc] initWithContext:_context value:outval];
+    }
+    
+    return nil;
+}
+
 @end
 
 #pragma mark - SubscriptSupport

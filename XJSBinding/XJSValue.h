@@ -84,7 +84,7 @@
 // Access the property named "method" from this value; call the value resulting
 // from the property access as a function, passing this value as the "this"
 // value, and the specified arguments.
-//- (XJSValue *)invokeMethod:(NSString *)method withArguments:(NSArray *)arguments;
+- (XJSValue *)invokeMethod:(NSString *)method withArguments:(NSArray *)arguments;
 
 @end
 

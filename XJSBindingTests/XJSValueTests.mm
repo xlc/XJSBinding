@@ -472,6 +472,24 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     XCTAssertEqual(ret[@"length"].toInt32, 4, @"array with length 0");
 }
 
+- (void)testInvokeMethod
+{
+    XJSValue *ret;
+    
+    _value = [XJSValue valueWithDate:[NSDate dateWithTimeIntervalSince1970:0] inContext:_context];
+    
+    ret = [_value invokeMethod:@"getTime" withArguments:nil];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertEqual(ret.toInt32, 0, @"");
+    
+    ret = [_value invokeMethod:@"setFullYear" withArguments:@[@2000]];
+    XCTAssertNotNil(ret, @"");
+    
+    ret = [_value invokeMethod:@"getFullYear" withArguments:nil];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertEqual(ret.toInt32, 2000, @"");
+}
+
 @end
 
 @interface XJSValueInitTests : XCTestCase
