@@ -411,8 +411,8 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
 
 - (void)testIsInstanceOf
 {
-    XJSValue *object = [_context evaluateString:@"Object" error:NULL];
-    XJSValue *array = [_context evaluateString:@"Array" error:NULL];
+    XJSValue *object = _context[@"Object"];
+    XJSValue *array = _context[@"Array"];
     
     _value = [XJSValue valueWithNewObjectInContext:_context];
 
@@ -454,7 +454,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
 {
     XJSValue *ret;
     
-    _value = [_context evaluateString:@"Array" error:NULL];
+    _value = _context[@"Array"];
     
     ret = [_value constructWithArguments:nil];
     XCTAssertNotNil(ret, @"");
