@@ -11,6 +11,7 @@
 #import "jsapi.h"
 #import "XLCAssertion.h"
 #import "NSError+XJSError.h"
+#import "NSObject+XJSValueConvert.h"
 
 #import "XJSRuntime_Private.h"
 #import "XJSValue_Private.h"
@@ -214,12 +215,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (void)setObject:(id)object forKeyedSubscript:(NSString *)key
 {
-    XJSValue *value;
-    
-    if ([object isKindOfClass:[XJSValue class]]) {
-        value = object;
-    }
-    
+    XJSValue *value = [object xjs_toValueInContext:self];
     jsval inval = value.value;
     
     @synchronized(_runtime) {

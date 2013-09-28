@@ -158,4 +158,15 @@
     XCTAssertEqual(value.toInt32, 2, @"");
 }
 
+- (void)testKeyedSubscript2
+{
+    XJSValue *value;
+    
+    _context[@"a"] = @2;
+    
+    value = _context[@"a"];
+    XCTAssertNotNil(value, @"");
+    XCTAssertEqual(value.toInt32, 2, @"");
+}
+
 @end

@@ -363,6 +363,19 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     XCTAssertEqual([_value[@"a"] toInt32], 1, @"");
 }
 
+- (void)testKeyedSubscript2
+{
+    _value = [XJSValue valueWithNewObjectInContext:_context];
+    
+    _value[@"a"] = @"b";
+    
+    XCTAssertEqualObjects([_value[@"a"] toString], @"b", @"");
+    
+    _value[@"a"] = @1;
+    
+    XCTAssertEqual([_value[@"a"] toInt32], 1, @"");
+}
+
 - (void)testIndexedSubscript
 {
     _value = [XJSValue valueWithNewArrayInContext:_context];
@@ -380,6 +393,20 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     XCTAssertTrue(_value[0].isUndefined, @"");
     
     XCTAssertEqual([_value[@"length"] toInt32], 2, @"array length should be 2");
+}
+
+- (void)testIndexedSubscript2
+{
+    _value = [XJSValue valueWithNewArrayInContext:_context];
+    
+    _value[1] = @"b";
+    
+    XCTAssertEqualObjects([_value[1] toString], @"b", @"");
+    
+    _value[1] = @1;
+    
+    XCTAssertEqual([_value[1] toInt32], 1, @"");
+    
 }
 
 - (void)testIsInstanceOf

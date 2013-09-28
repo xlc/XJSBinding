@@ -409,12 +409,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
         stringKey = [key description];
     }
     
-    XJSValue *value;
-    
-    if ([object isKindOfClass:[XJSValue class]]) {
-        value = object;
-    }
-    
+    XJSValue *value = [object xjs_toValueInContext:_context];
     jsval inval = value.value;
     
     @synchronized(_context.runtime) {
@@ -428,12 +423,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
         return;
     }
     
-    XJSValue *value;
-    
-    if ([object isKindOfClass:[XJSValue class]]) {
-        value = object;
-    }
-    
+    XJSValue *value = [object xjs_toValueInContext:_context];
     jsval inval = value.value;
     
     @synchronized(_context.runtime) {
