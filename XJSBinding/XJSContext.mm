@@ -10,11 +10,13 @@
 
 #import "jsapi.h"
 #import "XLCAssertion.h"
+
 #import "NSError+XJSError.h"
 #import "NSObject+XJSValueConvert.h"
 
 #import "XJSRuntime_Private.h"
 #import "XJSValue_Private.h"
+#import "XJSBinding.h"
 
 static NSMutableDictionary *contextDict;
 
@@ -192,6 +194,14 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
         return nil;
     }
     return [self evaluateString:script fileName:path lineNumber:0 error:error];
+}
+
+#pragma mark -
+
+- (void)createObjCRuntimeWithNamespace:(NSString *)name
+{
+    XLCASSERT_NOTNIL(name);
+    XJSBindingInit(name, _context, _globalObject);
 }
 
 @end

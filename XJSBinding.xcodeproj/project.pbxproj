@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0616304217F7F8620018F504 /* XJSBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 0616304017F7F8620018F504 /* XJSBinding.h */; };
+		0616304317F7F8620018F504 /* XJSBinding.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616304117F7F8620018F504 /* XJSBinding.mm */; };
+		0616304417F7F8630018F504 /* XJSBinding.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616304117F7F8620018F504 /* XJSBinding.mm */; };
+		0616304C17F818DC0018F504 /* XJSInternalOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616304A17F818DC0018F504 /* XJSInternalOperation.mm */; };
+		0616304D17F818DC0018F504 /* XJSInternalOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616304A17F818DC0018F504 /* XJSInternalOperation.mm */; };
+		0616304E17F818DC0018F504 /* XJSInternalOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0616304B17F818DC0018F504 /* XJSInternalOperation.h */; };
+		0616305117F81A210018F504 /* XJSRuntimeEntryClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 0616304F17F81A210018F504 /* XJSRuntimeEntryClass.h */; };
+		0616305217F81A210018F504 /* XJSRuntimeEntryClass.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305017F81A210018F504 /* XJSRuntimeEntryClass.mm */; };
+		0616305317F81A210018F504 /* XJSRuntimeEntryClass.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305017F81A210018F504 /* XJSRuntimeEntryClass.mm */; };
+		0616305517F95BA90018F504 /* XJSRuntimeEntryClassTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305417F95BA90018F504 /* XJSRuntimeEntryClassTests.mm */; };
+		0616305617F95BA90018F504 /* XJSRuntimeEntryClassTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305417F95BA90018F504 /* XJSRuntimeEntryClassTests.mm */; };
 		06208BCD17E1C2E100F60D39 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06208BCC17E1C2E100F60D39 /* libz.dylib */; };
 		06208BCE17E1C2F600F60D39 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06208BCC17E1C2E100F60D39 /* libz.dylib */; };
 		06208BD917E4084600F60D39 /* NSError+XJSError.h in Headers */ = {isa = PBXBuildFile; fileRef = 06208BD717E4084600F60D39 /* NSError+XJSError.h */; };
@@ -180,6 +191,13 @@
 
 /* Begin PBXFileReference section */
 		011E04E2669844BCB2BD6A8E /* libPods-XJSBindingTests-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBindingTests-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0616304017F7F8620018F504 /* XJSBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSBinding.h; sourceTree = "<group>"; };
+		0616304117F7F8620018F504 /* XJSBinding.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSBinding.mm; sourceTree = "<group>"; };
+		0616304A17F818DC0018F504 /* XJSInternalOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSInternalOperation.mm; sourceTree = "<group>"; };
+		0616304B17F818DC0018F504 /* XJSInternalOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSInternalOperation.h; sourceTree = "<group>"; };
+		0616304F17F81A210018F504 /* XJSRuntimeEntryClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntimeEntryClass.h; sourceTree = "<group>"; };
+		0616305017F81A210018F504 /* XJSRuntimeEntryClass.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeEntryClass.mm; sourceTree = "<group>"; };
+		0616305417F95BA90018F504 /* XJSRuntimeEntryClassTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeEntryClassTests.mm; sourceTree = "<group>"; };
 		06208BCC17E1C2E100F60D39 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		06208BD717E4084600F60D39 /* NSError+XJSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+XJSError.h"; sourceTree = "<group>"; };
 		06208BD817E4084600F60D39 /* NSError+XJSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+XJSError.m"; sourceTree = "<group>"; };
@@ -398,6 +416,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0616303F17F7F84E0018F504 /* XJSBinding */ = {
+			isa = PBXGroup;
+			children = (
+				0616304017F7F8620018F504 /* XJSBinding.h */,
+				0616304117F7F8620018F504 /* XJSBinding.mm */,
+				0616304F17F81A210018F504 /* XJSRuntimeEntryClass.h */,
+				0616305017F81A210018F504 /* XJSRuntimeEntryClass.mm */,
+			);
+			name = XJSBinding;
+			sourceTree = "<group>";
+		};
 		0620F8AC17F04859008A86ED /* XJSBindingApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,6 +454,8 @@
 			children = (
 				0660B9CC17DF23A800A3DD0C /* XJSConvert.h */,
 				0660B9CD17DF23A800A3DD0C /* XJSConvert.mm */,
+				0616304B17F818DC0018F504 /* XJSInternalOperation.h */,
+				0616304A17F818DC0018F504 /* XJSInternalOperation.mm */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -529,6 +560,7 @@
 		0692BC6A17D9D612009BFC18 /* XJSBinding */ = {
 			isa = PBXGroup;
 			children = (
+				0616303F17F7F84E0018F504 /* XJSBinding */,
 				066CECC317DBFC7B0078829C /* XJSContext */,
 				066CECC417DBFC830078829C /* XJSRuntime */,
 				066CECC517DBFC8A0078829C /* XJSValue */,
@@ -557,6 +589,7 @@
 				0664602A17DDC4960071D23F /* XJSContextTests.mm */,
 				0660B9D117E0584D00A3DD0C /* XJSValueTests.mm */,
 				06DA4B6E17F58FAD00C9C3B6 /* XJSValueConvertTests.mm */,
+				0616305417F95BA90018F504 /* XJSRuntimeEntryClassTests.mm */,
 				0692BC7C17D9D612009BFC18 /* Supporting Files */,
 			);
 			path = XJSBindingTests;
@@ -685,6 +718,7 @@
 				06A3FC2E17DAA0D900E936F1 /* HashFunctions.h in Headers */,
 				06A3FBFD17DAA0D900E936F1 /* CharacterEncoding.h in Headers */,
 				06A3FC0A17DAA0D900E936F1 /* Vector.h in Headers */,
+				0616304217F7F8620018F504 /* XJSBinding.h in Headers */,
 				0660B9CE17DF23A800A3DD0C /* XJSConvert.h in Headers */,
 				06A3FC3C17DAA0D900E936F1 /* SplayTree.h in Headers */,
 				06A3FC1717DAA0D900E936F1 /* jsprf.h in Headers */,
@@ -693,6 +727,7 @@
 				06A3FC3F17DAA0D900E936F1 /* TypedEnum.h in Headers */,
 				06A3FC0D17DAA0D900E936F1 /* jsapi.h in Headers */,
 				06A3FC1B17DAA0D900E936F1 /* jspubtd.h in Headers */,
+				0616304E17F818DC0018F504 /* XJSInternalOperation.h in Headers */,
 				06A3FC2C17DAA0D900E936F1 /* FloatingPoint.h in Headers */,
 				066CECBA17DBFC6E0078829C /* XJSContext.h in Headers */,
 				06A3FBFB17DAA0D900E936F1 /* Anchor.h in Headers */,
@@ -728,6 +763,7 @@
 				06A3FC3E17DAA0D900E936F1 /* ThreadLocal.h in Headers */,
 				06A3FC1817DAA0D900E936F1 /* jsprototypes.h in Headers */,
 				06A3FC2017DAA0D900E936F1 /* Assertions.h in Headers */,
+				0616305117F81A210018F504 /* XJSRuntimeEntryClass.h in Headers */,
 				06A3FC3117DAA0D900E936F1 /* MathAlgorithms.h in Headers */,
 				06A3FC0717DAA0D900E936F1 /* TemplateLib.h in Headers */,
 				06A3FC3217DAA0D900E936F1 /* MemoryChecking.h in Headers */,
@@ -1120,6 +1156,7 @@
 				06DA4B7017F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
 				0660B9ED17E094F500A3DD0C /* XJSTestUtils.m in Sources */,
 				0660B9EE17E094FA00A3DD0C /* XJSRuntimeTests.mm in Sources */,
+				0616305617F95BA90018F504 /* XJSRuntimeEntryClassTests.mm in Sources */,
 				0660B9F117E0950500A3DD0C /* XJSValueTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1144,7 +1181,10 @@
 				066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */,
 				06208BDA17E4084600F60D39 /* NSError+XJSError.m in Sources */,
 				0660B9CF17DF23A800A3DD0C /* XJSConvert.mm in Sources */,
+				0616304C17F818DC0018F504 /* XJSInternalOperation.mm in Sources */,
 				066CECBB17DBFC6E0078829C /* XJSContext.mm in Sources */,
+				0616305217F81A210018F504 /* XJSRuntimeEntryClass.mm in Sources */,
+				0616304317F7F8620018F504 /* XJSBinding.mm in Sources */,
 				066AD6C917F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1157,6 +1197,7 @@
 				06DA4B6F17F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
 				0664602B17DDC4960071D23F /* XJSContextTests.mm in Sources */,
 				0660B9D517E05C0E00A3DD0C /* XJSTestUtils.m in Sources */,
+				0616305517F95BA90018F504 /* XJSRuntimeEntryClassTests.mm in Sources */,
 				065B1A6D17DC136B00AC0D63 /* XJSRuntimeTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1169,7 +1210,10 @@
 				06CFF4F217E1C0AA0081F388 /* XJSRuntime.mm in Sources */,
 				06208BDB17E4084600F60D39 /* NSError+XJSError.m in Sources */,
 				06CFF4F417E1C0AE0081F388 /* XJSValue.mm in Sources */,
+				0616304D17F818DC0018F504 /* XJSInternalOperation.mm in Sources */,
 				06CFF4F517E1C0B10081F388 /* XJSConvert.mm in Sources */,
+				0616305317F81A210018F504 /* XJSRuntimeEntryClass.mm in Sources */,
+				0616304417F7F8630018F504 /* XJSBinding.mm in Sources */,
 				066AD6CA17F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

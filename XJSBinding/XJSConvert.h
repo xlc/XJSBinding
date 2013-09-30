@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#include "jsapi.h"
+#import "jsapi.h"
 
 NSString *XJSConvertJSValueToString(JSContext *cx, jsval val);
 NSString *XJSConvertJSValueToSource(JSContext *cx, jsval val);

@@ -27,6 +27,9 @@
  */
 - (id)initWithRuntime:(XJSRuntime *)runtime;
 
+// call this method to get all the magic of Objective-C binding
+- (void)createObjCRuntimeWithNamespace:(NSString *)name;
+
 - (void)gcIfNeed;
 
 - (XJSValue *)evaluateString:(NSString *)script error:(NSError **)error;
