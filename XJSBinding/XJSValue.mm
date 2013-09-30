@@ -318,7 +318,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     jsval outval;
     JSBool success;
     @synchronized(_context.runtime) {
-        success = JS_CallFunctionValue(_context.context, NULL, _value, arguments.count, args, &outval);
+        success = JS_CallFunctionValue(_context.context, NULL, _value, (unsigned)arguments.count, args, &outval);
     }
     if (success) {
         return [[XJSValue alloc] initWithContext:_context value:outval];
@@ -341,7 +341,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     
     JSObject *obj;
     @synchronized(_context.runtime) {
-        obj = JS_New(_context.context, _object, arguments.count, args);
+        obj = JS_New(_context.context, _object, (unsigned)arguments.count, args);
     }
     if (obj) {
         return [[XJSValue alloc] initWithContext:_context value:js::ObjectOrNullValue(obj)];
@@ -366,7 +366,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     JSBool success;
     
     @synchronized(_context.runtime) {
-        success = JS_CallFunctionName(_context.context, _object, [method UTF8String], arguments.count, args, &outval);
+        success = JS_CallFunctionName(_context.context, _object, [method UTF8String], (unsigned)arguments.count, args, &outval);
     }
     
     if (success) {
