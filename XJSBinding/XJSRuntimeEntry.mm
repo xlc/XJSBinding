@@ -1,12 +1,12 @@
 //
-//  XJSRuntimeEntryClass.m
+//  XJSRuntimeEntry.m
 //  XJSBinding
 //
 //  Created by Xiliang Chen on 13-9-29.
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#import "XJSRuntimeEntryClass.h"
+#import "XJSRuntimeEntry.h"
 
 #import <objc/runtime.h>
 #import "jsapi.h"
@@ -59,7 +59,7 @@ static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
     return JS_TRUE;
 }
 
-static JSClass _XJSRuntimeEntryClass = {
+static JSClass XJSRuntimeEntryClass = {
     "XJSRuntimeEntry",          // name
     0,                          // flags
     XJSPropertyImpl,            // add
@@ -73,4 +73,4 @@ static JSClass _XJSRuntimeEntryClass = {
     JSCLASS_NO_OPTIONAL_MEMBERS
 };
 
-JSClass *XJSRuntimeEntryClass = &_XJSRuntimeEntryClass;
+JSClass *XJSRuntimeEntry = &XJSRuntimeEntryClass;

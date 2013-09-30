@@ -10,7 +10,7 @@
 
 #import "XLCAssertion.h"
 
-#import "XJSRuntimeEntryClass.h"
+#import "XJSRuntimeEntry.h"
 
 void XJSBindingInit(NSString *name, JSContext *cx, JSObject *globalObject)
 {
@@ -19,7 +19,7 @@ void XJSBindingInit(NSString *name, JSContext *cx, JSObject *globalObject)
         name = @"objc";
     }
     
-    JSObject *rootobj = JS_NewObject(cx, XJSRuntimeEntryClass, NULL, NULL);
+    JSObject *rootobj = JS_NewObject(cx, XJSRuntimeEntry, NULL, NULL);
     jsval rootval = JS::ObjectOrNullValue(rootobj);
     JS_SetProperty(cx, globalObject, [name UTF8String], &rootval);
 }

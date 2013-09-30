@@ -1,5 +1,5 @@
 //
-//  XJSRuntimeEntryClassTests.m
+//  XJSRuntimeEntryTests.m
 //  XJSBinding
 //
 //  Created by Xiliang Chen on 13-9-30.
@@ -11,11 +11,11 @@
 #import "XJSContext.h"
 #import "XJSValue.h"
 
-@interface XJSRuntimeEntryClassTests : XCTestCase
+@interface XJSRuntimeEntryTests : XCTestCase
 
 @end
 
-@implementation XJSRuntimeEntryClassTests
+@implementation XJSRuntimeEntryTests
 {
     XJSContext *_context;
     XJSValue *_objc;

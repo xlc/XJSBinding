@@ -1,5 +1,5 @@
 //
-//  XJSRuntimeEntryClass.h
+//  XJSRuntimeEntry.h
 //  XJSBinding
 //
 //  Created by Xiliang Chen on 13-9-29.
@@ -8,4 +8,4 @@
 
 #import <Foundation/Foundation.h>
 
-extern struct JSClass *XJSRuntimeEntryClass;
+extern struct JSClass *XJSRuntimeEntry;
