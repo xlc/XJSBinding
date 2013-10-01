@@ -14,7 +14,8 @@
 
 #import "XJSInternalOperation.h"
 
-static JSBool XJSPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp) {
+static JSBool XJSPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
+{
     if (XJSInternalOperation::IsInternalOepration(cx)) {
         return JS_PropertyStub(cx, obj, jid, vp);
     }
