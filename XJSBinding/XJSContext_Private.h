@@ -13,10 +13,10 @@
 @interface XJSContext ()
 {
     NSMutableArray *_errorStack;
-    JSObject *_globalObject;
 }
 
 @property (assign, readonly) JSContext *context;
+@property (assign, readonly) JSObject *globalObject;
 
 + (XJSContext *)contextForJSContext:(JSContext *)jscontext;
 

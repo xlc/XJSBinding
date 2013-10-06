@@ -18,14 +18,16 @@
 		0616305317F81A210018F504 /* XJSRuntimeEntry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305017F81A210018F504 /* XJSRuntimeEntry.mm */; };
 		0616305517F95BA90018F504 /* XJSRuntimeEntryTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */; };
 		0616305617F95BA90018F504 /* XJSRuntimeEntryTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */; };
-		0619AA6C17F969E8001631BD /* XJSObjectWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0619AA6A17F969E8001631BD /* XJSObjectWrapper.h */; };
-		0619AA6D17F969E8001631BD /* XJSObjectWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA6B17F969E8001631BD /* XJSObjectWrapper.mm */; };
-		0619AA6E17F969E8001631BD /* XJSObjectWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA6B17F969E8001631BD /* XJSObjectWrapper.mm */; };
 		0619AA7117F96CA1001631BD /* XJSHelperFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0619AA6F17F96CA1001631BD /* XJSHelperFunctions.h */; };
 		0619AA7217F96CA1001631BD /* XJSHelperFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */; };
 		0619AA7317F96CA1001631BD /* XJSHelperFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */; };
 		0619AA7517F971DC001631BD /* XJSHelperFunctionsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */; };
 		0619AA7617F971DC001631BD /* XJSHelperFunctionsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */; };
+		0619AA7917FC0DCF001631BD /* XJSClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 0619AA7717FC0DCF001631BD /* XJSClass.h */; };
+		0619AA7A17FC0DCF001631BD /* XJSClass.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7817FC0DCF001631BD /* XJSClass.mm */; };
+		0619AA7B17FC0DCF001631BD /* XJSClass.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7817FC0DCF001631BD /* XJSClass.mm */; };
+		0619AA7D17FC2CC3001631BD /* XJSClassTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */; };
+		0619AA7E17FC2CC3001631BD /* XJSClassTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */; };
 		06208BCD17E1C2E100F60D39 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06208BCC17E1C2E100F60D39 /* libz.dylib */; };
 		06208BCE17E1C2F600F60D39 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06208BCC17E1C2E100F60D39 /* libz.dylib */; };
 		06208BD917E4084600F60D39 /* NSError+XJSError.h in Headers */ = {isa = PBXBuildFile; fileRef = 06208BD717E4084600F60D39 /* NSError+XJSError.h */; };
@@ -206,11 +208,12 @@
 		0616304F17F81A210018F504 /* XJSRuntimeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntimeEntry.h; sourceTree = "<group>"; };
 		0616305017F81A210018F504 /* XJSRuntimeEntry.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeEntry.mm; sourceTree = "<group>"; };
 		0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeEntryTests.mm; sourceTree = "<group>"; };
-		0619AA6A17F969E8001631BD /* XJSObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSObjectWrapper.h; sourceTree = "<group>"; };
-		0619AA6B17F969E8001631BD /* XJSObjectWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSObjectWrapper.mm; sourceTree = "<group>"; };
 		0619AA6F17F96CA1001631BD /* XJSHelperFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSHelperFunctions.h; sourceTree = "<group>"; };
 		0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSHelperFunctions.mm; sourceTree = "<group>"; };
 		0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSHelperFunctionsTests.mm; sourceTree = "<group>"; };
+		0619AA7717FC0DCF001631BD /* XJSClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSClass.h; sourceTree = "<group>"; };
+		0619AA7817FC0DCF001631BD /* XJSClass.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSClass.mm; sourceTree = "<group>"; };
+		0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSClassTests.mm; sourceTree = "<group>"; };
 		06208BCC17E1C2E100F60D39 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		06208BD717E4084600F60D39 /* NSError+XJSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+XJSError.h"; sourceTree = "<group>"; };
 		06208BD817E4084600F60D39 /* NSError+XJSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+XJSError.m"; sourceTree = "<group>"; };
@@ -436,8 +439,8 @@
 				0616304117F7F8620018F504 /* XJSBinding.mm */,
 				0616304F17F81A210018F504 /* XJSRuntimeEntry.h */,
 				0616305017F81A210018F504 /* XJSRuntimeEntry.mm */,
-				0619AA6A17F969E8001631BD /* XJSObjectWrapper.h */,
-				0619AA6B17F969E8001631BD /* XJSObjectWrapper.mm */,
+				0619AA7717FC0DCF001631BD /* XJSClass.h */,
+				0619AA7817FC0DCF001631BD /* XJSClass.mm */,
 			);
 			name = XJSBinding;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				06DA4B6E17F58FAD00C9C3B6 /* XJSValueConvertTests.mm */,
 				0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */,
 				0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */,
+				0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */,
 				0692BC7C17D9D612009BFC18 /* Supporting Files */,
 			);
 			path = XJSBindingTests;
@@ -761,7 +765,6 @@
 				06A3FC1A17DAA0D900E936F1 /* jsprvtd.h in Headers */,
 				066CECBC17DBFC6E0078829C /* XJSRuntime_Private.h in Headers */,
 				06A3FC3D17DAA0D900E936F1 /* StandardInteger.h in Headers */,
-				0619AA6C17F969E8001631BD /* XJSObjectWrapper.h in Headers */,
 				066AD6C817F57B4700EADB2B /* NSObject+XJSValueConvert.h in Headers */,
 				06A3FC0517DAA0D900E936F1 /* RequiredDefines.h in Headers */,
 				06A3FC0E17DAA0D900E936F1 /* jsclass.h in Headers */,
@@ -808,6 +811,7 @@
 				06A3FC1317DAA0D900E936F1 /* jsfriendapi.h in Headers */,
 				06A3FC2517DAA0D900E936F1 /* CheckedInt.h in Headers */,
 				06A3FBFF17DAA0D900E936F1 /* GCAPI.h in Headers */,
+				0619AA7917FC0DCF001631BD /* XJSClass.h in Headers */,
 				06A3FC1017DAA0D900E936F1 /* jscpucfg.h in Headers */,
 				06A3FC2A17DAA0D900E936F1 /* Endian.h in Headers */,
 				06A3FC3A17DAA0D900E936F1 /* Scoped.h in Headers */,
@@ -1172,6 +1176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0619AA7E17FC2CC3001631BD /* XJSClassTests.mm in Sources */,
 				0660B9F017E0950200A3DD0C /* XJSContextTests.mm in Sources */,
 				06DA4B7017F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
 				0660B9ED17E094F500A3DD0C /* XJSTestUtils.m in Sources */,
@@ -1207,7 +1212,7 @@
 				0619AA7217F96CA1001631BD /* XJSHelperFunctions.mm in Sources */,
 				0616305217F81A210018F504 /* XJSRuntimeEntry.mm in Sources */,
 				0616304317F7F8620018F504 /* XJSBinding.mm in Sources */,
-				0619AA6D17F969E8001631BD /* XJSObjectWrapper.mm in Sources */,
+				0619AA7A17FC0DCF001631BD /* XJSClass.mm in Sources */,
 				066AD6C917F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1216,6 +1221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0619AA7D17FC2CC3001631BD /* XJSClassTests.mm in Sources */,
 				0660B9D217E0584D00A3DD0C /* XJSValueTests.mm in Sources */,
 				06DA4B6F17F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
 				0664602B17DDC4960071D23F /* XJSContextTests.mm in Sources */,
@@ -1239,7 +1245,7 @@
 				0619AA7317F96CA1001631BD /* XJSHelperFunctions.mm in Sources */,
 				0616305317F81A210018F504 /* XJSRuntimeEntry.mm in Sources */,
 				0616304417F7F8630018F504 /* XJSBinding.mm in Sources */,
-				0619AA6E17F969E8001631BD /* XJSObjectWrapper.mm in Sources */,
+				0619AA7B17FC0DCF001631BD /* XJSClass.mm in Sources */,
 				066AD6CA17F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
