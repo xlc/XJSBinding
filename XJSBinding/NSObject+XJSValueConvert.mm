@@ -19,7 +19,7 @@
 
 - (XJSValue *)xjs_toValueInContext:(XJSContext *)context
 {
-    return nil; // TODO wrap objc object
+    return [XJSValue valueWithObject:self inContext:context];
 }
 
 @end

@@ -14,8 +14,8 @@
 
 @property (strong, readonly) XJSContext *context;
 
-//// Create a JSValue by converting an Objective-C object.
-//+ (XJSValue *)valueWithObject:(id)value inContext:(XJSContext *)context;
+// Create a wrapper of Objective-C object
++ (XJSValue *)valueWithObject:(id)value inContext:(XJSContext *)context;
 
 + (XJSValue *)valueWithString:(NSString *)value inContext:(XJSContext *)context;
 + (XJSValue *)valueWithDate:(NSDate *)date inContext:(XJSContext *)context;

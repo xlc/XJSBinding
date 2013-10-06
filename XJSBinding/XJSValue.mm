@@ -17,8 +17,17 @@
 #import "XJSConvert.h"
 #import "XJSContext_Private.h"
 #import "XJSRuntime.h"
+#import "XJSClass.h"
 
 @implementation XJSValue
+
++ (XJSValue *)valueWithObject:(id)value inContext:(XJSContext *)context
+{
+    @synchronized(context.runtime) {
+        JSObject *obj = XJSCreateJSObject(context.context, value);
+        return [[self alloc] initWithContext:context value:JS::ObjectOrNullValue(obj)];
+    }
+}
 
 + (XJSValue *)valueWithBool:(BOOL)value inContext:(XJSContext *)context
 {
