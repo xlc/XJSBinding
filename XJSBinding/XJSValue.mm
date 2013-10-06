@@ -90,6 +90,8 @@
 
 - (id)initWithContext:(XJSContext *)context value:(jsval)val
 {
+    XLCASSERT_NOTNIL(context);
+    
     self = [super init];
     if (self) {
         _context = context;
