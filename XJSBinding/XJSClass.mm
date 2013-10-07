@@ -117,6 +117,7 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
 
 id XJSGetAssosicatedObject(JSObject *jsobj)
 {
+    XASSERT(jsobj != NULL, @"cannot be NULL");
     JSClass *jscls = JS_GetClass(jsobj);
     if (jscls->addProperty != XJSPropertyImpl) {    // check class type
         return nil;

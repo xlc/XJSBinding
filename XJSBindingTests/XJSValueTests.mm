@@ -43,9 +43,8 @@ void _assertEqual(id self, T actual, T expected, SEL selToTest)
     XCTAssertEqual(actual, expected, @"failed selector: %@", NSStringFromSelector(selToTest));
 }
 
-// for NSString
-template <typename NSString>
-void _assertEqual(id self, NSString * actual, NSString * expected, SEL selToTest)
+template <typename NSObject>
+void _assertEqual(id self, NSObject * actual, NSObject * expected, SEL selToTest)
 {
     XCTAssertEqualObjects(actual, expected, @"failed selector: %@", NSStringFromSelector(selToTest));
 }
@@ -296,7 +295,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
 
 - (void)testToString
 {
-    NSString *expected[] =
+    NSObject *expected[] =
     {
         @"0",                               // 0
         @"-1",                              // -1
@@ -321,7 +320,37 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
         @"undefined"                        // undefined
     };
     
-    _testValueConvert<NSString *, sizeof(expected)/sizeof(expected[0])>(self, _cmd, _context, @selector(toString), expected);
+    _testValueConvert<NSObject *, sizeof(expected)/sizeof(expected[0])>(self, _cmd, _context, @selector(toString), expected);
+}
+
+- (void)testToObject
+{
+    NSObject *expected[] =
+    {
+        @(0),                                 // 0
+        @(-1),                                // -1
+        @(INT32_MAX),                         // INT32_MAX
+        @(INT32_MIN),                         // INT32_MIN
+        @(0.0),                               // 0.0
+        @(123.45),                            // 123.45
+        @(-123.45),                           // -123.45
+        @((double)INT32_MAX),                 // (double)INT32_MAX
+        @((double)INT32_MIN),                 // (double)INT32_MIN
+        @"0",                                 // "0"
+        @"-1",                                // "-1"
+        @"123.45",                            // "123.45"
+        @"-123.45",                           // "-123.45"
+        @"2147483648",                        // (string)INT32_MAX+1
+        @"-2147483649",                       // (string)INT32_MIN-1
+        @"9223372036854775808",               // (string)INT64_MAX+1
+        @"abcd",                              // "abcd"
+        @YES,                                 // YES
+        @NO,                                  // NO
+        nil,                                  // null
+        nil                                   // undefined
+    };
+    
+    _testValueConvert<NSObject *, sizeof(expected)/sizeof(expected[0])>(self, _cmd, _context, @selector(toObject), expected);
 }
 
 - (void)testEqual

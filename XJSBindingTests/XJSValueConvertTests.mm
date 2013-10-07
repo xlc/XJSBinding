@@ -99,4 +99,14 @@
     XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001, @"");
 }
 
+- (void)testObject
+{
+    id obj = [NSObject new];
+    _value = [obj xjs_toValueInContext:_context];
+    XCTAssertNotNil(_value, @"");
+    
+    XCTAssertTrue(_value.isObject, @"");
+    XCTAssertEqualObjects(_value.toObject, obj, @"");
+}
+
 @end

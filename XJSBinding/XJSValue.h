@@ -38,6 +38,7 @@
 - (BOOL)toBool;
 - (NSString *)toString;
 - (NSDate *)toDate;
+- (id)toObject;
 
 //// If the value is null or undefined then nil is returned.
 //// If the value is not an object then a JavaScript TypeError will be thrown.
@@ -68,7 +69,7 @@
 - (BOOL)isDate;
 - (BOOL)isCallable;
 
-- (BOOL)isObject;
+- (BOOL)isObject;   // is Objective-C object
 
 - (BOOL)isEqual:(id)object; // lossely equal
 - (BOOL)isStrictlyEqualToValue:(XJSValue *)object; // ===

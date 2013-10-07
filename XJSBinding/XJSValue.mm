@@ -23,6 +23,10 @@
 
 + (XJSValue *)valueWithObject:(id)value inContext:(XJSContext *)context
 {
+    if (!value) {
+        return [self valueWithNullInContext:context];
+    }
+    
     @synchronized(context.runtime) {
         JSObject *obj = XJSCreateJSObject(context.context, value);
         return [[self alloc] initWithContext:context value:JS::ObjectOrNullValue(obj)];
@@ -226,6 +230,49 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
             XLCASSERT(val.isNumber(), @"date.getTime() did not return a number");
             return [NSDate dateWithTimeIntervalSince1970:val.toNumber()];
         }
+    }
+    return nil;
+}
+
+- (id)toObject
+{
+    switch (JS_TypeOfValue(_context.context, _value)) {
+        case JSTYPE_LIMIT:  // this is not valid type but need it to make compiler happy
+            
+        case JSTYPE_VOID:
+        case JSTYPE_NULL:
+            return nil;
+        case JSTYPE_BOOLEAN:
+            return @(self.toBool);
+        case JSTYPE_NUMBER:
+            if (self.isInt32) {
+                return @(self.toInt32);
+            }
+            return @(self.toDouble);
+        case JSTYPE_STRING:
+            return self.toString;
+        case JSTYPE_OBJECT:
+        {
+            JSObject *jsobj = _value.toObjectOrNull();
+            if (!jsobj) {
+                return nil;
+            }
+            id obj = XJSGetAssosicatedObject(_value.toObjectOrNull());
+            if (obj) {
+                return obj;
+            }
+            
+            if (self.isDate) {
+                return self.toDate;
+            }
+            
+            // TODO conver array to NSArray, normal object to NSDictionary,
+            
+            return nil;
+        }
+        case JSTYPE_FUNCTION:
+            // TODO XJSBlock?
+            return nil;
     }
     return nil;
 }
