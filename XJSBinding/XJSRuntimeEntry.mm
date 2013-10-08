@@ -13,6 +13,7 @@
 #import "XLCAssertion.h"
 
 #import "XJSInternalOperation.h"
+#import "XJSClass.h"
 
 static JSBool XJSPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
 {
@@ -51,9 +52,7 @@ static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
     const char *clsname = str.encodeUtf8(cx, JSID_TO_STRING(jid));
     Class cls = objc_getClass(clsname);
     if (cls) {
-#warning TODO create JSClass and constructor
-        
-        JSObject *clsobj = JS_NewObject(cx, NULL, NULL, NULL);
+        JSObject *clsobj = XJSCreateJSObject(cx, cls);
         jsval clsval = JS::ObjectOrNullValue(clsobj);
         return JS_SetProperty(cx, obj, clsname, &clsval);
     }

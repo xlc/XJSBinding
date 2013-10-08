@@ -39,7 +39,7 @@
 
 - (void)testNamespaceCreate
 {
-    XCTAssertTrue(_objc.isObject, @"");
+    XCTAssertTrue(!_objc.isPrimitive, @"");
     
     XCTAssertEqualObjects(_objc.toString, @"[object XJSRuntimeEntry]", @"");
 }
@@ -59,6 +59,8 @@
     
     value = _objc[@"NSObject"];
     XCTAssertTrue(value.isObject, @"");
+    
+    XCTAssertEqualObjects(value.toObject, [NSObject class], @"");
 }
 
 @end

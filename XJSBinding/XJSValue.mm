@@ -306,7 +306,11 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 
 - (BOOL)isObject
 {
-    return _value.isObject();
+    if (_value.isPrimitive()) {
+        return NO;
+    }
+    JSObject *jsobj = _value.toObjectOrNull();
+    return XJSGetAssosicatedObject(jsobj) != nil;
 }
 
 - (BOOL)isNullOrUndefined
