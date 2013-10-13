@@ -19,6 +19,9 @@
 #import "XJSConvert.h"
 #import "XJSHelperFunctions.h"
 #import "XJSInternalOperation.h"
+#import "NSObject+XJSValueConvert.h"
+#import "XJSContext_Private.h"
+#import "XJSValue_Private.h"
 
 static JSBool XJSPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
 {
@@ -116,7 +119,7 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
         jsval retval;
         JSBool success = XJSValueFromType(cx, [signature methodReturnType], buff, &retval);
         if (!success) {
-            retval = JSVAL_VOID;
+            retval = JS::UndefinedValue();
             XELOG(@"Method %c[%s %s] invoked successful but unable to convert returned value (%s) to jsval.",
                   [obj class] == obj ? '+' : '-',
                   class_getName([obj class]),
@@ -127,6 +130,8 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
         // TODO autorelease if selector return with +1 retain count?? i.e. init, new, alloc, copy, mutableCopy
         
         args.rval().set(retval);
+    } else {
+        args.rval().set(JS::UndefinedValue());
     }
     return JS_TRUE;
 }
@@ -138,7 +143,11 @@ static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
     
     if (val.isString()) {
         JSAutoByteString str(cx, JS_ValueToString(cx, val));
-        JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, str.ptr());
+        const char *selname = str.ptr();
+        if (strcmp(selname, "toString") == 0) {
+            selname = "description";
+        }
+        JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, selname);
         jsval funcval = JS::ObjectOrNullValue(JS_GetFunctionObject(func));
         // TODO set it on prototype so it is shared by all instance
         if (!JS_SetProperty(cx, obj, str.ptr(), &funcval)) return JS_FALSE;
