@@ -94,7 +94,7 @@
 
 - (id)initWithContext:(XJSContext *)context value:(jsval)val
 {
-    XLCASSERT_NOTNIL(context);
+    XASSERT_NOTNULL(context);
     
     self = [super init];
     if (self) {
@@ -227,7 +227,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
             success = JS_CallFunctionName(_context.context, _object, "getTime", 0, NULL, &val);
         }
         if (success) {
-            XLCASSERT(val.isNumber(), @"date.getTime() did not return a number");
+            XASSERT(val.isNumber(), @"date.getTime() did not return a number");
             return [NSDate dateWithTimeIntervalSince1970:val.toNumber()];
         }
     }
@@ -274,7 +274,6 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
             // TODO XJSBlock?
             return nil;
     }
-    return nil;
 }
 
 #pragma mark -

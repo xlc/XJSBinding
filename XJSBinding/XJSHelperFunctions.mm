@@ -94,8 +94,8 @@ static SEL _XJSSearchSelector(id obj, const char *selname, unsigned argc)
 
 SEL XJSSearchSelector(id obj, const char *selname, unsigned argc)
 {
-    XLCASSERT_NOTNIL(obj);
-    XLCASSERT(selname != NULL, @"selname is NULL");
+    XASSERT_NOTNULL(obj);
+    XASSERT_NOTNULL(selname);
     SEL result = _XJSSearchSelector(obj, selname, argc);
     return (result && [obj respondsToSelector:result]) ? result : NULL;
 }

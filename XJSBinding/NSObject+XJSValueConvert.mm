@@ -32,7 +32,7 @@
         return self;
     }
     
-    XLCASSERT(self.isPrimitive || context.runtime == self.context.runtime, @"Move object from one runtime to another runtime is not supported yet");
+    XASSERT(self.isPrimitive || context.runtime == self.context.runtime, @"Move object from one runtime to another runtime is not supported yet");
     
     return [[XJSValue alloc] initWithContext:context value:self.value];
 }

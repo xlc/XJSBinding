@@ -200,7 +200,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (void)createObjCRuntimeWithNamespace:(NSString *)name
 {
-    XLCASSERT_NOTNIL(name);
+    XASSERT_NOTNULL(name);
     XJSBindingInit(name, _context, _globalObject);
 }
 

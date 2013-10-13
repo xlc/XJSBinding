@@ -15,6 +15,7 @@
 #import "XJSClass.h"
 #import "XJSConvert.h"
 #import "XJSContext_Private.h"
+#import "XJSValue_Private.h"
 
 @interface XJSClassTests : XCTestCase
 
@@ -73,6 +74,23 @@
     _context = nil; // somehow [_context.runtime gc] does not finalize the js object
     
     XCTAssertNil(weakobj, @"should be released by context");
+}
+
+- (void)testCallMethodNoArgument
+{
+    id obj = @"test";
+    
+    JSObject *jsobj = XJSCreateJSObject(_context.context, obj);
+    
+    XJSValue *val = [[XJSValue alloc] initWithContext:_context value:JS::ObjectOrNullValue(jsobj)];
+    
+    XJSValue *ret = [val invokeMethod:@"length" withArguments:nil];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertEqual(ret.toInt32, 4, @"");
+    
+    ret = [val invokeMethod:@"description" withArguments:nil];
+    XCTAssertNotNil(ret, @"");
+    XCTAssertEqualObjects(ret.toString, @"test", @"");
 }
 
 @end
