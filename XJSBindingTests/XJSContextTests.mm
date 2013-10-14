@@ -142,20 +142,20 @@
     XJSValue *value;
     
     value = _context[@"a"];
-    XCTAssertNotNil(value, @"");
-    XCTAssertTrue(value.isUndefined, @"");
+    XCTAssertNotNil(value);
+    XCTAssertTrue(value.isUndefined);
     
     [_context evaluateString:@"a=1" error:NULL];
     
     value = _context[@"a"];
-    XCTAssertNotNil(value, @"");
-    XCTAssertEqual(value.toInt32, 1, @"");
+    XCTAssertNotNil(value);
+    XCTAssertEqual(value.toInt32, 1);
     
     _context[@"a"] = [XJSValue valueWithInt32:2 inContext:_context];
     
     value = _context[@"a"];
-    XCTAssertNotNil(value, @"");
-    XCTAssertEqual(value.toInt32, 2, @"");
+    XCTAssertNotNil(value);
+    XCTAssertEqual(value.toInt32, 2);
 }
 
 - (void)testKeyedSubscript2
@@ -165,8 +165,8 @@
     _context[@"a"] = @2;
     
     value = _context[@"a"];
-    XCTAssertNotNil(value, @"");
-    XCTAssertEqual(value.toInt32, 2, @"");
+    XCTAssertNotNil(value);
+    XCTAssertEqual(value.toInt32, 2);
 }
 
 @end

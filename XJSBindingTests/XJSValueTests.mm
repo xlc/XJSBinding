@@ -385,11 +385,11 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     _value[@"a"] = [XJSValue valueWithString:@"b" inContext:_context];
     
-    XCTAssertEqualObjects([_value[@"a"] toString], @"b", @"");
+    XCTAssertEqualObjects([_value[@"a"] toString], @"b");
     
     _value[@"a"] = [XJSValue valueWithInt32:1 inContext:_context];
     
-    XCTAssertEqual([_value[@"a"] toInt32], 1, @"");
+    XCTAssertEqual([_value[@"a"] toInt32], 1);
 }
 
 - (void)testKeyedSubscript2
@@ -398,11 +398,11 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     _value[@"a"] = @"b";
     
-    XCTAssertEqualObjects([_value[@"a"] toString], @"b", @"");
+    XCTAssertEqualObjects([_value[@"a"] toString], @"b");
     
     _value[@"a"] = @1;
     
-    XCTAssertEqual([_value[@"a"] toInt32], 1, @"");
+    XCTAssertEqual([_value[@"a"] toInt32], 1);
 }
 
 - (void)testIndexedSubscript
@@ -413,13 +413,13 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     _value[1] = [XJSValue valueWithString:@"b" inContext:_context];
     
-    XCTAssertEqualObjects([_value[1] toString], @"b", @"");
+    XCTAssertEqualObjects([_value[1] toString], @"b");
     
     _value[1] = [XJSValue valueWithInt32:1 inContext:_context];
     
-    XCTAssertEqual([_value[1] toInt32], 1, @"");
+    XCTAssertEqual([_value[1] toInt32], 1);
     
-    XCTAssertTrue(_value[0].isUndefined, @"");
+    XCTAssertTrue(_value[0].isUndefined);
     
     XCTAssertEqual([_value[@"length"] toInt32], 2, @"array length should be 2");
 }
@@ -430,11 +430,11 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     _value[1] = @"b";
     
-    XCTAssertEqualObjects([_value[1] toString], @"b", @"");
+    XCTAssertEqualObjects([_value[1] toString], @"b");
     
     _value[1] = @1;
     
-    XCTAssertEqual([_value[1] toInt32], 1, @"");
+    XCTAssertEqual([_value[1] toInt32], 1);
     
 }
 
@@ -445,13 +445,13 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     _value = [XJSValue valueWithNewObjectInContext:_context];
 
-    XCTAssertTrue([_value isInstanceOf:object], @"");
+    XCTAssertTrue([_value isInstanceOf:object]);
     XCTAssertFalse([_value isInstanceOf:array], @"not array");
     
     _value = [XJSValue valueWithNewArrayInContext:_context];
 
-    XCTAssertTrue([_value isInstanceOf:object], @"");
-    XCTAssertTrue([_value isInstanceOf:array], @"");
+    XCTAssertTrue([_value isInstanceOf:object]);
+    XCTAssertTrue([_value isInstanceOf:array]);
 }
 
 - (void)testCallWithArguments
@@ -460,23 +460,23 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     _value = [_context evaluateString:@"(function () { })" error:NULL];
     ret = [_value callWithArguments:nil];
-    XCTAssertNotNil(ret, @"");
-    XCTAssertTrue(ret.isUndefined, @"");
+    XCTAssertNotNil(ret);
+    XCTAssertTrue(ret.isUndefined);
     
     _value = [_context evaluateString:@"(function () { return 1; })" error:NULL];
     ret = [_value callWithArguments:nil];
-    XCTAssertNotNil(ret, @"");
-    XCTAssertEqual(ret.toInt32, 1, @"");
+    XCTAssertNotNil(ret);
+    XCTAssertEqual(ret.toInt32, 1);
     
     _value = [_context evaluateString:@"(function (a) { return a+1; })" error:NULL];
     ret = [_value callWithArguments:@[@1]];
-    XCTAssertNotNil(ret, @"");
-    XCTAssertEqual(ret.toInt32, 2, @"");
+    XCTAssertNotNil(ret);
+    XCTAssertEqual(ret.toInt32, 2);
     
     _value = [_context evaluateString:@"(function (a, b) { return a+b; })" error:NULL];
     ret = [_value callWithArguments:@[@1, @2]];
-    XCTAssertNotNil(ret, @"");
-    XCTAssertEqual(ret.toInt32, 3, @"");
+    XCTAssertNotNil(ret);
+    XCTAssertEqual(ret.toInt32, 3);
 }
 
 - (void)testConstructWithArguments
@@ -486,17 +486,17 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     _value = _context[@"Array"];
     
     ret = [_value constructWithArguments:nil];
-    XCTAssertNotNil(ret, @"");
+    XCTAssertNotNil(ret);
     XCTAssertTrue([ret isInstanceOf:_value], @"instanceof Array");
     XCTAssertEqual(ret[@"length"].toInt32, 0, @"array with length 0");
     
     ret = [_value constructWithArguments:@[@5]];
-    XCTAssertNotNil(ret, @"");
+    XCTAssertNotNil(ret);
     XCTAssertTrue([ret isInstanceOf:_value], @"instanceof Array");
     XCTAssertEqual(ret[@"length"].toInt32, 5, @"array with length 0");
     
     ret = [_value constructWithArguments:@[@1, @2, @3, @4]];
-    XCTAssertNotNil(ret, @"");
+    XCTAssertNotNil(ret);
     XCTAssertTrue([ret isInstanceOf:_value], @"instanceof Array");
     XCTAssertEqual(ret[@"length"].toInt32, 4, @"array with length 0");
 }
@@ -508,15 +508,15 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     _value = [XJSValue valueWithDate:[NSDate dateWithTimeIntervalSince1970:0] inContext:_context];
     
     ret = [_value invokeMethod:@"getTime" withArguments:nil];
-    XCTAssertNotNil(ret, @"");
-    XCTAssertEqual(ret.toInt32, 0, @"");
+    XCTAssertNotNil(ret);
+    XCTAssertEqual(ret.toInt32, 0);
     
     ret = [_value invokeMethod:@"setFullYear" withArguments:@[@2000]];
-    XCTAssertNotNil(ret, @"");
+    XCTAssertNotNil(ret);
     
     ret = [_value invokeMethod:@"getFullYear" withArguments:nil];
-    XCTAssertNotNil(ret, @"");
-    XCTAssertEqual(ret.toInt32, 2000, @"");
+    XCTAssertNotNil(ret);
+    XCTAssertEqual(ret.toInt32, 2000);
 }
 
 @end

@@ -39,9 +39,9 @@
 
 - (void)testNamespaceCreate
 {
-    XCTAssertTrue(!_objc.isPrimitive, @"");
+    XCTAssertTrue(!_objc.isPrimitive);
     
-    XCTAssertEqualObjects(_objc.toString, @"[object XJSRuntimeEntry]", @"");
+    XCTAssertEqualObjects(_objc.toString, @"[object XJSRuntimeEntry]");
 }
 
 - (void)testRuntimeEntryCannotSet
@@ -49,18 +49,18 @@
     _objc[@"_non_exist_"] = @1;
     
     XJSValue *value = _objc[@"_non_exist_"];
-    XCTAssertTrue(value.isUndefined, @"");
+    XCTAssertTrue(value.isUndefined);
 }
 
 - (void)testRuntimeEntryGet
 {
     XJSValue *value = _objc[@"_non_exist_"];
-    XCTAssertTrue(value.isUndefined, @"");
+    XCTAssertTrue(value.isUndefined);
     
     value = _objc[@"NSObject"];
-    XCTAssertTrue(value.isObject, @"");
+    XCTAssertTrue(value.isObject);
     
-    XCTAssertEqualObjects(value.toObject, [NSObject class], @"");
+    XCTAssertEqualObjects(value.toObject, [NSObject class]);
 }
 
 @end

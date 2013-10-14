@@ -41,19 +41,19 @@
     
     num = @YES;
     _value = [num xjs_toValueInContext:_context];
-    XCTAssertEqual(_value.toBool, YES, @"");
+    XCTAssertEqual(_value.toBool, YES);
     
     num = @123;
     _value = [num xjs_toValueInContext:_context];
-    XCTAssertEqual(_value.toInt32, 123, @"");
+    XCTAssertEqual(_value.toInt32, 123);
     
     num = @123.5;
     _value = [num xjs_toValueInContext:_context];
-    XCTAssertEqual(_value.toDouble, 123.5, @"");
+    XCTAssertEqual(_value.toDouble, 123.5);
     
     num = @(UINT32_MAX);
     _value = [num xjs_toValueInContext:_context];
-    XCTAssertEqual(_value.toUInt32, UINT32_MAX, @"");
+    XCTAssertEqual(_value.toUInt32, UINT32_MAX);
 }
 
 - (void)testString
@@ -62,20 +62,20 @@
     
     str = @"123";
     _value = [str xjs_toValueInContext:_context];
-    XCTAssertEqualObjects(_value.toString, str, @"");
+    XCTAssertEqualObjects(_value.toString, str);
     
     str = @"";
     _value = [str xjs_toValueInContext:_context];
-    XCTAssertEqualObjects(_value.toString, str, @"");
+    XCTAssertEqualObjects(_value.toString, str);
     
     str = [NSMutableString stringWithFormat:@"%d", 1];
     _value = [str xjs_toValueInContext:_context];
-    XCTAssertEqualObjects(_value.toString, @"1", @"");
+    XCTAssertEqualObjects(_value.toString, @"1");
 }
 
 - (void)testNull
 {
-    XCTAssertTrue([[NSNull null] xjs_toValueInContext:_context].isNull, @"");
+    XCTAssertTrue([[NSNull null] xjs_toValueInContext:_context].isNull);
 }
 
 - (void)testDate
@@ -84,29 +84,29 @@
     
     date = [NSDate date];
     _value = [date xjs_toValueInContext:_context];
-    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001, @"");
+    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001);
     
     date = [NSDate dateWithTimeIntervalSinceNow:100];
     _value = [date xjs_toValueInContext:_context];
-    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001, @"");
+    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001);
     
     date = [NSDate dateWithTimeIntervalSince1970:0];
     _value = [date xjs_toValueInContext:_context];
-    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001, @"");
+    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001);
     
     date = [NSDate dateWithTimeIntervalSince1970:-100];
     _value = [date xjs_toValueInContext:_context];
-    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001, @"");
+    XCTAssertEqualWithAccuracy(_value.toDate.timeIntervalSince1970, date.timeIntervalSince1970, 0.001);
 }
 
 - (void)testObject
 {
     id obj = [NSObject new];
     _value = [obj xjs_toValueInContext:_context];
-    XCTAssertNotNil(_value, @"");
+    XCTAssertNotNil(_value);
     
-    XCTAssertTrue(_value.isObject, @"");
-    XCTAssertEqualObjects(_value.toObject, obj, @"");
+    XCTAssertTrue(_value.isObject);
+    XCTAssertEqualObjects(_value.toObject, obj);
 }
 
 @end
