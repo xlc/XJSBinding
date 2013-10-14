@@ -76,6 +76,16 @@
     XCTAssertNil(weakobj, @"should be released by context");
 }
 
+- (void)testConstruct
+{
+    Class cls = [NSObject class];
+    JSObject *clsobj = XJSCreateJSObject(_context.context, cls);
+    JSObject *newobj = JS_New(_context.context, clsobj, 0, NULL);
+    id obj = XJSGetAssosicatedObject(newobj);
+    XCTAssertNotNil(obj);
+    XCTAssertEqualObjects([obj class], cls);
+}
+
 @end
 
 @interface XJSClassCallMethodTests : XCTestCase

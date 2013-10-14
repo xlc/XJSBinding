@@ -165,7 +165,23 @@ static JSBool XJSHasInstanceImpl(JSContext *cx, JSHandleObject obj, JSMutableHan
 
 static JSBool XJSConstructor(JSContext *cx, unsigned argc, jsval *vp)
 {
-
+    auto args = JS::CallArgsFromVp(argc, vp);
+    
+    id cls = XJSGetAssosicatedObject(&args.callee());
+    XASSERT_NOTNULL(cls);
+    
+    if (![cls respondsToSelector:@selector(alloc)]) {
+        JS_ReportError(cx, "'%s'(%s) is not a constructor", [[cls description] UTF8String], [XJSConvertJSValueToSource(cx, args.calleev()) UTF8String]);
+        return JS_FALSE;
+    }
+    
+    id retobj = [[cls alloc] init];
+    if (retobj) {
+        args.rval().set(JS::ObjectOrNullValue(XJSCreateJSObject(cx, retobj)));
+    } else {
+        args.rval().set(JS::NullValue());
+    }
+    
     return JS_TRUE;
 }
 
