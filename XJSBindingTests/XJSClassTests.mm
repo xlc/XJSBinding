@@ -78,12 +78,44 @@
 
 - (void)testConstruct
 {
-    Class cls = [NSObject class];
-    JSObject *clsobj = XJSCreateJSObject(_context.context, cls);
-    JSObject *newobj = JS_New(_context.context, clsobj, 0, NULL);
-    id obj = XJSGetAssosicatedObject(newobj);
-    XCTAssertNotNil(obj);
-    XCTAssertEqualObjects([obj class], cls);
+    __weak id weakobj;
+    @autoreleasepool {
+        Class cls = [NSObject class];
+        JSObject *clsobj = XJSCreateJSObject(_context.context, cls);
+        JSObject *newobj = JS_New(_context.context, clsobj, 0, NULL);
+        id obj = XJSGetAssosicatedObject(newobj);
+        weakobj = obj;
+        XCTAssertNotNil(obj);
+        XCTAssertEqualObjects([obj class], cls);
+    }
+    
+    XCTAssertNotNil(weakobj, @"should be retained by context");
+    
+    _context = nil; // somehow [_context.runtime gc] does not finalize the js object
+    
+    XCTAssertNil(weakobj, @"should be released by context");
+}
+
+- (void)testConstruct2
+{
+    __weak id weakobj;
+    @autoreleasepool {
+        Class cls = [NSObject class];
+        JSObject *clsobj = XJSCreateJSObject(_context.context, cls);
+        jsval rval;
+        XCTAssertTrue(JS_CallFunctionName(_context.context, clsobj, "alloc", 0, NULL, &rval));
+        XCTAssertTrue(rval.isObject());
+        id obj = XJSGetAssosicatedObject(rval.toObjectOrNull());
+        weakobj = obj;
+        XCTAssertNotNil(obj);
+        XCTAssertEqualObjects([obj class], cls);
+    }
+    
+    XCTAssertNotNil(weakobj, @"should be retained by context");
+    
+    _context = nil; // somehow [_context.runtime gc] does not finalize the js object
+    
+    XCTAssertNil(weakobj, @"should be released by context");
 }
 
 @end

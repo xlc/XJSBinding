@@ -127,7 +127,21 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
                   [signature methodReturnType]
                   );
         }
-        // TODO autorelease if selector return with +1 retain count?? i.e. init, new, alloc, copy, mutableCopy
+        
+        // balance retain count manually since ARC don't know which selector was performed
+        const char *selname = sel_getName(sel);
+        if (strncmp(selname, "alloc", 5) == 0 ||
+            strncmp(selname, "copy", 4) == 0 ||
+            strncmp(selname, "mutableCopy", 11) == 0 ||
+            strncmp(selname, "new", 3) == 0) {
+            if (strcmp([signature methodReturnType], @encode(id)) == 0) {
+                id obj = *(id __autoreleasing *)(void *)buff;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                [obj performSelector:sel_getUid("autorelease")];
+#pragma clang diagnostic pop
+            }
+        }
         
         args.rval().set(retval);
     } else {
