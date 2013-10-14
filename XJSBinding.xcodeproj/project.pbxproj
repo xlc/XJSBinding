@@ -207,7 +207,7 @@
 		0616304B17F818DC0018F504 /* XJSInternalOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSInternalOperation.h; sourceTree = "<group>"; };
 		0616304F17F81A210018F504 /* XJSRuntimeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntimeEntry.h; sourceTree = "<group>"; };
 		0616305017F81A210018F504 /* XJSRuntimeEntry.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeEntry.mm; sourceTree = "<group>"; };
-		0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeEntryTests.mm; sourceTree = "<group>"; };
+		0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = XJSRuntimeEntryTests.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0619AA6F17F96CA1001631BD /* XJSHelperFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSHelperFunctions.h; sourceTree = "<group>"; };
 		0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSHelperFunctions.mm; sourceTree = "<group>"; };
 		0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSHelperFunctionsTests.mm; sourceTree = "<group>"; };
@@ -234,14 +234,14 @@
 		0660B9CC17DF23A800A3DD0C /* XJSConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSConvert.h; sourceTree = "<group>"; };
 		0660B9CD17DF23A800A3DD0C /* XJSConvert.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSConvert.mm; sourceTree = "<group>"; };
 		0660B9D017E0553400A3DD0C /* XJSValue_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XJSValue_Private.h; sourceTree = "<group>"; };
-		0660B9D117E0584D00A3DD0C /* XJSValueTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSValueTests.mm; sourceTree = "<group>"; };
+		0660B9D117E0584D00A3DD0C /* XJSValueTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = XJSValueTests.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0660B9D317E05C0E00A3DD0C /* XJSTestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSTestUtils.h; sourceTree = "<group>"; };
 		0660B9D417E05C0E00A3DD0C /* XJSTestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSTestUtils.m; sourceTree = "<group>"; };
 		0660B9DA17E094CA00A3DD0C /* XJSBindingTests-ios.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XJSBindingTests-ios.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0660B9DC17E094CA00A3DD0C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0660B9DE17E094CA00A3DD0C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		0660B9F217E0962700A3DD0C /* XJSBindingTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XJSBindingTests-Prefix.pch"; sourceTree = "<group>"; };
-		0664602A17DDC4960071D23F /* XJSContextTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSContextTests.mm; sourceTree = "<group>"; };
+		0664602A17DDC4960071D23F /* XJSContextTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = XJSContextTests.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		066AD6BF17F0588A00EADB2B /* XJSBindingTests-ios copy.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XJSBindingTests-ios copy.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		066AD6C017F0588A00EADB2B /* XJSBindingTests-ios copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XJSBindingTests-ios copy-Info.plist"; path = "/Users/xiliangchen/Documents/project/XJSBinding/XJSBindingTests-ios copy-Info.plist"; sourceTree = "<absolute>"; };
 		066AD6C617F57B4700EADB2B /* NSObject+XJSValueConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+XJSValueConvert.h"; sourceTree = "<group>"; };
@@ -340,7 +340,7 @@
 		06A3FBFA17DAA0D900E936F1 /* WeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakPtr.h; sourceTree = "<group>"; };
 		06CFF4CF17E1BFD10081F388 /* libXJSBinding-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libXJSBinding-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		06CFF4F917E1C24E0081F388 /* XJSBinding-ios-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "XJSBinding-ios-Prefix.pch"; path = "XJSBinding/XJSBinding-ios-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		06DA4B6E17F58FAD00C9C3B6 /* XJSValueConvertTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSValueConvertTests.mm; sourceTree = "<group>"; };
+		06DA4B6E17F58FAD00C9C3B6 /* XJSValueConvertTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = XJSValueConvertTests.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		13B00A57B74E481C8E10386A /* libPods-XJSBindingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBindingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		19DCF33337D74A589F235EA8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E34A372E8FC46218FB0FEA9 /* libPods-XJSBinding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBinding.a"; sourceTree = BUILT_PRODUCTS_DIR; };

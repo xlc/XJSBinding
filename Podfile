@@ -3,7 +3,7 @@ def import_pods
 end
 
 def import_pods_test
-    pod 'OCMock', '~> 2.2.1'
+    pod 'OCMock', '~> 2.2.1', :inhibit_warnings => true
 end
 
 target 'XJSBinding-ios' do

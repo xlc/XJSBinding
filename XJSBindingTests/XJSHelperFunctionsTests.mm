@@ -78,7 +78,7 @@
 void testSearchMethod(XJSHelperFunctionsTests *self, SEL _cmd, id obj, SEL expectedSel, std::initializer_list<const char *> possibleSelectorNames, std::initializer_list<const char *>shouldNotMatchSelectorNames)
 {
     const char *selname = sel_getName(expectedSel);
-    auto count = std::count(selname, selname + strlen(selname), ':');
+    unsigned count = (unsigned)std::count(selname, selname + strlen(selname), ':');
     
     for (auto inputSelName : possibleSelectorNames) {
         SEL result = XJSSearchSelector(obj, inputSelName, count);

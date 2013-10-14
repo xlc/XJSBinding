@@ -167,7 +167,7 @@ JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, jsval *o
         }
             
         case _C_UCHR:  //     'C'
-            *outval = JS::NumberValue(*(char *)value);
+            *outval = JS::Int32Value(*(char *)value);
             return JS_TRUE;
             
         case _C_SHT:  //      's'
