@@ -31,6 +31,7 @@
     [super setUp];
     
     _context = [[XJSContext alloc] init];
+    [_context createObjCRuntimeWithNamespace:@"objc"];
 }
 
 - (void)tearDown
@@ -116,6 +117,50 @@
     _context = nil; // somehow [_context.runtime gc] does not finalize the js object
     
     XCTAssertNil(weakobj, @"should be released by context");
+}
+
+- (void)testHasInstance
+{
+    JSObject *obj = XJSCreateJSObject(_context.context, @1);
+    JSObject *cls = XJSCreateJSObject(_context.context, [NSNumber class]);
+    JSBool result;
+    XCTAssertTrue(JS_HasInstance(_context.context, cls, JS::ObjectOrNullValue(obj), &result));
+    XCTAssertTrue(result, "@1 should be instanceof NSNumber");
+    
+    cls = XJSCreateJSObject(_context.context, [NSValue class]);
+    XCTAssertTrue(JS_HasInstance(_context.context, cls, JS::ObjectOrNullValue(obj), &result));
+    XCTAssertTrue(result, "@1 should be instanceof NSValue");
+    
+    cls = XJSCreateJSObject(_context.context, [NSObject class]);
+    XCTAssertTrue(JS_HasInstance(_context.context, cls, JS::ObjectOrNullValue(obj), &result));
+    XCTAssertTrue(result, "@1 should be instanceof NSObject");
+}
+
+- (void)testHasInstance2
+{
+    JSObject *obj = XJSCreateJSObject(_context.context, @[]);
+    JSObject *cls = XJSCreateJSObject(_context.context, [NSNumber class]);
+    JSBool result;
+    XCTAssertTrue(JS_HasInstance(_context.context, cls, JS::ObjectOrNullValue(obj), &result));
+    XCTAssertFalse(result, "@[] should not be instanceof NSNumber");
+}
+
+- (void)testHasInstance3
+{
+    JSObject *obj = XJSCreateJSObject(_context.context, [NSNumber class]);
+    JSObject *cls = XJSCreateJSObject(_context.context, [NSObject class]);
+    JSBool result;
+    XCTAssertTrue(JS_HasInstance(_context.context, cls, JS::ObjectOrNullValue(obj), &result));
+    XCTAssertTrue(result, "NSNumber should be instanceof NSObject");
+}
+
+- (void)testHasInstance4
+{
+    JSObject *obj = XJSCreateJSObject(_context.context, [NSObject class]);
+    JSObject *cls = XJSCreateJSObject(_context.context, [NSObject class]);
+    JSBool result;
+    XCTAssertTrue(JS_HasInstance(_context.context, cls, JS::ObjectOrNullValue(obj), &result));
+    XCTAssertTrue(result, "NSObject should be instanceof NSObject (itself)");
 }
 
 @end

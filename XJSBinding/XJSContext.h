@@ -14,6 +14,7 @@
 @interface XJSContext : NSObject
 
 @property (strong, readonly) XJSRuntime *runtime;
+@property (copy, readonly) NSString *globalNamespace;
 
 @property (strong) void (^errorHandler)(XJSContext *context, NSError *error);
 

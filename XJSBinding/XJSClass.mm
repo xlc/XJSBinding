@@ -160,7 +160,10 @@ static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
         const char *selname = str.ptr();
         if (strcmp(selname, "toString") == 0) {
             selname = "description";
+        } else if (strcmp(selname, "toSource") == 0) {   // use default one from Object TODO make actual toSource
+            return JS_TRUE;
         }
+        
         JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, selname);
         jsval funcval = JS::ObjectOrNullValue(JS_GetFunctionObject(func));
         // TODO set it on prototype so it is shared by all instance
@@ -172,7 +175,18 @@ static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
 
 static JSBool XJSHasInstanceImpl(JSContext *cx, JSHandleObject obj, JSMutableHandleValue vp, JSBool *bp)
 {
-
+    if (vp.isPrimitive()) {
+        *bp = JS_FALSE;
+        return JS_TRUE;
+    }
+    id cls = XJSGetAssosicatedObject(obj);
+    id nsobj = XJSGetAssosicatedObject(vp.toObjectOrNull());
+    if (!nsobj || ! cls) {
+        *bp = JS_FALSE;
+        return JS_TRUE;
+    }
+    
+    *bp = [nsobj isKindOfClass:cls];
     
     return JS_TRUE;
 }
@@ -189,7 +203,25 @@ static JSBool XJSConstructor(JSContext *cx, unsigned argc, jsval *vp)
         return JS_FALSE;
     }
     
-    id retobj = [[cls alloc] init];
+    id retobj = nil;
+    
+    try {
+        @try {
+            retobj = [[cls alloc] init];
+        }
+        @catch (id exception) { // objc exception
+            jsval errval = [exception xjs_toValueInContext:[XJSContext contextForJSContext:cx]].value;
+            JS_SetPendingException(cx, errval);
+            return JS_FALSE;
+        }
+    } catch (std::exception &e) {   // c++ exception
+        JS_ReportError(cx, e.what());
+        return JS_FALSE;
+    } catch (...) { // some random exception
+        JS_ReportError(cx, "Unknown exception");
+        return JS_FALSE;
+    }
+    
     if (retobj) {
         args.rval().set(JS::ObjectOrNullValue(XJSCreateJSObject(cx, retobj)));
     } else {
@@ -239,23 +271,50 @@ static JSClass *XJSGetJSClassForNSClass(Class cls)
     
     jsclsdata = [NSMutableData dataWithBytes:&XJSClassTemplate length:sizeof(XJSClassTemplate)];
     
-    objc_setAssociatedObject(cls, XJSClassKey, jsclsdata, OBJC_ASSOCIATION_RETAIN);
-    
     JSClass *jscls = (JSClass *)[jsclsdata mutableBytes];
     
     const char *clsname = class_getName(cls);
     [jsclsdata appendBytes:clsname length:strlen(clsname)];   // store name
     jscls->name = (const char *)(jscls + 1);    // end of JSClass
     
+    objc_setAssociatedObject(cls, XJSClassKey, jsclsdata, OBJC_ASSOCIATION_RETAIN);
+    
     return jscls;
 }
 
 JSObject *XJSCreateJSObject(JSContext *cx, id obj)
 {
+    JSBool success;
+    
     JSClass *jscls = XJSGetJSClassForNSClass(object_getClass(obj));
     JSObject *jsobj = JS_NewObject(cx, jscls, NULL, NULL);
     
     JS_SetPrivate(jsobj, (__bridge_retained void *)obj);
+    
+    jsval cstrval;
+    
+    if (obj == [NSObject class]) {
+        cstrval = JS::ObjectOrNullValue(jsobj); // refer to self
+    } else {
+        const char *runtimename = [[XJSContext contextForJSContext:cx].globalNamespace UTF8String];
+        jsval runtimeval;
+        success = JS_GetProperty(cx, JS_GetGlobalObject(cx), runtimename, &runtimeval);
+        XASSERT(success, "fail to get objc runtime entry");
+        
+        JSObject *runtime = &runtimeval.toObject();
+        
+        Class cls = object_getClass(obj);
+        if (class_isMetaClass(cls))
+        {
+            cls = [NSObject class];
+        }
+        
+        success = JS_GetProperty(cx, runtime, class_getName(cls), &cstrval);
+        XASSERT(success, "fail to get constructor object");
+    }
+    
+    success = JS_SetProperty(cx, jsobj, "constructor", &cstrval);
+    XASSERT(success, "fail to assign constructor");
     
     return jsobj;
 }
