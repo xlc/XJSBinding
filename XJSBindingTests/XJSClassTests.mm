@@ -163,6 +163,16 @@
     XCTAssertTrue(result, "NSObject should be instanceof NSObject (itself)");
 }
 
+- (void)testConstructor
+{
+    JSObject *obj = XJSCreateJSObject(_context.context, self);
+    jsval val;
+    XCTAssertTrue(JS_GetProperty(_context.context, obj, "constructor", &val));
+    XCTAssertTrue(val.isObject());
+    id cls = XJSGetAssosicatedObject(val.toObjectOrNull());
+    XCTAssertEqualObjects(cls, [self class]);
+}
+
 @end
 
 @interface XJSClassCallMethodTests : XCTestCase
