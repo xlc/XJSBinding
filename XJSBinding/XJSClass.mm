@@ -153,30 +153,33 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
 static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
 {
     jsval val;
-    if (!JS_IdToValue(cx, jid, &val)) return JS_FALSE;
+    JSBool success;
     
-    JSObject *proto = NULL;
-    JS_GetPrototype(cx, obj, &proto);
-    if (proto != NULL) {
-        JSBool hasProperty = JS_FALSE;
-        JS_HasPropertyById(cx, proto, jid, &hasProperty);
-        if (hasProperty) {  // we are not going to override property inherited from Object
-            return JS_TRUE;
-        }
-    }
-    
+    success = JS_IdToValue(cx, jid, &val);
+    XASSERT(success, "fail to get id");
     
     if (val.isString()) {
+        JSObject *proto = NULL;
+        success = JS_GetPrototype(cx, obj, &proto);
+        XASSERT(success && proto, "fail to get prototype");
+        
         JSAutoByteString str(cx, JS_ValueToString(cx, val));
         const char *selname = str.ptr();
         if (strcmp(selname, "toString") == 0) {
             selname = "description";
+        } else {
+            JSBool hasProperty = JS_FALSE;
+            JS_HasPropertyById(cx, proto, jid, &hasProperty);
+            if (hasProperty) {  // we are not going to override property inherited from Object except toString
+                return JS_TRUE;
+            }
         }
         
         JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, selname);
         jsval funcval = JS::ObjectOrNullValue(JS_GetFunctionObject(func));
-        // TODO set it on prototype so it is shared by all instance
-        if (!JS_SetProperty(cx, obj, str.ptr(), &funcval)) return JS_FALSE;
+        
+        success = JS_SetProperty(cx, proto, str.ptr(), &funcval);
+        XASSERT(success, "fail to set property");
     }
     
     return JS_TRUE;
@@ -304,13 +307,20 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
     success = JS_GetPrototype(cx, jsobj, &proto);
     XASSERT(success, @"fail to get prototype object");
     
-    JSObject *cstrobj = JS_GetConstructor(cx, proto);
-    if (!XJSGetAssosicatedObject(cstrobj)) {    // constructor is default one
-        jsval cstrval;
+    jsval cstrval;
+    JS_GetProperty(cx, proto, "constructor", &cstrval); // JS_GetConstructor will report error if it cannot find a constructor, which is normal in our case
+    JSObject *cstrobj = NULL;
+    if (cstrval.isObjectOrNull()) {
+        cstrobj = cstrval.toObjectOrNull();
+    }
+    if (!cstrobj || !XJSGetAssosicatedObject(cstrobj)) {    // constructor is default one
+        
         if (obj == [NSObject class]) {
             cstrval = JS::ObjectOrNullValue(jsobj); // refer to self
         } else {
             const char *runtimename = [[XJSContext contextForJSContext:cx].globalNamespace UTF8String];
+            XASSERT_NOTNULL(runtimename);
+            
             jsval runtimeval;
             success = JS_GetProperty(cx, JS_GetGlobalObject(cx), runtimename, &runtimeval);
             XASSERT(success, "fail to get objc runtime entry");

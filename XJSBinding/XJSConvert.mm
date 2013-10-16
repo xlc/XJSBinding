@@ -93,6 +93,9 @@ std::pair<NSValue *, id> XJSValueToType(JSContext *cx, jsval val, const char *en
             return MakePair(encode, size, (double)xval.toDouble);
             
         case _C_CONST:  //    'r'
+            if (encode[1] == _C_CHARPTR) {  // const char *
+                return MakePair(encode, size, [XJSConvertJSValueToString(cx, val) UTF8String]);
+            }
             XWLOG(@"ignore encode modifier 'r' (const) for type %s", encode);
             return XJSValueToType(cx, val, encode+1);
             
@@ -211,6 +214,10 @@ JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, jsval *o
             return JS_TRUE;
             
         case _C_CONST:  //    'r'
+            if (encode[1] == _C_CHARPTR) {  // const char *
+                *outval = JS::StringValue(JS_NewStringCopyZ(cx, *(const char **)value));
+                return JS_TRUE;
+            }
             XWLOG(@"ignore encode modifier 'r' (const) for type %s", encode);
             return XJSValueFromType(cx, encode+1, value, outval);
             

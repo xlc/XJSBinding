@@ -173,6 +173,14 @@
     XCTAssertEqualObjects(cls, [self class]);
 }
 
+- (void)testInheritObjectProperty
+{
+    JSObject *obj = XJSCreateJSObject(_context.context, self);
+    jsval val;
+    XCTAssertTrue(JS_CallFunctionName(_context.context, obj, "toSource", 0, NULL, &val));
+    XCTAssertEqualObjects(XJSConvertJSValueToSource(_context.context, val), @"\"({})\"");
+}
+
 @end
 
 @interface XJSClassCallMethodTests : XCTestCase
@@ -231,7 +239,9 @@
 {
     [super setUp];
     
-    _val = [XJSValue valueWithObject:self inContext:[[XJSContext alloc] init]];
+    XJSContext *context = [[XJSContext alloc] init];
+    [context createObjCRuntimeWithNamespace:@"objc"];
+    _val = [XJSValue valueWithObject:self inContext:context];
 }
 
 - (void)tearDown

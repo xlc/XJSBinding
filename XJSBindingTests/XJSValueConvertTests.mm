@@ -27,6 +27,7 @@
 - (void)setUp
 {
     _context = [[XJSContext alloc] init];
+    [_context createObjCRuntimeWithNamespace:@"objc"];
 }
 
 - (void)tearDown
