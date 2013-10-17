@@ -519,6 +519,30 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     XCTAssertEqual(ret.toInt32, 2000);
 }
 
+- (void)testArrayLikeToArray
+{
+    _value = [XJSValue valueWithNewObjectInContext:_context];
+    _value[@"length"] = @5;
+    _value[1] = @"1";
+    _value[@2] = @"2";
+    _value[@"3"] = @"3";
+    
+    NSArray *arr = _value.toArray;
+    XCTAssertNotNil(arr);
+    XCTAssertEqual(arr.count, 5u);
+    XCTAssertEqualObjects(arr, (@[[NSNull null], @"1", @"2", @"3", [NSNull null]]));
+}
+
+- (void)testNotArrayLikeToArray
+{
+    _value = [XJSValue valueWithNewObjectInContext:_context];
+    _value[@"0"] = @"0";
+    _value[@"1"] = @"1";
+    
+    NSArray *arr = _value.toArray;
+    XCTAssertNil(arr);
+}
+
 @end
 
 @interface XJSValueInitTests : XCTestCase

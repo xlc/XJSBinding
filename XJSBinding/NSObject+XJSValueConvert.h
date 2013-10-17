@@ -41,4 +41,10 @@
 
 @end
 
-// TODO NSArray NSDictionary NSValue
+@interface NSArray (XJSValueConvert)
+
+- (XJSValue *)xjs_toValueInContext:(XJSContext *)context;
+
+@end
+
+// TODO  NSDictionary NSValue

@@ -115,3 +115,12 @@
 }
 
 @end
+
+@implementation NSArray (XJSValueConvert)
+
+- (XJSValue *)xjs_toValueInContext:(XJSContext *)context
+{
+    return [XJSValue valueWithArray:self inContext:context];
+}
+
+@end

@@ -110,4 +110,33 @@
     XCTAssertEqualObjects(_value.toObject, obj);
 }
 
+- (void)testArray
+{
+    NSArray *array;
+    
+    array = @[];
+    _value = [array xjs_toValueInContext:_context];
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive, "should be jsobject");
+    XCTAssertFalse(_value.isObject, "should be native array object, not objc object");
+    XCTAssertEqual(_value[@"length"].toInt32, 0);
+    XCTAssertEqualObjects(_value.toArray, array);
+    
+    array = @[@1, @"test"];
+    _value = [array xjs_toValueInContext:_context];
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive, "should be jsobject");
+    XCTAssertFalse(_value.isObject, "should be native array object, not objc object");
+    XCTAssertEqual(_value[@"length"].toInt32, 2);
+    XCTAssertEqualObjects(_value.toArray, array);
+    
+    array = [NSMutableArray arrayWithObjects:@1, @"test", nil];
+    _value = [array xjs_toValueInContext:_context];
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive, "should be jsobject");
+    XCTAssertFalse(_value.isObject, "should be native array object, not objc object");
+    XCTAssertEqual(_value[@"length"].toInt32, 2);
+    XCTAssertEqualObjects(_value.toArray, array);
+}
+
 @end

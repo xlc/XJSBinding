@@ -16,6 +16,7 @@
 
 // Create a wrapper of Objective-C object
 + (XJSValue *)valueWithObject:(id)value inContext:(XJSContext *)context;
++ (XJSValue *)valueWithArray:(NSArray *)value inContext:(XJSContext *)context;
 
 + (XJSValue *)valueWithString:(NSString *)value inContext:(XJSContext *)context;
 + (XJSValue *)valueWithDate:(NSDate *)date inContext:(XJSContext *)context;
@@ -38,15 +39,9 @@
 - (BOOL)toBool;
 - (NSString *)toString;
 - (NSDate *)toDate;
+- (NSArray *)toArray;   // convert array-like object to NSArray
 - (id)toObject;
 
-//// If the value is null or undefined then nil is returned.
-//// If the value is not an object then a JavaScript TypeError will be thrown.
-//// The property "length" is read from the object, converted to an unsigned
-//// integer, and an NSArray of this size is allocated. Properties corresponding
-//// to indicies within the array bounds will be copied to the array, with
-//// Objective-C objects converted to equivalent JSValues as specified.
-//- (NSArray *)toArray;
 //// If the value is null or undefined then nil is returned.
 //// If the value is not an object then a JavaScript TypeError will be thrown.
 //// All enumerable properties of the object are copied to the dictionary, with
@@ -68,6 +63,7 @@
 - (BOOL)isString;
 - (BOOL)isDate;
 - (BOOL)isCallable;
+- (BOOL)isArray;
 
 - (BOOL)isObject;   // is Objective-C object
 

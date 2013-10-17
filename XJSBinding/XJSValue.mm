@@ -33,6 +33,24 @@
     }
 }
 
++ (XJSValue *)valueWithArray:(NSArray *)value inContext:(XJSContext *)context
+{
+    if (!value) {
+        return [self valueWithNullInContext:context];
+    }
+    
+    @synchronized(context.runtime) {
+        jsval valarr[value.count];
+        int i = 0;
+        for (id obj in value) {
+            valarr[i++] = [obj xjs_toValueInContext:context].value;
+        }
+        
+        JSObject *jsarr = JS_NewArrayObject(context.context, (int)value.count, valarr);
+        return [[self alloc] initWithContext:context value:JS::ObjectOrNullValue(jsarr)];
+    }
+}
+
 + (XJSValue *)valueWithBool:(BOOL)value inContext:(XJSContext *)context
 {
     return [[self alloc] initWithContext:context value:JS::BooleanValue(value)];
@@ -234,6 +252,32 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     return nil;
 }
 
+- (NSArray *)toArray
+{
+    if (!_object) {
+        return nil;
+    }
+    
+    @synchronized(_context.runtime) {
+        uint32_t len;
+        JSBool hasLength;
+        if (!JS_HasProperty(_context.context, _object, "length", &hasLength) || !hasLength) return nil;
+        if (!JS_GetArrayLength(_context.context, _object, &len)) return nil;
+        
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:len];
+        
+        for (uint32_t i = 0; i < len; i++) {
+            jsval val;
+            id obj;
+            if (JS_GetElement(_context.context, _object, i, &val)) {
+                obj = [[XJSValue alloc] initWithContext:_context value:val].toObject;
+            }
+            [arr addObject:obj ?: [NSNull null]];
+        }
+        return arr;
+    }
+}
+
 - (id)toObject
 {
     switch (JS_TypeOfValue(_context.context, _value)) {
@@ -266,7 +310,11 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
                 return self.toDate;
             }
             
-            // TODO conver array to NSArray, normal object to NSDictionary,
+            if (self.isArray) {
+                return self.toArray;
+            }
+            
+            // TODO normal object to NSDictionary,
             
             return nil;
         }
@@ -349,6 +397,16 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     }
     @synchronized(_context.runtime) {
         return JS_ObjectIsCallable(_context.context, _object);
+    }
+}
+
+- (BOOL)isArray
+{
+    if (!_object) {
+        return NO;
+    }
+    @synchronized(_context.runtime) {
+        return JS_IsArrayObject(_context.context, _object);
     }
 }
 
