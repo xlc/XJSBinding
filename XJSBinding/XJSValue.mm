@@ -122,10 +122,6 @@
         @synchronized(_context.runtime) {
             JS_AddValueRoot(_context.context, &_value);
         }
-        
-        if (_value.isObject()) {
-            _object = _value.toObjectOrNull();
-        }
     }
     return self;
 }
@@ -242,7 +238,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
         jsval val;
         JSBool success;
         @synchronized(_context.runtime) {
-            success = JS_CallFunctionName(_context.context, _object, "getTime", 0, NULL, &val);
+            success = JS_CallFunctionName(_context.context, _value.toObjectOrNull(), "getTime", 0, NULL, &val);
         }
         if (success) {
             XASSERT(val.isNumber(), @"date.getTime() did not return a number");
@@ -254,22 +250,24 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 
 - (NSArray *)toArray
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return nil;
     }
+    
+    JSObject *object = _value.toObjectOrNull();
     
     @synchronized(_context.runtime) {
         uint32_t len;
         JSBool hasLength;
-        if (!JS_HasProperty(_context.context, _object, "length", &hasLength) || !hasLength) return nil;
-        if (!JS_GetArrayLength(_context.context, _object, &len)) return nil;
+        if (!JS_HasProperty(_context.context, object, "length", &hasLength) || !hasLength) return nil;
+        if (!JS_GetArrayLength(_context.context, object, &len)) return nil;
         
         NSMutableArray *arr = [NSMutableArray arrayWithCapacity:len];
         
         for (uint32_t i = 0; i < len; i++) {
             jsval val;
             id obj;
-            if (JS_GetElement(_context.context, _object, i, &val)) {
+            if (JS_GetElement(_context.context, object, i, &val)) {
                 obj = [[XJSValue alloc] initWithContext:_context value:val].toObject;
             }
             [arr addObject:obj ?: [NSNull null]];
@@ -382,43 +380,43 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 
 - (BOOL)isDate
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return NO;
     }
     @synchronized(_context.runtime) {
-        return JS_ObjectIsDate(_context.context, _object);
+        return JS_ObjectIsDate(_context.context, _value.toObjectOrNull());
     }
 }
 
 - (BOOL)isCallable
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return NO;
     }
     @synchronized(_context.runtime) {
-        return JS_ObjectIsCallable(_context.context, _object);
+        return JS_ObjectIsCallable(_context.context, _value.toObjectOrNull());
     }
 }
 
 - (BOOL)isArray
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return NO;
     }
     @synchronized(_context.runtime) {
-        return JS_IsArrayObject(_context.context, _object);
+        return JS_IsArrayObject(_context.context, _value.toObjectOrNull());
     }
 }
 
 - (BOOL)isInstanceOf:(XJSValue *)value
 {
-    if (!value.object) {
+    if (value.value.isPrimitive()) {
         return NO;
     }
     JSBool success;
     JSBool result;
     @synchronized(_context.runtime) {
-        success = JS_HasInstance(_context.context, value.object, _value, &result);
+        success = JS_HasInstance(_context.context, value.value.toObjectOrNull(), _value, &result);
     }
     return success && result;
 }
@@ -447,7 +445,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 
 - (XJSValue *)constructWithArguments:(NSArray *)arguments
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return NO;
     }
     
@@ -460,17 +458,17 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     
     JSObject *obj;
     @synchronized(_context.runtime) {
-        obj = JS_New(_context.context, _object, (unsigned)arguments.count, args);
+        obj = JS_New(_context.context, _value.toObjectOrNull(), (unsigned)arguments.count, args);
     }
     if (obj) {
-        return [[XJSValue alloc] initWithContext:_context value:js::ObjectOrNullValue(obj)];
+        return [[XJSValue alloc] initWithContext:_context value:JS::ObjectOrNullValue(obj)];
     }
     return nil;
 }
 
 - (XJSValue *)invokeMethod:(NSString *)method withArguments:(NSArray *)arguments
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return NO;
     }
     
@@ -485,7 +483,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     JSBool success;
     
     @synchronized(_context.runtime) {
-        success = JS_CallFunctionName(_context.context, _object, [method UTF8String], (unsigned)arguments.count, args, &outval);
+        success = JS_CallFunctionName(_context.context, _value.toObjectOrNull(), [method UTF8String], (unsigned)arguments.count, args, &outval);
     }
     
     if (success) {
@@ -503,7 +501,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 
 - (XJSValue *)objectForKeyedSubscript:(id)key
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return nil;
     }
     
@@ -517,7 +515,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     jsval outval;
     
     @synchronized(_context.runtime) {
-        if (JS_GetProperty(_context.context, _object, [stringKey UTF8String], &outval)) {
+        if (JS_GetProperty(_context.context, _value.toObjectOrNull(), [stringKey UTF8String], &outval)) {
             return [[XJSValue alloc] initWithContext:_context value:outval];
         }
     }
@@ -527,14 +525,14 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 
 - (XJSValue *)objectAtIndexedSubscript:(uint32_t)index
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return nil;
     }
     
     jsval outval;
     
     @synchronized(_context.runtime) {
-        if (JS_GetElement(_context.context, _object, index, &outval)) {
+        if (JS_GetElement(_context.context, _value.toObjectOrNull(), index, &outval)) {
             return [[XJSValue alloc] initWithContext:_context value:outval];
         }
     }
@@ -544,7 +542,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 
 - (void)setObject:(id)object forKeyedSubscript:(id)key
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return;
     }
     
@@ -559,13 +557,13 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     jsval inval = value.value;
     
     @synchronized(_context.runtime) {
-        JS_SetProperty(_context.context, _object, [stringKey UTF8String], &inval);
+        JS_SetProperty(_context.context, _value.toObjectOrNull(), [stringKey UTF8String], &inval);
     }
 }
 
 - (void)setObject:(id)object atIndexedSubscript:(uint32_t)index
 {
-    if (!_object) {
+    if (_value.isPrimitive()) {
         return;
     }
     
@@ -573,7 +571,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     jsval inval = value.value;
     
     @synchronized(_context.runtime) {
-        JS_SetElement(_context.context, _object, index, &inval);
+        JS_SetElement(_context.context, _value.toObjectOrNull(), index, &inval);
     }
 }
 
