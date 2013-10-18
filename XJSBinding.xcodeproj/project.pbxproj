@@ -18,6 +18,9 @@
 		0616305317F81A210018F504 /* XJSRuntimeEntry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305017F81A210018F504 /* XJSRuntimeEntry.mm */; };
 		0616305517F95BA90018F504 /* XJSRuntimeEntryTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */; };
 		0616305617F95BA90018F504 /* XJSRuntimeEntryTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */; };
+		0617DAB71811395C00D6884E /* XJSValueWeakRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0617DAB51811395C00D6884E /* XJSValueWeakRef.h */; };
+		0617DAB81811395C00D6884E /* XJSValueWeakRef.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0617DAB61811395C00D6884E /* XJSValueWeakRef.mm */; };
+		0617DAB91811395C00D6884E /* XJSValueWeakRef.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0617DAB61811395C00D6884E /* XJSValueWeakRef.mm */; };
 		0619AA7117F96CA1001631BD /* XJSHelperFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0619AA6F17F96CA1001631BD /* XJSHelperFunctions.h */; };
 		0619AA7217F96CA1001631BD /* XJSHelperFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */; };
 		0619AA7317F96CA1001631BD /* XJSHelperFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */; };
@@ -208,6 +211,8 @@
 		0616304F17F81A210018F504 /* XJSRuntimeEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSRuntimeEntry.h; sourceTree = "<group>"; };
 		0616305017F81A210018F504 /* XJSRuntimeEntry.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntimeEntry.mm; sourceTree = "<group>"; };
 		0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = XJSRuntimeEntryTests.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		0617DAB51811395C00D6884E /* XJSValueWeakRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSValueWeakRef.h; sourceTree = "<group>"; };
+		0617DAB61811395C00D6884E /* XJSValueWeakRef.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSValueWeakRef.mm; sourceTree = "<group>"; };
 		0619AA6F17F96CA1001631BD /* XJSHelperFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSHelperFunctions.h; sourceTree = "<group>"; };
 		0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSHelperFunctions.mm; sourceTree = "<group>"; };
 		0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSHelperFunctionsTests.mm; sourceTree = "<group>"; };
@@ -510,6 +515,8 @@
 				066CECB717DBFC6E0078829C /* XJSValue.mm */,
 				066AD6C617F57B4700EADB2B /* NSObject+XJSValueConvert.h */,
 				066AD6C717F57B4700EADB2B /* NSObject+XJSValueConvert.mm */,
+				0617DAB51811395C00D6884E /* XJSValueWeakRef.h */,
+				0617DAB61811395C00D6884E /* XJSValueWeakRef.mm */,
 			);
 			name = XJSValue;
 			sourceTree = "<group>";
@@ -815,6 +822,7 @@
 				06A3FC1017DAA0D900E936F1 /* jscpucfg.h in Headers */,
 				06A3FC2A17DAA0D900E936F1 /* Endian.h in Headers */,
 				06A3FC3A17DAA0D900E936F1 /* Scoped.h in Headers */,
+				0617DAB71811395C00D6884E /* XJSValueWeakRef.h in Headers */,
 				06A3FC3517DAA0D900E936F1 /* PodOperations.h in Headers */,
 				06A3FC1F17DAA0D900E936F1 /* jswrapper.h in Headers */,
 				06A3FC1117DAA0D900E936F1 /* jsdbgapi.h in Headers */,
@@ -1214,6 +1222,7 @@
 				0616304317F7F8620018F504 /* XJSBinding.mm in Sources */,
 				0619AA7A17FC0DCF001631BD /* XJSClass.mm in Sources */,
 				066AD6C917F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */,
+				0617DAB81811395C00D6884E /* XJSValueWeakRef.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1247,6 +1256,7 @@
 				0616304417F7F8630018F504 /* XJSBinding.mm in Sources */,
 				0619AA7B17FC0DCF001631BD /* XJSClass.mm in Sources */,
 				066AD6CA17F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */,
+				0617DAB91811395C00D6884E /* XJSValueWeakRef.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
