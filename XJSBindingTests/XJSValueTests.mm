@@ -529,7 +529,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     NSArray *arr = _value.toArray;
     XCTAssertNotNil(arr);
-    XCTAssertEqual(arr.count, 5u);
+    XCTAssertEqual(arr.count, (NSUInteger)5);
     XCTAssertEqualObjects(arr, (@[[NSNull null], @"1", @"2", @"3", [NSNull null]]));
 }
 
@@ -541,61 +541,6 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     NSArray *arr = _value.toArray;
     XCTAssertNil(arr);
-}
-
-@end
-
-@interface XJSValueInitTests : XCTestCase
-
-@end
-
-@implementation XJSValueInitTests {
-    XJSContext *_context;
-    JSContext *_cx;
-}
-
-- (void)_setUp
-{
-    _context = [[XJSContext alloc] init];
-    _cx = _context.context;
-}
-
-- (void)_tearDown
-{
-    _cx = NULL;
-    _context = nil;
-}
-
-- (void)testInitWithValue
-{
-    __weak id weakContext;
-    @autoreleasepool {
-        [self _setUp];
-        weakContext = _context;
-        
-        jsval values[] = {
-            JSVAL_NULL,
-            JSVAL_ZERO,
-            JSVAL_ONE,
-            JSVAL_FALSE,
-            JSVAL_TRUE,
-            JSVAL_VOID,
-            INT_TO_JSVAL(INT32_MAX),
-            INT_TO_JSVAL(INT32_MIN),
-            DOUBLE_TO_JSVAL(INFINITY),
-            XJSConvertStringToJSValue(_cx, @"test"),
-        };
-        
-        for (int i = 0; i < sizeof(values) / sizeof(values[0]); i++) {
-            XJSValue *value = [[XJSValue alloc] initWithContext:_context value:values[i]];
-            XCTAssertEqual(value.context, _context, @"context should be same");
-            XJSAssertEqualValue(_cx, values[i], value.value, @"value should be same");
-        }
-        
-        [self _tearDown];
-    }
-    
-    XCTAssertNil(weakContext, @"should be released");
 }
 
 @end

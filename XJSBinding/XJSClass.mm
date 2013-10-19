@@ -152,15 +152,15 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
 
 static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
 {
-    jsval val;
+    JS::RootedValue val(cx);
     JSBool success;
     
-    success = JS_IdToValue(cx, jid, &val);
+    success = JS_IdToValue(cx, jid, val.address());
     XASSERT(success, "fail to get id");
     
     if (val.isString()) {
-        JSObject *proto = NULL;
-        success = JS_GetPrototype(cx, obj, &proto);
+        JS::RootedObject proto(cx);
+        success = JS_GetPrototype(cx, obj, proto.address());
         XASSERT(success && proto, "fail to get prototype");
         
         JSAutoByteString str(cx, JS_ValueToString(cx, val));
@@ -299,17 +299,17 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
     JSBool success;
     
     JSClass *jscls = XJSGetJSClassForNSClass(object_getClass(obj));
-    JSObject *jsobj = JS_NewObject(cx, jscls, NULL, NULL);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, jscls, NULL, NULL));
     
     JS_SetPrivate(jsobj, (__bridge_retained void *)obj);
     
-    JSObject *proto;
-    success = JS_GetPrototype(cx, jsobj, &proto);
+    JS::RootedObject proto(cx);
+    success = JS_GetPrototype(cx, jsobj, proto.address());
     XASSERT(success, @"fail to get prototype object");
     
-    jsval cstrval;
-    JS_GetProperty(cx, proto, "constructor", &cstrval); // JS_GetConstructor will report error if it cannot find a constructor, which is normal in our case
-    JSObject *cstrobj = NULL;
+    JS::RootedValue cstrval(cx);
+    JS_GetProperty(cx, proto, "constructor", cstrval.address()); // JS_GetConstructor will report error if it cannot find a constructor, which is normal in our case
+    JS::RootedObject cstrobj(cx);
     if (cstrval.isObjectOrNull()) {
         cstrobj = cstrval.toObjectOrNull();
     }
@@ -333,7 +333,7 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
                 cls = [NSObject class];
             }
             
-            success = JS_GetProperty(cx, runtime, class_getName(cls), &cstrval);
+            success = JS_GetProperty(cx, runtime, class_getName(cls), cstrval.address());
             XASSERT(success, "fail to get constructor object");
         }
         

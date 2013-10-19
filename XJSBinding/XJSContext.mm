@@ -92,8 +92,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
             _globalObject = JS_NewGlobalObject(_context, &global_class, NULL);
             XASSERT(_globalObject != NULL, @"fail to create gloabl object");
             
-            JSAutoCompartment ac(_context, _globalObject);
-            JS_SetGlobalObject(_context, _globalObject);
+            JS_AddObjectRoot(_context, &_globalObject); // just in case
             
             JS_InitStandardClasses(_context, _globalObject);
         };
@@ -104,6 +103,8 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 - (void)dealloc
 {
     @synchronized(_runtime) {
+        JS_RemoveObjectRoot(_context, &_globalObject);
+        
         JS_DestroyContext(_context);
     }
     
