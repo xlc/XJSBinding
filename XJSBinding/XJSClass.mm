@@ -23,22 +23,24 @@
 #import "XJSContext_Private.h"
 #import "XJSValue_Private.h"
 
-static JSBool XJSPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
+static JSBool XJSAddPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
 {
-    
-    return JS_TRUE;
+    return JS_PropertyStub(cx, obj, jid, vp);
+}
+
+static JSBool XJSGetPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
+{
+    return JS_PropertyStub(cx, obj, jid, vp);
 }
 
 static JSBool XJSDeletePropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSBool *succeeded)
 {
-    
-    return JS_TRUE; // no error
+    return JS_DeletePropertyStub(cx, obj, jid, succeeded);
 }
 
 static JSBool XJSSetPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSBool strict, JSMutableHandleValue vp)
 {
-    
-    return JS_TRUE;
+    return JS_StrictPropertyStub(cx, obj, jid, strict, vp);
 }
 
 static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
@@ -253,9 +255,9 @@ static void XJSFinalizeImpl(JSFreeOp *fop, JSObject *jsobj)
 static JSClass XJSClassTemplate = {
     "XJSClassTemplate",         // name
     JSCLASS_HAS_PRIVATE,        // flags
-    XJSPropertyImpl,            // add
+    XJSAddPropertyImpl,         // add
     XJSDeletePropertyImpl,      // delet
-    JS_PropertyStub,            // get
+    XJSGetPropertyImpl,         // get
     XJSSetPropertyImpl,         // set
     JS_EnumerateStub,           // enumerate
     XJSResolveImpl,             // resolve
@@ -348,7 +350,7 @@ id XJSGetAssosicatedObject(JSObject *jsobj)
 {
     XASSERT_NOTNULL(jsobj);
     JSClass *jscls = JS_GetClass(jsobj);
-    if (jscls->addProperty != XJSPropertyImpl) {    // check class type
+    if (jscls->addProperty != XJSAddPropertyImpl) {    // check class type
         return nil;
     }
     
