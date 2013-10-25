@@ -52,7 +52,7 @@ static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
     const char *clsname = str.encodeUtf8(cx, JSID_TO_STRING(jid));
     Class cls = objc_getClass(clsname);
     if (cls) {
-        JSObject *clsobj = XJSCreateJSObject(cx, cls);
+        JSObject *clsobj = XJSGetOrCreateJSObject(cx, cls);
         jsval clsval = JS::ObjectOrNullValue(clsobj);
         return JS_SetProperty(cx, obj, clsname, &clsval);
     }

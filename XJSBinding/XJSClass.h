@@ -10,5 +10,6 @@
 
 #import "jsapi.h"
 
+JSObject *XJSGetOrCreateJSObject(JSContext *cx, id obj);
 JSObject *XJSCreateJSObject(JSContext *cx, id obj);
 id XJSGetAssosicatedObject(JSObject *jsobj);

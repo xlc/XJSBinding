@@ -181,6 +181,21 @@
     XCTAssertEqualObjects(XJSConvertJSValueToSource(_context.context, val), @"\"({})\"");
 }
 
+- (void)testCacheObject
+{
+    JSObject *obj = XJSGetOrCreateJSObject(_context.context, self);
+    JSObject *obj2 = XJSGetOrCreateJSObject(_context.context, self);
+    XCTAssert(obj != NULL);
+    XCTAssertEqual(obj, obj2);
+    
+    JSObject *obj3 = XJSGetOrCreateJSObject(_context.context, @1);
+    JSObject *obj4 = XJSGetOrCreateJSObject(_context.context, @1);
+    XCTAssert(obj3 != NULL);
+    XCTAssertEqual(obj3, obj4);
+    
+    XCTAssertNotEqual(obj, obj3);
+}
+
 @end
 
 @interface XJSClassCallMethodTests : XCTestCase

@@ -28,7 +28,7 @@
     }
     
     @synchronized(context.runtime) {
-        JSObject *obj = XJSCreateJSObject(context.context, value);
+        JSObject *obj = XJSGetOrCreateJSObject(context.context, value);
         return [[self alloc] initWithContext:context value:JS::ObjectOrNullValue(obj)];
     }
 }

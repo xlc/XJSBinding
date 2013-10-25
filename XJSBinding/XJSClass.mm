@@ -22,6 +22,7 @@
 #import "NSObject+XJSValueConvert.h"
 #import "XJSContext_Private.h"
 #import "XJSValue_Private.h"
+#import "XJSValueWeakRef.h"
 
 static JSBool XJSAddPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
 {
@@ -237,7 +238,7 @@ static JSBool XJSConstructor(JSContext *cx, unsigned argc, jsval *vp)
     }
     
     if (retobj) {
-        args.rval().set(JS::ObjectOrNullValue(XJSCreateJSObject(cx, retobj)));
+        args.rval().set(JS::ObjectOrNullValue(XJSGetOrCreateJSObject(cx, retobj)));
     } else {
         args.rval().set(JS::NullValue());
     }
@@ -294,6 +295,42 @@ static JSClass *XJSGetJSClassForNSClass(Class cls)
     objc_setAssociatedObject(cls, XJSClassKey, jsclsdata, OBJC_ASSOCIATION_RETAIN);
     
     return jscls;
+}
+
+JSObject *XJSGetOrCreateJSObject(JSContext *cx, id obj)
+{
+    static const void *key = &key;
+    
+    // no need to lock, dict just used for cache, it is fine to lost some update
+    NSMutableDictionary *dict = objc_getAssociatedObject(obj, key);
+    if (!dict) {
+        dict = [NSMutableDictionary dictionary];
+        objc_setAssociatedObject(obj, key, dict, OBJC_ASSOCIATION_RETAIN);
+    }
+    
+    // per runtime
+    NSValue *runtimeKey = [NSValue valueWithPointer:JS_GetRuntime(cx)];
+
+    XJSValueWeakRef *ref;
+    @synchronized(dict) {
+        ref = dict[runtimeKey];
+    }
+
+    XJSValue *val = ref.value;
+    if (val) {
+        return val.value.toObjectOrNull();
+    }
+    
+    JSObject *jsobj = XJSCreateJSObject(cx, obj);
+    
+    val = [[XJSValue alloc] initWithContext:[XJSContext contextForJSContext:cx] value:JS::ObjectOrNullValue(jsobj)];
+    ref = [val weakReference];
+    
+    @synchronized(dict) {
+        dict[runtimeKey] = ref;
+    }
+    
+    return jsobj;
 }
 
 JSObject *XJSCreateJSObject(JSContext *cx, id obj)
