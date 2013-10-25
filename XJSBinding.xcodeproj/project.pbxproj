@@ -91,6 +91,9 @@
 		066CECBE17DBFC6E0078829C /* XJSRuntime.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB317DBFC6E0078829C /* XJSRuntime.mm */; };
 		066CECC117DBFC6E0078829C /* XJSValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB617DBFC6E0078829C /* XJSValue.h */; };
 		066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB717DBFC6E0078829C /* XJSValue.mm */; };
+		067AAFD3181A73FA002DB3A2 /* XJSRuntimeEntryTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */; };
+		067AAFD4181A73FA002DB3A2 /* XJSHelperFunctionsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */; };
+		067AAFD5181A73FA002DB3A2 /* XJSClassTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */; };
 		0692BC6517D9D612009BFC18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC6417D9D612009BFC18 /* Cocoa.framework */; };
 		0692BC7617D9D612009BFC18 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC7517D9D612009BFC18 /* XCTest.framework */; };
 		0692BC7717D9D612009BFC18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC6417D9D612009BFC18 /* Cocoa.framework */; };
@@ -1219,6 +1222,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				067AAFD3181A73FA002DB3A2 /* XJSRuntimeEntryTests.mm in Sources */,
+				067AAFD4181A73FA002DB3A2 /* XJSHelperFunctionsTests.mm in Sources */,
+				067AAFD5181A73FA002DB3A2 /* XJSClassTests.mm in Sources */,
 				060A9019181220DD002631A5 /* XJSWeakMapTests.mm in Sources */,
 				066AD6AE17F0588A00EADB2B /* XJSContextTests.mm in Sources */,
 				06DA4B7117F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
@@ -1322,13 +1328,14 @@
 				GCC_PREFIX_HEADER = "XJSBindingApp/XJSBindingApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "XJSBindingApp/XJSBindingApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/xiliangchen/Documents/project/XJSBinding/Spidermonkey/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1348,13 +1355,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBindingApp/XJSBindingApp-Prefix.pch";
 				INFOPLIST_FILE = "XJSBindingApp/XJSBindingApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/xiliangchen/Documents/project/XJSBinding/Spidermonkey/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
