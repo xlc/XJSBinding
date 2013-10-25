@@ -8,28 +8,59 @@
 
 #import "XJSValueWeakRef.h"
 
+#import "NSObject+XJSValueConvert.h"
+
+#import "XJSWeakMap.h"
+
 @implementation XJSValueWeakRef
 {
     __weak XJSValue *_value;
+    XJSWeakMap *_map;
 }
 
 - (id)initWithValue:(XJSValue *)value
 {
     self = [super init];
     if (self) {
-        _value = value;
+        _map = [[XJSWeakMap alloc] initWithContext:value.context];
+        self.value = value;
     }
     return self;
 }
 
 - (XJSValue *)value
 {
+    XJSValue *val = _value; // strong ref
+    if (val) {
+        return val;
+    }
+    
+    XJSValue *allKeys = [_map allKeys];
+    
+    if (allKeys[@"length"].toInt32 == 0)
+    {
+        _map = nil; // no use anymore
+        return nil;
+    }
+    
+    _value = allKeys[0];
     return _value;
 }
 
 - (void)setValue:(XJSValue *)value
 {
     _value = value;
+    [_map removeAllObjects];
+    _map[value] = [XJSValue valueWithNullInContext:value.context];
+}
+
+@end
+
+@implementation XJSValueWeakRef (XJSValueConvert)
+
+- (XJSValue *)xjs_toValueInContext:(XJSContext *)context
+{
+    return [self.value xjs_toValueInContext:context];
 }
 
 @end

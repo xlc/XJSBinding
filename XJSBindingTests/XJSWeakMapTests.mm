@@ -106,4 +106,24 @@
     
 }
 
+- (void)testWeakRef2
+{
+    XJSValue *val = [XJSValue valueWithNewObjectInContext:_context];
+    
+    @autoreleasepool {
+        XJSValue *key = [XJSValue valueWithNewObjectInContext:_context];
+        
+        _map[key] = val;
+    }
+    
+    @autoreleasepool {
+        XCTAssertEqual([_map allKeys][@"length"].toInt32, 1);
+    }
+    
+    [_context.runtime gc];
+    
+    XCTAssertEqual([_map allKeys][@"length"].toInt32, 0);
+    
+}
+
 @end

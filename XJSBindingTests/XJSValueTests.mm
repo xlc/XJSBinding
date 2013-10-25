@@ -8,7 +8,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import "XJSTestUtils.h"
 #import "XJSConvert.h"
 
 #import "XJSValue_Private.h"

@@ -18,6 +18,12 @@
 
 @end
 
+@interface XJSValueWeakRef (XJSValueConvert)
+
+- (XJSValue *)xjs_toValueInContext:(XJSContext *)context;
+
+@end
+
 @interface XJSValue (XJSValueWeakRef)
 
 - (XJSValueWeakRef *)weakReference;
