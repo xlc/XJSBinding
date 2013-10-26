@@ -11,6 +11,14 @@
 @class XJSValue;
 @class XJSContext;
 
+__BEGIN_DECLS
+
+// call xjs_toValueInContext on obj or return [XJSValue valueWithNullInContext:context] if obj is nil
+// never return nil
+XJSValue *XJSToValue(XJSContext *context, id obj);
+
+__END_DECLS
+
 @interface NSObject (XJSValueConvert)
 
 - (XJSValue *)xjs_toValueInContext:(XJSContext *)context;

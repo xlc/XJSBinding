@@ -15,6 +15,15 @@
 #import "XJSValue_Private.h"
 #import "XJSContext.h"
 
+XJSValue *XJSToValue(XJSContext *context, id obj)
+{
+    XJSValue *ret = [obj xjs_toValueInContext:context];
+    if (ret) {
+        return ret;
+    }
+    return [XJSValue valueWithNullInContext:context];
+}
+
 @implementation NSObject (XJSValueConvert)
 
 - (XJSValue *)xjs_toValueInContext:(XJSContext *)context

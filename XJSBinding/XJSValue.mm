@@ -43,7 +43,7 @@
         jsval valarr[value.count];
         int i = 0;
         for (id obj in value) {
-            valarr[i++] = [obj xjs_toValueInContext:context].value;
+            valarr[i++] = XJSToValue(context, obj).value;
         }
         
         JSObject *jsarr = JS_NewArrayObject(context.context, (int)value.count, valarr);
@@ -429,7 +429,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     
     for (int i = 0; i < arguments.count; i++) {
         // the temporary XJSValue is autoreleased so jsval will be rooted before method returned
-        args[i] = [arguments[i] xjs_toValueInContext:_context].value;
+        args[i] = XJSToValue(_context, arguments[i]).value;
     }
     
     jsval outval;
@@ -453,7 +453,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     
     for (int i = 0; i < arguments.count; i++) {
         // the temporary XJSValue is autoreleased so jsval will be rooted before method returned
-        args[i] = [arguments[i] xjs_toValueInContext:_context].value;
+        args[i] = XJSToValue(_context, arguments[i]).value;
     }
     
     JSObject *obj;
@@ -476,7 +476,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     
     for (int i = 0; i < arguments.count; i++) {
         // the temporary XJSValue is autoreleased so jsval will be rooted before method returned
-        args[i] = [arguments[i] xjs_toValueInContext:_context].value;
+        args[i] = XJSToValue(_context, arguments[i]).value;
     }
     
     jsval outval;
@@ -553,8 +553,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
         stringKey = [key description];
     }
     
-    XJSValue *value = [object xjs_toValueInContext:_context];
-    jsval inval = value.value;
+    jsval inval = XJSToValue(_context, object).value;
     
     @synchronized(_context.runtime) {
         JS_SetProperty(_context.context, _value.toObjectOrNull(), [stringKey UTF8String], &inval);
@@ -567,8 +566,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
         return;
     }
     
-    XJSValue *value = [object xjs_toValueInContext:_context];
-    jsval inval = value.value;
+    jsval inval = XJSToValue(_context, object).value;
     
     @synchronized(_context.runtime) {
         JS_SetElement(_context.context, _value.toObjectOrNull(), index, &inval);

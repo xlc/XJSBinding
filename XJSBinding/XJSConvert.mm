@@ -138,7 +138,7 @@ JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, jsval *o
         {
             XASSERT(size == sizeof(id), @"expected type with size %lu but return type with size %lu", (unsigned long)size, sizeof(id));
             id obj = *(id __autoreleasing *)value;
-            *outval = [obj xjs_toValueInContext:[XJSContext contextForJSContext:cx]].value;
+            *outval = XJSToValue([XJSContext contextForJSContext:cx], obj).value;
             return JS_TRUE;
         }
             

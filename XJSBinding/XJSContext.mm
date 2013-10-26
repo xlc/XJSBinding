@@ -227,8 +227,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (void)setObject:(id)object forKeyedSubscript:(NSString *)key
 {
-    XJSValue *value = [object xjs_toValueInContext:self];
-    jsval inval = value.value;
+    jsval inval = XJSToValue(self, object).value;
     
     @synchronized(_runtime) {
         JS_SetProperty(_context, _globalObject, [key UTF8String], &inval);

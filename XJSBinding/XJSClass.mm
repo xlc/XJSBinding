@@ -103,7 +103,7 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
             [invocation invoke];
         }
         @catch (id exception) { // objc exception
-            jsval errval = [exception xjs_toValueInContext:[XJSContext contextForJSContext:cx]].value;
+            jsval errval = XJSToValue([XJSContext contextForJSContext:cx], exception).value;
             JS_SetPendingException(cx, errval);
             return JS_FALSE;
         }
@@ -225,7 +225,7 @@ static JSBool XJSConstructor(JSContext *cx, unsigned argc, jsval *vp)
             retobj = [[cls alloc] init];
         }
         @catch (id exception) { // objc exception
-            jsval errval = [exception xjs_toValueInContext:[XJSContext contextForJSContext:cx]].value;
+            jsval errval = XJSToValue([XJSContext contextForJSContext:cx], exception).value;
             JS_SetPendingException(cx, errval);
             return JS_FALSE;
         }

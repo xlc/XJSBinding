@@ -8,6 +8,7 @@
 
 #import "XJSValueWeakRef.h"
 
+#import "XLCAssertion.h"
 #import "NSObject+XJSValueConvert.h"
 
 #import "XJSWeakMap.h"
@@ -20,6 +21,7 @@
 
 - (id)initWithValue:(XJSValue *)value
 {
+    XASSERT_NOTNULL(value);
     self = [super init];
     if (self) {
         _map = [[XJSWeakMap alloc] initWithContext:value.context];
@@ -33,6 +35,10 @@
     XJSValue *val = _value; // strong ref
     if (val) {
         return val;
+    }
+    
+    if (!_map) {
+        return nil;
     }
     
     XJSValue *allKeys = [_map allKeys];
@@ -50,8 +56,13 @@
 - (void)setValue:(XJSValue *)value
 {
     _value = value;
-    [_map removeAllObjects];
-    _map[value] = [XJSValue valueWithNullInContext:value.context];
+    
+    @synchronized(_map) {
+        [_map removeAllObjects];
+        if (!value.isPrimitive) {   // map key cannot be primitive type and no much reason to hold weak ref to primitive type
+            _map[value] = [XJSValue valueWithNullInContext:value.context];
+        }
+    }
 }
 
 @end
@@ -60,7 +71,7 @@
 
 - (XJSValue *)xjs_toValueInContext:(XJSContext *)context
 {
-    return [self.value xjs_toValueInContext:context];
+    return XJSToValue(context, self.value);
 }
 
 @end

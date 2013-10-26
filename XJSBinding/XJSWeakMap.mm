@@ -21,6 +21,7 @@
 
 - (id)initWithContext:(XJSContext *)context
 {
+    XASSERT_NOTNULL(context);
     self = [super init];
     if (self) {
         _context = context;
