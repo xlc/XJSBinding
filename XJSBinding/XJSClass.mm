@@ -374,6 +374,7 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
             
             success = JS_GetProperty(cx, runtime, class_getName(cls), cstrval.address());
             XASSERT(success, "fail to get constructor object");
+            XASSERT(cstrval.isObject(), "unable to get constructor object, class (%@) it not registered? ", cls);
         }
         
         success = JS_LinkConstructorAndPrototype(cx, cstrval.toObjectOrNull(), proto);
