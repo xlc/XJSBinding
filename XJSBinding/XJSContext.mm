@@ -201,6 +201,9 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (void)createObjCRuntimeWithNamespace:(NSString *)name
 {
+    // TODO allow empty name - no public namespace created but return a XJSValue
+    // TODO save namespace object so it can be used internally
+    // TODO allow name to be dot seperated namespace. e.g. myapp.objc
     XASSERT_NOTNULL(name);
     _globalNamespace = [name copy];
     XJSBindingInit(name, _context, _globalObject);
@@ -212,7 +215,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 @implementation XJSContext(SubscriptSupport)
 
-- (XJSValue *)objectForKeyedSubscript:(NSString *)key
+- (XJSValue *)objectForKeyedSubscript:(NSString *)key   // TODO allow key to be dot seperated namespace. e.g. myapp.value
 {
     jsval outval;
     
@@ -225,7 +228,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     return nil;
 }
 
-- (void)setObject:(id)object forKeyedSubscript:(NSString *)key
+- (void)setObject:(id)object forKeyedSubscript:(NSString *)key  // TODO allow key to be dot seperated namespace. e.g. myapp.value
 {
     jsval inval = XJSToValue(self, object).value;
     
