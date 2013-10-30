@@ -178,6 +178,9 @@
 		06A3FC4117DAA0D900E936F1 /* TypeTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = 06A3FBF817DAA0D900E936F1 /* TypeTraits.h */; };
 		06A3FC4217DAA0D900E936F1 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 06A3FBF917DAA0D900E936F1 /* Util.h */; };
 		06A3FC4317DAA0D900E936F1 /* WeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 06A3FBFA17DAA0D900E936F1 /* WeakPtr.h */; };
+		06A5A13A1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.h in Headers */ = {isa = PBXBuildFile; fileRef = 06A5A1381820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.h */; };
+		06A5A13B1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A1391820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m */; };
+		06A5A13C1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A1391820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m */; };
 		06CFF4CA17E1BFAB0081F388 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A3FBAC17DAA0A700E936F1 /* libjs_static.a */; };
 		06CFF4D017E1BFD10081F388 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0627CD2417E1BA4A00D0BB7C /* Foundation.framework */; };
 		06CFF4F117E1C0A90081F388 /* XJSContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB017DBFC6E0078829C /* XJSContext.mm */; };
@@ -363,6 +366,8 @@
 		06A3FBF817DAA0D900E936F1 /* TypeTraits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeTraits.h; sourceTree = "<group>"; };
 		06A3FBF917DAA0D900E936F1 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		06A3FBFA17DAA0D900E936F1 /* WeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakPtr.h; sourceTree = "<group>"; };
+		06A5A1381820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XJSStructMetadata+XJSLoadCommonStructure.h"; sourceTree = "<group>"; };
+		06A5A1391820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XJSStructMetadata+XJSLoadCommonStructure.m"; sourceTree = "<group>"; };
 		06CFF4CF17E1BFD10081F388 /* libXJSBinding-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libXJSBinding-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		06CFF4F917E1C24E0081F388 /* XJSBinding-ios-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "XJSBinding-ios-Prefix.pch"; path = "XJSBinding/XJSBinding-ios-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		06DA4B6E17F58FAD00C9C3B6 /* XJSValueConvertTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = XJSValueConvertTests.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -506,6 +511,8 @@
 			children = (
 				0657FEEC181BA400000B29F6 /* XJSStructMetadata.h */,
 				0657FEED181BA400000B29F6 /* XJSStructMetadata.mm */,
+				06A5A1381820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.h */,
+				06A5A1391820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m */,
 			);
 			name = XJSStructMetadata;
 			sourceTree = "<group>";
@@ -815,6 +822,7 @@
 				06A3FC3D17DAA0D900E936F1 /* StandardInteger.h in Headers */,
 				066AD6C817F57B4700EADB2B /* NSObject+XJSValueConvert.h in Headers */,
 				06A3FC0517DAA0D900E936F1 /* RequiredDefines.h in Headers */,
+				06A5A13A1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.h in Headers */,
 				06A3FC0E17DAA0D900E936F1 /* jsclass.h in Headers */,
 				06A3FC0217DAA0D900E936F1 /* LegacyIntTypes.h in Headers */,
 				066CECC117DBFC6E0078829C /* XJSValue.h in Headers */,
@@ -1261,6 +1269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06A5A13B1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m in Sources */,
 				066CECBE17DBFC6E0078829C /* XJSRuntime.mm in Sources */,
 				066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */,
 				06208BDA17E4084600F60D39 /* NSError+XJSError.m in Sources */,
@@ -1299,6 +1308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06A5A13C1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m in Sources */,
 				06CFF4F117E1C0A90081F388 /* XJSContext.mm in Sources */,
 				06CFF4F217E1C0AA0081F388 /* XJSRuntime.mm in Sources */,
 				06208BDB17E4084600F60D39 /* NSError+XJSError.m in Sources */,
