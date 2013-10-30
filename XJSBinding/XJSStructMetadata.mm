@@ -77,7 +77,15 @@ static NSMutableDictionary *metadataDict;
     self = [super init];
     if (self) {
         _encoding = encoding;
-        _fields = [fields copy];
+        _fields = [fields sortedArrayUsingComparator:^NSComparisonResult(XJSStructField *obj1, XJSStructField *obj2) {
+            if (obj1.offset == obj2.offset) {
+                return NSOrderedSame;
+            }
+            if (obj1.offset < obj2.offset) {
+                return NSOrderedAscending;
+            }
+            return NSOrderedDescending;
+        }];
         [self parseEncoding];
     }
     return self;

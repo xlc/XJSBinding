@@ -80,6 +80,35 @@ typedef struct empty_struct {
     XCTAssertEqual(field.size, (NSUInteger)sizeof(int));
 }
 
+- (void)testPlainStructDifferentOrder
+{
+    _data = [[XJSStructMetadata alloc] initWithEncoding:@(@encode(test_struct1)) fields:@[XJS_CREATE_FIELD(test_struct1, z),
+                                                                                          XJS_CREATE_FIELD(test_struct1, y),
+                                                                                          XJS_CREATE_FIELD(test_struct1, x)]];
+    XCTAssertEqualObjects(_data.name, @"test_struct1");
+    XCTAssertEqualObjects(_data.encoding, @(@encode(test_struct1)));
+    XCTAssertEqual(_data.fields.count, (NSUInteger)3);
+    
+    XJSStructField *field;
+    field = _data.fields[0];
+    XCTAssertEqual(field.offset, offsetof(test_struct1, x));
+    XCTAssertEqualObjects(field.name, @"x");
+    XCTAssertEqualObjects(field.encoding, @(@encode(float)));
+    XCTAssertEqual(field.size, (NSUInteger)sizeof(float));
+    
+    field = _data.fields[1];
+    XCTAssertEqual(field.offset, offsetof(test_struct1, y));
+    XCTAssertEqualObjects(field.name, @"y");
+    XCTAssertEqualObjects(field.encoding, @(@encode(double)));
+    XCTAssertEqual(field.size, (NSUInteger)sizeof(double));
+    
+    field = _data.fields[2];
+    XCTAssertEqual(field.offset, offsetof(test_struct1, z));
+    XCTAssertEqualObjects(field.name, @"z");
+    XCTAssertEqualObjects(field.encoding, @(@encode(int)));
+    XCTAssertEqual(field.size, (NSUInteger)sizeof(int));
+}
+
 - (void)testEmptyStruct
 {
     _data = [[XJSStructMetadata alloc] initWithEncoding:@(@encode(empty_struct)) fields:@[]];
