@@ -16,10 +16,11 @@
 
 // Create a wrapper of Objective-C object
 + (XJSValue *)valueWithObject:(id)value inContext:(XJSContext *)context;
-+ (XJSValue *)valueWithArray:(NSArray *)value inContext:(XJSContext *)context;
 
++ (XJSValue *)valueWithArray:(NSArray *)value inContext:(XJSContext *)context;
 + (XJSValue *)valueWithString:(NSString *)value inContext:(XJSContext *)context;
 + (XJSValue *)valueWithDate:(NSDate *)date inContext:(XJSContext *)context;
++ (XJSValue *)valueWithNSValue:(NSValue *)value inContext:(XJSContext *)context;
 
 + (XJSValue *)valueWithBool:(BOOL)value inContext:(XJSContext *)context;
 + (XJSValue *)valueWithDouble:(double)value inContext:(XJSContext *)context;
@@ -41,6 +42,7 @@
 - (NSDate *)toDate;
 - (NSArray *)toArray;   // convert array-like object to NSArray
 - (id)toObject;
+- (NSValue *)toValueOfType:(const char *)type;
 
 //// If the value is null or undefined then nil is returned.
 //// If the value is not an object then a JavaScript TypeError will be thrown.

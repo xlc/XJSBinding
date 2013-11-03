@@ -108,6 +108,23 @@
     return [[self alloc] initWithContext:context value:JS::UndefinedValue()];
 }
 
++ (XJSValue *)valueWithNSValue:(NSValue *)value inContext:(XJSContext *)context
+{
+    const char *encode = value.objCType;
+    NSUInteger size;
+    NSGetSizeAndAlignment(encode, &size, NULL);
+    alignas(NSUInteger) char buff[size];
+    [value getValue:buff];
+    @synchronized(context.runtime) {
+        jsval val;
+        if (XJSValueFromType(context.context, encode, buff, &val))
+        {
+            return [[XJSValue alloc] initWithContext:context value:val];
+        }
+        return nil;
+    }
+}
+
 #pragma mark -
 
 - (id)initWithContext:(XJSContext *)context value:(jsval)val
@@ -320,6 +337,11 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
             // TODO XJSBlock?
             return nil;
     }
+}
+
+- (NSValue *)toValueOfType:(const char *)type
+{
+    return XJSValueToType(_context.context, _value, type).first;
 }
 
 #pragma mark -

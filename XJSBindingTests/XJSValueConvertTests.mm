@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 #import "NSObject+XJSValueConvert.h"
 
@@ -137,6 +138,31 @@
     XCTAssertFalse(_value.isObject, "should be native array object, not objc object");
     XCTAssertEqual(_value[@"length"].toInt32, 2);
     XCTAssertEqualObjects(_value.toArray, array);
+}
+
+- (void)testStruct
+{
+    NSValue *value;
+    
+    CGPoint p = {1,2};
+    value = [NSValue valueWithBytes:&p objCType:@encode(CGPoint)];
+    _value = [value xjs_toValueInContext:_context];
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive);
+    
+    CGPoint p2 = {};
+    [[_value toValueOfType:@encode(CGPoint)] getValue:&p2];
+    XCTAssertEqual(p, p2);
+    
+    CGRect rect = {{1,2},{3,4}};
+    value = [NSValue valueWithBytes:&rect objCType:@encode(CGRect)];
+    _value = [value xjs_toValueInContext:_context];
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive);
+    
+    CGRect rect2 = {};
+    [[_value toValueOfType:@encode(CGRect)] getValue:&rect2];
+    XCTAssertEqual(rect, rect2);
 }
 
 @end

@@ -16,6 +16,7 @@
 #import "XJSValue_Private.h"
 #import "XJSContext_Private.h"
 #import "XJSClass.h"
+#import "XJSStructMetadata.h"
 
 NSString *XJSConvertJSValueToString(JSContext *cx, jsval val)
 {
@@ -33,6 +34,82 @@ NSString *XJSConvertJSValueToSource(JSContext *cx, jsval val)
 jsval XJSConvertStringToJSValue(JSContext *cx, NSString *string)
 {
     return STRING_TO_JSVAL(JS_NewStringCopyN(cx, [string UTF8String], [string length]));
+}
+
+
+static NSValue * XJSValueToStruct(JSContext *cx, jsval val, const char *encode)
+{
+    if (val.isPrimitive()) {
+        return nil;
+    }
+    
+    JSObject *obj = val.toObjectOrNull();
+    if (!obj) {
+        return nil;
+    }
+    
+    auto data = [XJSStructMetadata metadataForEncoding:@(encode)];
+    if (!data) {
+        return nil;
+    }
+    
+    NSUInteger size;
+    auto encode2 = NSGetSizeAndAlignment(encode, &size, NULL);
+    XASSERT(encode2[0] == '\0', @"encode should only contain one type");
+    
+    alignas(sizeof(NSInteger)) char buff[size];
+    bzero(buff, size);
+    
+    for (XJSStructField *field in data.fields) {
+        JSBool success;
+        jsval outval;
+        
+        success = JS_GetProperty(cx, obj, [field.name UTF8String], &outval);
+        if (!success) {
+            return nil;
+        }
+        
+        void *ptr = buff + field.offset;
+        auto fieldval = XJSValueToType(cx, outval, [field.encoding UTF8String]);
+        if (fieldval.second) {
+            *(__unsafe_unretained id *)ptr = fieldval.second;
+        } else if (fieldval.first) {
+            [fieldval.first getValue:ptr];
+        } else {
+            return nil;
+        }
+    }
+    
+    return [NSValue valueWithBytes:buff objCType:encode];
+}
+
+static JSBool XJSValueFromStruct(JSContext *cx, const char *encode, void *value, jsval *outval)
+{
+    auto data = [XJSStructMetadata metadataForEncoding:@(encode)];
+    if (!data) {
+        return nil;
+    }
+    
+    JSObject *obj = JS_NewObject(cx, NULL, NULL, NULL);
+    
+    for (XJSStructField *field in data.fields) {
+        JSBool success;
+        jsval outval;
+        
+        success = XJSValueFromType(cx, [field.encoding UTF8String], (char *)value + field.offset, &outval);
+        if (!success) {
+            return JS_FALSE;
+        }
+        
+        success = JS_SetProperty(cx, obj, [field.name UTF8String], &outval);
+        if (!success) {
+            return JS_FALSE;
+        }
+    }
+    
+    *outval = JS::ObjectOrNullValue(obj);
+    
+    return JS_TRUE;
 }
 
 template <typename T>
@@ -100,8 +177,7 @@ std::pair<NSValue *, id> XJSValueToType(JSContext *cx, jsval val, const char *en
             return XJSValueToType(cx, val, encode+1);
             
         case _C_STRUCT_B:  // '{'
-            // TODO support struct
-
+            return { XJSValueToStruct(cx, val, encode), nil };
             
             // unsuportted type
         case _C_UNION_B:  //  '('   support union??
@@ -222,8 +298,7 @@ JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, jsval *o
             return XJSValueFromType(cx, encode+1, value, outval);
             
         case _C_STRUCT_B:  // '{'
-            // TODO support struct
-            
+            return XJSValueFromStruct(cx, encode, value, outval);
             
             // unsuportted type
         case _C_UNION_B:  //  '('   support union??

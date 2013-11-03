@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 #import "XJSConvert.h"
 
@@ -22,12 +23,12 @@
 {
     XJSContext *_context;
     XJSValue *_value;
-    BOOL _hasError;
 }
 
 - (void)setUp
 {
     _context = [[XJSContext alloc] init];
+    [_context createObjCRuntimeWithNamespace:@"objc"];
 }
 
 - (void)tearDown
@@ -540,6 +541,113 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     NSArray *arr = _value.toArray;
     XCTAssertNil(arr);
+}
+
+- (void)testCreateValueCGPoint
+{
+    CGPoint p = {1,2.5};
+    _value = [XJSValue valueWithNSValue:[NSValue valueWithBytes:&p objCType:@encode(CGPoint)] inContext:_context];
+    
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive);
+    XCTAssertEqual(_value[@"x"].toDouble, 1.0);
+    XCTAssertEqual(_value[@"y"].toDouble, 2.5);
+    
+    NSValue *val = [_value toValueOfType:@encode(CGPoint)];
+    XCTAssertNotNil(val);
+    XCTAssertEqualObjects(@(val.objCType), @(@encode(CGPoint)));
+    
+    CGPoint p2;
+    [val getValue:&p2];
+    XCTAssertEqual(p, p2);
+}
+
+- (void)testCreateValueCGSize
+{
+    CGSize p = {1,2.5};
+    _value = [XJSValue valueWithNSValue:[NSValue valueWithBytes:&p objCType:@encode(CGSize)] inContext:_context];
+    
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive);
+    XCTAssertEqual(_value[@"width"].toDouble, 1.0);
+    XCTAssertEqual(_value[@"height"].toDouble, 2.5);
+    
+    NSValue *val = [_value toValueOfType:@encode(CGSize)];
+    XCTAssertNotNil(val);
+    XCTAssertEqualObjects(@(val.objCType), @(@encode(CGSize)));
+    
+    CGSize p2;
+    [val getValue:&p2];
+    XCTAssertEqual(p, p2);
+}
+
+- (void)testCreateValueCGRect
+{
+    CGRect p = { {1.5, 2.5}, {3.5, 4.5} };
+    _value = [XJSValue valueWithNSValue:[NSValue valueWithBytes:&p objCType:@encode(CGRect)] inContext:_context];
+    
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive);
+    
+    XJSValue *origin = _value[@"origin"];
+    XCTAssertNotNil(origin);
+    XCTAssertFalse(origin.isPrimitive);
+    XCTAssertEqual(origin[@"x"].toDouble, 1.5);
+    XCTAssertEqual(origin[@"y"].toDouble, 2.5);
+    
+    XJSValue *size = _value[@"size"];
+    XCTAssertNotNil(size);
+    XCTAssertFalse(size.isPrimitive);
+    XCTAssertEqual(size[@"width"].toDouble, 3.5);
+    XCTAssertEqual(size[@"height"].toDouble, 4.5);
+    
+    NSValue *val = [_value toValueOfType:@encode(CGRect)];
+    XCTAssertNotNil(val);
+    XCTAssertEqualObjects(@(val.objCType), @(@encode(CGRect)));
+    
+    CGRect p2;
+    [val getValue:&p2];
+    XCTAssertEqual(p, p2);
+}
+
+- (CGRect)createRectWithOrigin:(CGPoint)origin andSize:(CGSize)size
+{
+    return { origin, size };
+}
+
+- (void)testCallMethodWithStructType
+{
+    _value = [XJSValue valueWithObject:self inContext:_context];
+    
+    CGPoint origin = {1.5, 2};
+    CGSize size = {3, 4.5};
+    
+    XJSValue *ret = [_value invokeMethod:@"createRectWithOrigin_andSize" withArguments:@[[NSValue valueWithBytes:&origin objCType:@encode(CGPoint)],
+                                                                                         [NSValue valueWithBytes:&size objCType:@encode(CGSize)]
+                                                                                         ]];
+    XCTAssertNotNil(ret);
+    XCTAssertFalse(ret.isPrimitive);
+    
+    XJSValue *originVal = ret[@"origin"];
+    XCTAssertNotNil(originVal);
+    XCTAssertFalse(originVal.isPrimitive);
+    XCTAssertEqual(originVal[@"x"].toDouble, 1.5);
+    XCTAssertEqual(originVal[@"y"].toDouble, 2.0);
+    
+    XJSValue *sizeVal = ret[@"size"];
+    XCTAssertNotNil(sizeVal);
+    XCTAssertFalse(sizeVal.isPrimitive);
+    XCTAssertEqual(sizeVal[@"width"].toDouble, 3.0);
+    XCTAssertEqual(sizeVal[@"height"].toDouble, 4.5);
+    
+    NSValue *val = [ret toValueOfType:@encode(CGRect)];
+    XCTAssertNotNil(val);
+    XCTAssertEqualObjects(@(val.objCType), @(@encode(CGRect)));
+    
+    CGRect rect;
+    [val getValue:&rect];
+    XCTAssertEqual(CGRectMake(1.5, 2, 3, 4.5), rect);
+
 }
 
 @end

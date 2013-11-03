@@ -25,7 +25,7 @@ __END_DECLS
 
 @end
 
-@interface NSNumber (XJSValueConvert)
+@interface NSValue (XJSValueConvert)
 
 - (XJSValue *)xjs_toValueInContext:(XJSContext *)context;
 
@@ -55,4 +55,4 @@ __END_DECLS
 
 @end
 
-// TODO  NSDictionary NSValue
+// TODO  NSDictionary
