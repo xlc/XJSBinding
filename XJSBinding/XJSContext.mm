@@ -41,6 +41,9 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 }
 
 @implementation XJSContext
+{
+    JSCompartment *_compartment;
+}
 
 + (void)initialize
 {
@@ -79,9 +82,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
         @synchronized(_runtime) {
             _context = JS_NewContext(runtime.runtime, 8192);
             JS_SetOptions(_context, JSOPTION_VAROBJFIX);
-            JS_SetVersion(_context, JSVERSION_LATEST);
             JS_SetErrorReporter(_context, reportError);
-            
         }
         
         @synchronized(contextDict) {
@@ -89,12 +90,21 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
         }
         
         @synchronized(_runtime) {
-            _globalObject = JS_NewGlobalObject(_context, &global_class, NULL);
+            JS::CompartmentOptions options;
+            options.setVersion(JSVERSION_LATEST);
+            
+            JS::RootedObject global(_context, JS_NewGlobalObject(_context, &global_class, NULL, JS::DontFireOnNewGlobalHook, options));
+            
+            _compartment = JS_EnterCompartment(_context, global);
+            
+            JS_InitStandardClasses(_context, global);
+            
+            _globalObject = global;
             XASSERT(_globalObject != NULL, @"fail to create gloabl object");
             
-            JS_AddObjectRoot(_context, &_globalObject); // just in case
+            JS_AddObjectRoot(_context, &_globalObject);
             
-            JS_InitStandardClasses(_context, _globalObject);
+            JS_FireOnNewGlobalObject(_context, global);
         };
     }
     return self;
@@ -103,6 +113,8 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 - (void)dealloc
 {
     @synchronized(_runtime) {
+        JS_LeaveCompartment(_context, _compartment);
+        
         JS_RemoveObjectRoot(_context, &_globalObject);
         
         JS_DestroyContext(_context);
@@ -217,9 +229,8 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (XJSValue *)objectForKeyedSubscript:(NSString *)key   // TODO allow key to be dot seperated namespace. e.g. myapp.value
 {
-    jsval outval;
-    
     @synchronized(_runtime) {
+        JS::RootedValue outval(_context);
         if (JS_GetProperty(_context, _globalObject, [key UTF8String], &outval)) {
             return [[XJSValue alloc] initWithContext:self value:outval];
         }
@@ -230,10 +241,9 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (void)setObject:(id)object forKeyedSubscript:(NSString *)key  // TODO allow key to be dot seperated namespace. e.g. myapp.value
 {
-    jsval inval = XJSToValue(self, object).value;
-    
     @synchronized(_runtime) {
-        JS_SetProperty(_context, _globalObject, [key UTF8String], &inval);
+        JS::RootedValue inval(_context, XJSToValue(self, object).value);
+        JS_SetProperty(_context, _globalObject, [key UTF8String], inval);
     }
 
 }

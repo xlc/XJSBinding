@@ -28,7 +28,7 @@
         
         JSObject *obj;
         @synchronized(_context.runtime) {
-            jsval mapval;
+            JS::RootedValue mapval(context.context);
             JS_GetProperty(_context.context, _context.globalObject, "WeakMap", &mapval);
             obj = JS_New(_context.context, mapval.toObjectOrNull(), 0, NULL);
         }

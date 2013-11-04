@@ -49,8 +49,9 @@
         return nil;
     }
     
-    _value = allKeys[0];
-    return _value;
+    val = allKeys[0];
+    _value = val;
+    return val;
 }
 
 - (void)setValue:(XJSValue *)value

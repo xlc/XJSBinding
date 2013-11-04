@@ -62,7 +62,7 @@ static NSValue * XJSValueToStruct(JSContext *cx, jsval val, const char *encode)
     
     for (XJSStructField *field in data.fields) {
         JSBool success;
-        jsval outval;
+        JS::RootedValue outval(cx);
         
         success = JS_GetProperty(cx, obj, [field.name UTF8String], &outval);
         if (!success) {
@@ -83,7 +83,7 @@ static NSValue * XJSValueToStruct(JSContext *cx, jsval val, const char *encode)
     return [NSValue valueWithBytes:buff objCType:encode];
 }
 
-static JSBool XJSValueFromStruct(JSContext *cx, const char *encode, void *value, jsval *outval)
+static JSBool XJSValueFromStruct(JSContext *cx, const char *encode, void *value, JS::MutableHandleValue outval)
 {
     auto data = [XJSStructMetadata metadataForEncoding:@(encode)];
     if (!data) {
@@ -94,20 +94,20 @@ static JSBool XJSValueFromStruct(JSContext *cx, const char *encode, void *value,
     
     for (XJSStructField *field in data.fields) {
         JSBool success;
-        jsval outval;
+        JS::RootedValue fieldval(cx);
         
-        success = XJSValueFromType(cx, [field.encoding UTF8String], (char *)value + field.offset, &outval);
+        success = XJSValueFromType(cx, [field.encoding UTF8String], (char *)value + field.offset, &fieldval);
         if (!success) {
             return JS_FALSE;
         }
         
-        success = JS_SetProperty(cx, obj, [field.name UTF8String], &outval);
+        success = JS_SetProperty(cx, obj, [field.name UTF8String], fieldval);
         if (!success) {
             return JS_FALSE;
         }
     }
     
-    *outval = JS::ObjectOrNullValue(obj);
+    outval.set(JS::ObjectOrNullValue(obj));
     
     return JS_TRUE;
 }
@@ -199,9 +199,8 @@ std::pair<NSValue *, id> XJSValueToType(JSContext *cx, jsval val, const char *en
     }
 }
 
-JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, jsval *outval)
+JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, JS::MutableHandleValue outval)
 {
-    XASSERT_NOTNULL(outval);
     XASSERT_NOTNULL(value);
     
     NSUInteger size;
@@ -214,84 +213,84 @@ JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, jsval *o
         {
             XASSERT(size == sizeof(id), @"expected type with size %lu but return type with size %lu", (unsigned long)size, sizeof(id));
             id obj = *(id __autoreleasing *)value;
-            *outval = XJSToValue([XJSContext contextForJSContext:cx], obj).value;
+            outval.set(XJSToValue([XJSContext contextForJSContext:cx], obj).value);
             return JS_TRUE;
         }
             
         case _C_SEL:  //      ':'
-            *outval = JS::StringValue(JS_NewStringCopyZ(cx, sel_getName(*(SEL *)value)));
+            outval.set(JS::StringValue(JS_NewStringCopyZ(cx, sel_getName(*(SEL *)value))));
             return JS_TRUE;
             
         case _C_CHARPTR:  //  '*'
-            *outval = JS::StringValue(JS_NewStringCopyZ(cx, *(const char **)value));
+            outval.set(JS::StringValue(JS_NewStringCopyZ(cx, *(const char **)value)));
             return JS_TRUE;
             
         case _C_BOOL:  //     'B'
-            *outval = JS::BooleanValue(*(bool *)value);
+            outval.set(JS::BooleanValue(*(bool *)value));
             return JS_TRUE;
             
         case _C_CHR:  //      'c'
         {
-            BOOL val = *(BOOL *)value;
+            char val = *(char *)value;
             if (val == YES) {
-                *outval = JSVAL_TRUE;
+                outval.set(JSVAL_TRUE);
                 return JS_TRUE;
             } else if (val == NO) {
-                *outval = JSVAL_FALSE;
+                outval.set(JSVAL_FALSE);
                 return JS_TRUE;
             } else {
-                *outval = JS::NumberValue(*(unsigned char *)value);
+                outval.set(JS::NumberValue(*(unsigned char *)value));
                 return JS_TRUE;
             }
         }
             
         case _C_UCHR:  //     'C'
-            *outval = JS::Int32Value(*(char *)value);
+            outval.set(JS::Int32Value(*(char *)value));
             return JS_TRUE;
             
         case _C_SHT:  //      's'
-            *outval = JS::NumberValue(*(unsigned short *)value);
+            outval.set(JS::NumberValue(*(unsigned short *)value));
             return JS_TRUE;
             
         case _C_USHT:  //     'S'
-            *outval = JS::NumberValue(*(short *)value);
+            outval.set(JS::NumberValue(*(short *)value));
             return JS_TRUE;
             
         case _C_INT:  //      'i'
-            *outval = JS::NumberValue(*(int *)value);
+            outval.set(JS::NumberValue(*(int *)value));
             return JS_TRUE;
             
         case _C_UINT:  //     'I'
-            *outval = JS::NumberValue(*(unsigned int *)value);
+            outval.set(JS::NumberValue(*(unsigned int *)value));
             return JS_TRUE;
             
         case _C_LNG:  //      'l'
-            *outval = JS::detail::MakeNumberValue<true>::create(*(long *)value);
+            outval.set(JS::detail::MakeNumberValue<true>::create(*(long *)value));
             return JS_TRUE;
             
         case _C_ULNG:  //     'L'
-            *outval = JS::detail::MakeNumberValue<false>::create(*(unsigned long *)value);
+            outval.set(JS::detail::MakeNumberValue<false>::create(*(unsigned long *)value));
             return JS_TRUE;
             
         case _C_LNG_LNG:  //  'q'
-            *outval = JS::detail::MakeNumberValue<true>::create(*(long long *)value);
+            outval.set(JS::detail::MakeNumberValue<true>::create(*(long long *)value));
             return JS_TRUE;
             
         case _C_ULNG_LNG:  // 'Q'
-            *outval = JS::detail::MakeNumberValue<false>::create(*(unsigned long long *)value);
+            outval.set(JS::detail::MakeNumberValue<false>::create(*(unsigned long long *)value));
             return JS_TRUE;
             
         case _C_FLT:  //      'f'
-            *outval = JS::NumberValue(*(float *)value);
+            outval.set(JS::NumberValue(*(float *)value));
             return JS_TRUE;
             
         case _C_DBL:  //      'd'
-            *outval = JS::NumberValue(*(double *)value);
+            outval.set(JS::NumberValue(*(double *)value));
             return JS_TRUE;
             
         case _C_CONST:  //    'r'
             if (encode[1] == _C_CHARPTR) {  // const char *
-                *outval = JS::StringValue(JS_NewStringCopyZ(cx, *(const char **)value));
+                outval.set(JS::StringValue(JS_NewStringCopyZ(cx, *(const char **)value)));
                 return JS_TRUE;
             }
             XWLOG(@"ignore encode modifier 'r' (const) for type %s", encode);

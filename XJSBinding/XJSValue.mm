@@ -116,7 +116,7 @@
     alignas(NSUInteger) char buff[size];
     [value getValue:buff];
     @synchronized(context.runtime) {
-        jsval val;
+        JS::RootedValue val(context.context);
         if (XJSValueFromType(context.context, encode, buff, &val))
         {
             return [[XJSValue alloc] initWithContext:context value:val];
@@ -226,6 +226,7 @@
 - (type)objcmethod \
 { \
     type ret = 0; \
+    JS::RootedValue rooted(_context.context, _value); \
     if (!convertmethod) \
     { \
         [self reportErrorWithSelector:_cmd]; \
@@ -233,7 +234,7 @@
     return ret; \
 }
 
-#define TO_PRIMITIVE_METHOD_IMPL(type, objcmethod, jsmethod) TO_PRIMITIVE_METHOD_IMPL2(type, objcmethod, JS::jsmethod(self.context.context, _value, &ret))
+#define TO_PRIMITIVE_METHOD_IMPL(type, objcmethod, jsmethod) TO_PRIMITIVE_METHOD_IMPL2(type, objcmethod, JS::jsmethod(self.context.context, rooted, &ret))
 
 TO_PRIMITIVE_METHOD_IMPL(int32_t, toInt32, ToInt32)
 TO_PRIMITIVE_METHOD_IMPL(uint32_t, toUInt32, ToUint32)
@@ -468,7 +469,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 - (XJSValue *)constructWithArguments:(NSArray *)arguments
 {
     if (_value.isPrimitive()) {
-        return NO;
+        return nil;
     }
     
     jsval args[arguments.count];
@@ -491,7 +492,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
 - (XJSValue *)invokeMethod:(NSString *)method withArguments:(NSArray *)arguments
 {
     if (_value.isPrimitive()) {
-        return NO;
+        return nil;
     }
     
     jsval args[arguments.count];
@@ -534,7 +535,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
         stringKey = [key description];
     }
     
-    jsval outval;
+    JS::RootedValue outval(_context.context);
     
     @synchronized(_context.runtime) {
         if (JS_GetProperty(_context.context, _value.toObjectOrNull(), [stringKey UTF8String], &outval)) {
@@ -575,10 +576,10 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
         stringKey = [key description];
     }
     
-    jsval inval = XJSToValue(_context, object).value;
+    JS::RootedValue inval(_context.context, XJSToValue(_context, object).value);
     
     @synchronized(_context.runtime) {
-        JS_SetProperty(_context.context, _value.toObjectOrNull(), [stringKey UTF8String], &inval);
+        JS_SetProperty(_context.context, _value.toObjectOrNull(), [stringKey UTF8String], inval);
     }
 }
 

@@ -15,7 +15,7 @@
 #import "XJSInternalOperation.h"
 #import "XJSClass.h"
 
-static JSBool XJSPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
+static JSBool XJSPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JS::MutableHandleValue vp)
 {
     if (XJSInternalOperation::IsInternalOepration(cx)) {
         return JS_PropertyStub(cx, obj, jid, vp);
@@ -25,7 +25,7 @@ static JSBool XJSPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid,
     return JS_FALSE;
 }
 
-static JSBool XJSDeletePropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSBool *succeeded)
+static JSBool XJSDeletePropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JSBool *succeeded)
 {
     if (XJSInternalOperation::IsInternalOepration(cx)) {
         return JS_DeletePropertyStub(cx, obj, jid, succeeded);
@@ -35,7 +35,7 @@ static JSBool XJSDeletePropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleI
     return JS_TRUE; // no error
 }
 
-static JSBool XJSSetPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSBool strict, JSMutableHandleValue vp)
+static JSBool XJSSetPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JSBool strict, JS::MutableHandleValue vp)
 {
     if (XJSInternalOperation::IsInternalOepration(cx)) {
         return JS_StrictPropertyStub(cx, obj, jid, strict, vp);
@@ -45,7 +45,7 @@ static JSBool XJSSetPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId j
     return JS_FALSE;
 }
 
-static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
+static JSBool XJSResolveImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid)
 {
     XJSInternalOperation op(cx);
     JSAutoByteString str;
@@ -53,8 +53,8 @@ static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
     Class cls = objc_getClass(clsname);
     if (cls) {
         JSObject *clsobj = XJSGetOrCreateJSObject(cx, cls);
-        jsval clsval = JS::ObjectOrNullValue(clsobj);
-        return JS_SetProperty(cx, obj, clsname, &clsval);
+        JS::RootedValue clsval(cx, JS::ObjectOrNullValue(clsobj));
+        return JS_SetProperty(cx, obj, clsname, clsval);
     }
     return JS_TRUE;
 }
@@ -70,7 +70,6 @@ static JSClass XJSRuntimeEntryClass = {
     XJSResolveImpl,             // resolve
     JS_ConvertStub,             // convert
     NULL,                       // finalize
-    JSCLASS_NO_OPTIONAL_MEMBERS
 };
 
 JSClass *XJSRuntimeEntry = &XJSRuntimeEntryClass;

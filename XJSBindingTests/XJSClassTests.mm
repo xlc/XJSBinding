@@ -169,7 +169,7 @@
 - (void)testConstructor
 {
     JSObject *obj = XJSCreateJSObject(_context.context, self);
-    jsval val;
+    JS::RootedValue val(_context.context);
     XCTAssertTrue(JS_GetProperty(_context.context, obj, "constructor", &val));
     XCTAssertTrue(val.isObject());
     id cls = XJSGetAssosicatedObject(val.toObjectOrNull());
@@ -191,8 +191,10 @@
     XCTAssert(obj != NULL);
     XCTAssertEqual(obj, obj2);
     
-    JSObject *obj3 = XJSGetOrCreateJSObject(_context.context, @1);
-    JSObject *obj4 = XJSGetOrCreateJSObject(_context.context, @1);
+    id nsobj = [NSObject new];
+    
+    JSObject *obj3 = XJSGetOrCreateJSObject(_context.context, nsobj);
+    JSObject *obj4 = XJSGetOrCreateJSObject(_context.context, nsobj);
     XCTAssert(obj3 != NULL);
     XCTAssertEqual(obj3, obj4);
     

@@ -55,9 +55,10 @@
 - (void)testRetainedByJSValue
 {
     @autoreleasepool {
-
+        
         @autoreleasepool {
             XJSValue *value = [XJSValue valueWithNewObjectInContext:_context];
+            
             _ref = [value weakReference];
             XCTAssertNotNil(_ref);
             

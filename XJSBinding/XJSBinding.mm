@@ -20,6 +20,6 @@ void XJSBindingInit(NSString *name, JSContext *cx, JSObject *globalObject)
     }
     
     JSObject *rootobj = JS_NewObject(cx, XJSRuntimeEntry, NULL, NULL);
-    jsval rootval = JS::ObjectOrNullValue(rootobj);
-    JS_SetProperty(cx, globalObject, [name UTF8String], &rootval);
+    JS::RootedValue rootval(cx, JS::ObjectOrNullValue(rootobj));
+    JS_SetProperty(cx, globalObject, [name UTF8String], rootval);
 }

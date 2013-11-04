@@ -167,21 +167,13 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
         INT32_MIN,                          // INT32_MIN
         0,                                  // 0.0
         123,                                // 123.45
-#if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR // FIXME: cast negative double to int have different result on ios device
-        0,                                  // -123.45
-#else
         -123,                               // -123.45
-#endif
         INT32_MAX,                          // (double)INT32_MAX
         INT32_MIN,                          // (double)INT32_MIN
         0,                                  // "0"
         -1,                                 // "-1"
         123,                                // "123.45"
-#if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR // FIXME: cast negative double to int have different result on ios device
-        0,                                  // -123.45
-#else
         -123,                               // -123.45
-#endif
         INT32_MAX+1ll,                      // (string)INT32_MAX+1
         INT32_MIN-1ll,                      // (string)INT32_MIN-1
         INT64_MAX+1ll,                      // (string)INT64_MAX+1
@@ -205,21 +197,13 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
         static_cast<uint64_t>(INT32_MIN),   // INT32_MIN
         0,                                  // 0.0
         123,                                // 123.45
-#if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR // FIXME: cast negative double to int have different result on ios device
-        static_cast<uint64_t>(-123.45),     // -123.45
-#else
         static_cast<uint64_t>(-123),        // -123.45
-#endif
         INT32_MAX,                          // (double)INT32_MAX
         static_cast<uint64_t>(INT32_MIN),   // (double)INT32_MIN
         0,                                  // "0"
         static_cast<uint64_t>(-1),          // "-1"
         123,                                // "123.45"
-#if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR // FIXME: cast negative double to int have different result on ios device
-        static_cast<uint64_t>(-123.45),     // -123.45
-#else
         static_cast<uint64_t>(-123),        // -123.45
-#endif
         static_cast<uint64_t>(INT32_MAX+1llu), // (string)INT32_MAX+1
         static_cast<uint64_t>(INT32_MIN-1llu), // (string)INT32_MIN-1
         static_cast<uint64_t>(INT64_MAX+1llu), // (string)INT64_MAX+1

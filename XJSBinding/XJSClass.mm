@@ -24,22 +24,22 @@
 #import "XJSValue_Private.h"
 #import "XJSValueWeakRef.h"
 
-static JSBool XJSAddPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
+static JSBool XJSAddPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JS::MutableHandleValue vp)
 {
     return JS_PropertyStub(cx, obj, jid, vp);
 }
 
-static JSBool XJSGetPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSMutableHandleValue vp)
+static JSBool XJSGetPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JS::MutableHandleValue vp)
 {
     return JS_PropertyStub(cx, obj, jid, vp);
 }
 
-static JSBool XJSDeletePropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSBool *succeeded)
+static JSBool XJSDeletePropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JSBool *succeeded)
 {
     return JS_DeletePropertyStub(cx, obj, jid, succeeded);
 }
 
-static JSBool XJSSetPropertyImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid, JSBool strict, JSMutableHandleValue vp)
+static JSBool XJSSetPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JSBool strict, JS::MutableHandleValue vp)
 {
     return JS_StrictPropertyStub(cx, obj, jid, strict, vp);
 }
@@ -119,7 +119,7 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
     if (retsize > 0) {
         alignas(sizeof(NSInteger)) unsigned char buff[retsize];    // not sure alignas is required
         [invocation getReturnValue:buff];
-        jsval retval;
+        JS::RootedValue retval(cx);
         JSBool success = XJSValueFromType(cx, [signature methodReturnType], buff, &retval);
         if (!success) {
             retval = JS::UndefinedValue();
@@ -153,7 +153,7 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
     return JS_TRUE;
 }
 
-static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
+static JSBool XJSResolveImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid)
 {
     JS::RootedValue val(cx);
     JSBool success;
@@ -163,7 +163,7 @@ static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
     
     if (val.isString()) {
         JS::RootedObject proto(cx);
-        success = JS_GetPrototype(cx, obj, proto.address());
+        success = JS_GetPrototype(cx, obj, &proto);
         XASSERT(success && proto, "fail to get prototype");
         
         JSAutoByteString str(cx, JS_ValueToString(cx, val));
@@ -179,16 +179,16 @@ static JSBool XJSResolveImpl(JSContext *cx, JSHandleObject obj, JSHandleId jid)
         }
         
         JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, selname);
-        jsval funcval = JS::ObjectOrNullValue(JS_GetFunctionObject(func));
+        JS::RootedValue funcval(cx, JS::ObjectOrNullValue(JS_GetFunctionObject(func)));
         
-        success = JS_SetProperty(cx, proto, str.ptr(), &funcval);
+        success = JS_SetProperty(cx, proto, str.ptr(), funcval);
         XASSERT(success, "fail to set property");
     }
     
     return JS_TRUE;
 }
 
-static JSBool XJSHasInstanceImpl(JSContext *cx, JSHandleObject obj, JSMutableHandleValue vp, JSBool *bp)
+static JSBool XJSHasInstanceImpl(JSContext *cx, JS::HandleObject obj, JS::MutableHandleValue vp, JSBool *bp)
 {
     if (vp.isPrimitive()) {
         *bp = JS_FALSE;
@@ -343,11 +343,11 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
     JS_SetPrivate(jsobj, (__bridge_retained void *)obj);
     
     JS::RootedObject proto(cx);
-    success = JS_GetPrototype(cx, jsobj, proto.address());
+    success = JS_GetPrototype(cx, jsobj, &proto);
     XASSERT(success, @"fail to get prototype object");
     
     JS::RootedValue cstrval(cx);
-    JS_GetProperty(cx, proto, "constructor", cstrval.address()); // JS_GetConstructor will report error if it cannot find a constructor, which is normal in our case
+    JS_GetProperty(cx, proto, "constructor", &cstrval); // JS_GetConstructor will report error if it cannot find a constructor, which is normal in our case
     JS::RootedObject cstrobj(cx);
     if (cstrval.isObjectOrNull()) {
         cstrobj = cstrval.toObjectOrNull();
@@ -357,11 +357,14 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
         if (obj == [NSObject class]) {
             cstrval = JS::ObjectOrNullValue(jsobj); // refer to self
         } else {
-            const char *runtimename = [[XJSContext contextForJSContext:cx].globalNamespace UTF8String];
+            XJSContext *context = [XJSContext contextForJSContext:cx];
+            
+            // TODO avoid use runtimename to get runtime entry
+            const char *runtimename = [context.globalNamespace UTF8String];
             XASSERT_NOTNULL(runtimename);
             
-            jsval runtimeval;
-            success = JS_GetProperty(cx, JS_GetGlobalObject(cx), runtimename, &runtimeval);
+            JS::RootedValue runtimeval(cx);
+            success = JS_GetProperty(cx, context.globalObject, runtimename, &runtimeval);
             XASSERT(success, "fail to get objc runtime entry");
             
             JSObject *runtime = &runtimeval.toObject();
@@ -372,7 +375,7 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
                 cls = [NSObject class];
             }
             
-            success = JS_GetProperty(cx, runtime, class_getName(cls), cstrval.address());
+            success = JS_GetProperty(cx, runtime, class_getName(cls), &cstrval);
             XASSERT(success, "fail to get constructor object");
             XASSERT(cstrval.isObject(), "unable to get constructor object, class (%@) it not registered? ", cls);
         }

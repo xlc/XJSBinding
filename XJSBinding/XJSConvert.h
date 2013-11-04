@@ -18,4 +18,4 @@ NSString *XJSConvertJSValueToSource(JSContext *cx, jsval val);
 jsval XJSConvertStringToJSValue(JSContext *cx, NSString *string);
 
 std::pair<NSValue *, id> XJSValueToType(JSContext *cx, jsval val, const char *encode);
-JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, jsval *outval);
+JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, JS::MutableHandleValue outval);

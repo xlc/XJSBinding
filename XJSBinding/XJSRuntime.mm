@@ -17,6 +17,11 @@
 {
     self = [super init];
     if (self) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            JS_Init();
+        });
+        
         // TODO allow to config heap size and stack size
         _runtime = JS_NewRuntime(8L * 1024L * 1024L, JS_NO_HELPER_THREADS);
         JS_SetNativeStackQuota(_runtime, 128 * sizeof(size_t) * 1024);
