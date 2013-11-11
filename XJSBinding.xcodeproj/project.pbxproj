@@ -192,7 +192,7 @@
 		0660B9F217E0962700A3DD0C /* XJSBindingTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XJSBindingTests-Prefix.pch"; sourceTree = "<group>"; };
 		066241FF181BBC08000E1F54 /* XJSStructMetadataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSStructMetadataTests.m; sourceTree = "<group>"; };
 		0664602A17DDC4960071D23F /* XJSContextTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = XJSContextTests.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		066AD6BF17F0588A00EADB2B /* XJSBindingTests-ios copy.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XJSBindingTests-ios copy.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		066AD6BF17F0588A00EADB2B /* XJSBindingTests-ios.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XJSBindingTests-ios.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		066AD6C617F57B4700EADB2B /* NSObject+XJSValueConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+XJSValueConvert.h"; sourceTree = "<group>"; };
 		066AD6C717F57B4700EADB2B /* NSObject+XJSValueConvert.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSObject+XJSValueConvert.mm"; sourceTree = "<group>"; };
 		066CECAE17DBFC6E0078829C /* XJSContext_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSContext_Private.h; sourceTree = "<group>"; };
@@ -509,7 +509,7 @@
 				0660B9DA17E094CA00A3DD0C /* XJSBindingTests-ios.xctest */,
 				06CFF4CF17E1BFD10081F388 /* libXJSBinding-ios.a */,
 				0620F8A717F04859008A86ED /* XJSBindingApp.app */,
-				066AD6BF17F0588A00EADB2B /* XJSBindingTests-ios copy.xctest */,
+				066AD6BF17F0588A00EADB2B /* XJSBindingTests-ios.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -782,7 +782,7 @@
 			);
 			name = "XJSBindingTests-ios-device";
 			productName = "XJSBindingTests-ios";
-			productReference = 066AD6BF17F0588A00EADB2B /* XJSBindingTests-ios copy.xctest */;
+			productReference = 066AD6BF17F0588A00EADB2B /* XJSBindingTests-ios.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		0692BC6017D9D612009BFC18 /* XJSBinding */ = {
@@ -852,6 +852,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Xiliang Chen";
 				TargetAttributes = {
+					0620F8A617F04859008A86ED = {
+						DevelopmentTeam = 5EGPQ7NT4B;
+					};
 					0660B9D917E094CA00A3DD0C = {
 						TestTargetID = 0620F8A617F04859008A86ED;
 					};
@@ -1333,10 +1336,10 @@
 					"\"${PODS_ROOT}/Headers/XLCUtils\"",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
-				INFOPLIST_FILE = "XJSBindingTests-ios-Info.plist";
+				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "XJSBindingTests-ios copy";
+				PRODUCT_NAME = "XJSBindingTests-ios";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1364,10 +1367,10 @@
 					"\"${PODS_ROOT}/Headers/XLCUtils\"",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
-				INFOPLIST_FILE = "XJSBindingTests-ios-Info.plist";
+				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "XJSBindingTests-ios copy";
+				PRODUCT_NAME = "XJSBindingTests-ios";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUNDLE_LOADER)";

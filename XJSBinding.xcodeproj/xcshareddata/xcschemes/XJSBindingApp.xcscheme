@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "066AD6AB17F0588A00EADB2B"
-               BuildableName = "XJSBindingTests-ios copy.xctest"
+               BuildableName = "XJSBindingTests-ios.xctest"
                BlueprintName = "XJSBindingTests-ios-device"
                ReferencedContainer = "container:XJSBinding.xcodeproj">
             </BuildableReference>
