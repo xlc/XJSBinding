@@ -41,7 +41,6 @@
 		0619AA7D17FC2CC3001631BD /* XJSClassTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */; };
 		0619AA7E17FC2CC3001631BD /* XJSClassTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */; };
 		06208BCD17E1C2E100F60D39 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06208BCC17E1C2E100F60D39 /* libz.dylib */; };
-		06208BCE17E1C2F600F60D39 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06208BCC17E1C2E100F60D39 /* libz.dylib */; };
 		06208BD917E4084600F60D39 /* NSError+XJSError.h in Headers */ = {isa = PBXBuildFile; fileRef = 06208BD717E4084600F60D39 /* NSError+XJSError.h */; };
 		06208BDA17E4084600F60D39 /* NSError+XJSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 06208BD817E4084600F60D39 /* NSError+XJSError.m */; };
 		06208BDB17E4084600F60D39 /* NSError+XJSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 06208BD817E4084600F60D39 /* NSError+XJSError.m */; };
@@ -50,15 +49,11 @@
 		0620F8AB17F04859008A86ED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0660B9DE17E094CA00A3DD0C /* UIKit.framework */; };
 		0620F8B117F04859008A86ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0620F8AF17F04859008A86ED /* InfoPlist.strings */; };
 		0620F8B317F04859008A86ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0620F8B217F04859008A86ED /* main.m */; };
-		0620F8B717F04859008A86ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0620F8B617F04859008A86ED /* AppDelegate.m */; };
+		0620F8B717F04859008A86ED /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0620F8B617F04859008A86ED /* AppDelegate.mm */; };
 		0620F8B917F04859008A86ED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0620F8B817F04859008A86ED /* Images.xcassets */; };
 		0620F8D417F0487C008A86ED /* libXJSBinding-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CFF4CF17E1BFD10081F388 /* libXJSBinding-ios.a */; };
-		0620F8D617F04881008A86ED /* libPods-XJSBinding-ios-XLCUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0620F8D517F04881008A86ED /* libPods-XJSBinding-ios-XLCUtils.a */; };
-		0620F8D817F04885008A86ED /* libPods-XJSBinding-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0620F8D717F04885008A86ED /* libPods-XJSBinding-ios.a */; };
-		0620F8DA17F049E7008A86ED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06208BCC17E1C2E100F60D39 /* libz.dylib */; };
 		0627CD2517E1BA4A00D0BB7C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0627CD2417E1BA4A00D0BB7C /* Foundation.framework */; };
 		0627CD2617E1BA4E00D0BB7C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC7517D9D612009BFC18 /* XCTest.framework */; };
-		0635FB4517DBFE1C00E77A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0635FB4417DBFE1C00E77A85 /* libz.dylib */; };
 		0635FB4617DBFE3300E77A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0635FB4417DBFE1C00E77A85 /* libz.dylib */; };
 		0657FEEE181BA400000B29F6 /* XJSStructMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = 0657FEEC181BA400000B29F6 /* XJSStructMetadata.h */; };
 		0657FEEF181BA400000B29F6 /* XJSStructMetadata.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0657FEED181BA400000B29F6 /* XJSStructMetadata.mm */; };
@@ -105,6 +100,7 @@
 		06A5A13A1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.h in Headers */ = {isa = PBXBuildFile; fileRef = 06A5A1381820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.h */; };
 		06A5A13B1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A1391820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m */; };
 		06A5A13C1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A5A1391820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.m */; };
+		06CB26BF1830EB6B0001B000 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06208BCC17E1C2E100F60D39 /* libz.dylib */; };
 		06CFF4D017E1BFD10081F388 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0627CD2417E1BA4A00D0BB7C /* Foundation.framework */; };
 		06CFF4F117E1C0A90081F388 /* XJSContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB017DBFC6E0078829C /* XJSContext.mm */; };
 		06CFF4F217E1C0AA0081F388 /* XJSRuntime.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB317DBFC6E0078829C /* XJSRuntime.mm */; };
@@ -173,7 +169,7 @@
 		0620F8B217F04859008A86ED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0620F8B417F04859008A86ED /* XJSBindingApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XJSBindingApp-Prefix.pch"; sourceTree = "<group>"; };
 		0620F8B517F04859008A86ED /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		0620F8B617F04859008A86ED /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0620F8B617F04859008A86ED /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		0620F8B817F04859008A86ED /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0620F8D517F04881008A86ED /* libPods-XJSBinding-ios-XLCUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-XJSBinding-ios-XLCUtils.a"; path = "Pods/build/Debug-iphoneos/libPods-XJSBinding-ios-XLCUtils.a"; sourceTree = "<group>"; };
 		0620F8D717F04885008A86ED /* libPods-XJSBinding-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-XJSBinding-ios.a"; path = "Pods/build/Debug-iphoneos/libPods-XJSBinding-ios.a"; sourceTree = "<group>"; };
@@ -310,9 +306,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0620F8DA17F049E7008A86ED /* libz.dylib in Frameworks */,
-				0620F8D817F04885008A86ED /* libPods-XJSBinding-ios.a in Frameworks */,
-				0620F8D617F04881008A86ED /* libPods-XJSBinding-ios-XLCUtils.a in Frameworks */,
+				06CB26BF1830EB6B0001B000 /* libz.dylib in Frameworks */,
 				0620F8D417F0487C008A86ED /* libXJSBinding-ios.a in Frameworks */,
 				0620F8AA17F04859008A86ED /* CoreGraphics.framework in Frameworks */,
 				0620F8AB17F04859008A86ED /* UIKit.framework in Frameworks */,
@@ -350,7 +344,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0635FB4517DBFE1C00E77A85 /* libz.dylib in Frameworks */,
 				0692BC6517D9D612009BFC18 /* Cocoa.framework in Frameworks */,
 				869C10B1AFF5475D890D61F2 /* libPods-XJSBinding.a in Frameworks */,
 			);
@@ -372,7 +365,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06208BCE17E1C2F600F60D39 /* libz.dylib in Frameworks */,
 				06CFF4D017E1BFD10081F388 /* Foundation.framework in Frameworks */,
 				0D6311F05AF64626936572FE /* libPods-XJSBinding-ios.a in Frameworks */,
 			);
@@ -407,7 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				0620F8B517F04859008A86ED /* AppDelegate.h */,
-				0620F8B617F04859008A86ED /* AppDelegate.m */,
+				0620F8B617F04859008A86ED /* AppDelegate.mm */,
 				0620F8B817F04859008A86ED /* Images.xcassets */,
 				0620F8AD17F04859008A86ED /* Supporting Files */,
 			);
@@ -1076,7 +1068,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0620F8B717F04859008A86ED /* AppDelegate.m in Sources */,
+				0620F8B717F04859008A86ED /* AppDelegate.mm in Sources */,
 				0620F8B317F04859008A86ED /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1275,6 +1267,10 @@
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ljs_static",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1306,6 +1302,10 @@
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ljs_static",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1339,6 +1339,10 @@
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ljs_static",
+				);
 				PRODUCT_NAME = "XJSBindingTests-ios";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1370,6 +1374,10 @@
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ljs_static",
+				);
 				PRODUCT_NAME = "XJSBindingTests-ios";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1467,11 +1475,6 @@
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-ljs_static",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1488,11 +1491,6 @@
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-ljs_static",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1518,6 +1516,10 @@
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ljs_static",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "";
 				WRAPPER_EXTENSION = xctest;
@@ -1543,6 +1545,10 @@
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ljs_static",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "";
 				WRAPPER_EXTENSION = xctest;
@@ -1564,10 +1570,6 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-ljs_static",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1588,10 +1590,6 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-ljs_static",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
