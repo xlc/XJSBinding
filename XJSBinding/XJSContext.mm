@@ -211,6 +211,13 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 #pragma mark -
 
+- (BOOL)isStringCompilableUnit:(NSString *)str
+{
+    return JS_BufferIsCompilableUnit(_context, _globalObject, [str UTF8String], str.length);
+}
+
+#pragma mark -
+
 - (void)createObjCRuntimeWithNamespace:(NSString *)name
 {
     // TODO allow empty name - no public namespace created but return a XJSValue

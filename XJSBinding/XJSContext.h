@@ -38,6 +38,8 @@
 - (XJSValue *)evaluateScriptFile:(NSString *)path error:(NSError **)error;
 - (XJSValue *)evaluateScriptFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error;
 
+- (BOOL)isStringCompilableUnit:(NSString *)str;
+
 //
 ////-------
 //
