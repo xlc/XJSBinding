@@ -359,15 +359,7 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
         } else {
             XJSContext *context = [XJSContext contextForJSContext:cx];
             
-            // TODO avoid use runtimename to get runtime entry
-            const char *runtimename = [context.globalNamespace UTF8String];
-            XASSERT_NOTNULL(runtimename);
-            
-            JS::RootedValue runtimeval(cx);
-            success = JS_GetProperty(cx, context.globalObject, runtimename, &runtimeval);
-            XASSERT(success, "fail to get objc runtime entry");
-            
-            JSObject *runtime = &runtimeval.toObject();
+            JSObject *runtime = context.runtimeEntryObject;
             
             Class cls = object_getClass(obj);
             if (class_isMetaClass(cls))

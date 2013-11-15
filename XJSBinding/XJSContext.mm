@@ -115,6 +115,10 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     @synchronized(_runtime) {
         JS_LeaveCompartment(_context, _compartment);
         
+        if (_runtimeEntryObject) {
+            JS_RemoveObjectRoot(_context, &_runtimeEntryObject);
+        }
+        
         JS_RemoveObjectRoot(_context, &_globalObject);
         
         JS_DestroyContext(_context);
@@ -220,12 +224,19 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (void)createObjCRuntimeWithNamespace:(NSString *)name
 {
-    // TODO allow empty name - no public namespace created but return a XJSValue
-    // TODO save namespace object so it can be used internally
     // TODO allow name to be dot seperated namespace. e.g. myapp.objc
-    XASSERT_NOTNULL(name);
-    _globalNamespace = [name copy];
-    XJSBindingInit(name, _context, _globalObject);
+    
+    @synchronized(self) {
+        if (!_runtimeEntryObject) {
+            _runtimeEntryObject = XJSCreateRuntimeEntry(_context);
+            JS_AddObjectRoot(_context, &_runtimeEntryObject);
+        }
+    }
+    
+    if ([name length]) {
+        JS::RootedValue val(_context, JS::ObjectOrNullValue(_runtimeEntryObject));
+        JS_SetProperty(_context, _globalObject, [name UTF8String], val);
+    }
 }
 
 @end

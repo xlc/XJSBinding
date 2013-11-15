@@ -10,4 +10,4 @@
 
 #import "jsapi.h"
 
-void XJSBindingInit(NSString *name, JSContext *cx, JSObject *globalObject);
+JSObject * XJSCreateRuntimeEntry(JSContext *cx);

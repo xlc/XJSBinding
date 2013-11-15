@@ -17,6 +17,7 @@
 
 @property (assign, readonly) JSContext *context;
 @property (assign, readonly) JSObject *globalObject;
+@property (assign, readonly) JSObject *runtimeEntryObject;
 
 + (XJSContext *)contextForJSContext:(JSContext *)jscontext;
 

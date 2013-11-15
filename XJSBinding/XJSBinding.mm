@@ -12,14 +12,7 @@
 
 #import "XJSRuntimeEntry.h"
 
-void XJSBindingInit(NSString *name, JSContext *cx, JSObject *globalObject)
+JSObject * XJSCreateRuntimeEntry(JSContext *cx)
 {
-    if ([name length] == 0)
-    {
-        name = @"objc";
-    }
-    
-    JSObject *rootobj = JS_NewObject(cx, XJSRuntimeEntry, NULL, NULL);
-    JS::RootedValue rootval(cx, JS::ObjectOrNullValue(rootobj));
-    JS_SetProperty(cx, globalObject, [name UTF8String], rootval);
+    return JS_NewObject(cx, XJSRuntimeEntry, NULL, NULL);
 }
