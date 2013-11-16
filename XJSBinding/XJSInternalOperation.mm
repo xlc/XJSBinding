@@ -6,6 +6,6 @@
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#include "XJSInternalOperation.h"
+#include "XJSInternalOperation.hh"
 
 NSCountedSet * XJSInternalOperation::set;

@@ -8,4 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern struct JSClass *XJSRuntimeEntry;
+#import "jsapi.h"
+
+JSObject * XJSCreateRuntimeEntry(JSContext *cx);

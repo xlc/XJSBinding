@@ -6,14 +6,14 @@
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#import "XJSRuntimeEntry.h"
+#import "XJSRuntimeEntry.hh"
 
 #import <objc/runtime.h>
 #import "jsapi.h"
 #import "XLCAssertion.h"
 
-#import "XJSInternalOperation.h"
-#import "XJSClass.h"
+#import "XJSInternalOperation.hh"
+#import "XJSClass.hh"
 
 static JSBool XJSPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JS::MutableHandleValue vp)
 {
@@ -72,4 +72,7 @@ static JSClass XJSRuntimeEntryClass = {
     NULL,                       // finalize
 };
 
-JSClass *XJSRuntimeEntry = &XJSRuntimeEntryClass;
+JSObject * XJSCreateRuntimeEntry(JSContext *cx)
+{
+    return JS_NewObject(cx, &XJSRuntimeEntryClass, NULL, NULL);
+}

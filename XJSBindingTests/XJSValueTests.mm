@@ -9,10 +9,10 @@
 #import <XCTest/XCTest.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "XJSConvert.h"
+#import "XJSConvert.hh"
 
-#import "XJSValue_Private.h"
-#import "XJSContext_Private.h"
+#import "XJSValue_Private.hh"
+#import "XJSContext_Private.hh"
 #import "XJSRuntime.h"
 
 @interface XJSValueTests : XCTestCase

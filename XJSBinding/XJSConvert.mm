@@ -6,16 +6,16 @@
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#import "XJSConvert.h"
+#import "XJSConvert.hh"
 
 #import <objc/runtime.h>
 
 #import "XLCAssertion.h"
 
 #import "NSObject+XJSValueConvert.h"
-#import "XJSValue_Private.h"
-#import "XJSContext_Private.h"
-#import "XJSClass.h"
+#import "XJSValue_Private.hh"
+#import "XJSContext_Private.hh"
+#import "XJSClass.hh"
 #import "XJSStructMetadata.h"
 
 NSString *XJSConvertJSValueToString(JSContext *cx, jsval val)

@@ -2,12 +2,11 @@
 //  XJSBinding.h
 //  XJSBinding
 //
-//  Created by Xiliang Chen on 13-9-29.
+//  Created by Xiliang Chen on 13-11-16.
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-#import "jsapi.h"
 
-JSObject * XJSCreateRuntimeEntry(JSContext *cx);
+#import "XJSStructMetadata.h"

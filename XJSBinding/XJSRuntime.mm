@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#import "XJSRuntime_Private.h"
+#import "XJSRuntime_Private.hh"
 
 #import "jsapi.h"
 #import "XLCAssertion.h"

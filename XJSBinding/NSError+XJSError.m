@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#import "NSError+XJSError.h"
+#import "NSError+XJSError_Private.h"
 
 NSString * const XJSErrorDomain = @"XJSErrorDomain";
 

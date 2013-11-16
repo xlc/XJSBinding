@@ -10,9 +10,9 @@
 
 #import "XLCUtils.h"
 
-#import "NSError+XJSError.h"
+#import "NSError_XJSErrorConstants.h"
 
-#import "XJSContext_Private.h"
+#import "XJSContext_Private.hh"
 #import "XJSValue.h"
 
 @interface XJSContextTests : XCTestCase

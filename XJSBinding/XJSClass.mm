@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#import "XJSClass.h"
+#import "XJSClass.hh"
 
 #include <type_traits>
 #include <exception>
@@ -16,12 +16,12 @@
 #import "jsapi.h"
 #import "XLCAssertion.h"
 
-#import "XJSConvert.h"
+#import "XJSConvert.hh"
 #import "XJSHelperFunctions.h"
-#import "XJSInternalOperation.h"
+#import "XJSInternalOperation.hh"
 #import "NSObject+XJSValueConvert.h"
-#import "XJSContext_Private.h"
-#import "XJSValue_Private.h"
+#import "XJSContext_Private.hh"
+#import "XJSValue_Private.hh"
 #import "XJSValueWeakRef.h"
 
 static JSBool XJSAddPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JS::MutableHandleValue vp)

@@ -6,18 +6,18 @@
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#import "XJSValue_Private.h"
+#import "XJSValue_Private.hh"
 
 #import "jsapi.h"
 
 #import "XLCAssertion.h"
-#import "NSError+XJSError.h"
+#import "NSError+XJSError_Private.h"
 #import "NSObject+XJSValueConvert.h"
 
-#import "XJSConvert.h"
-#import "XJSContext_Private.h"
+#import "XJSConvert.hh"
+#import "XJSContext_Private.hh"
 #import "XJSRuntime.h"
-#import "XJSClass.h"
+#import "XJSClass.hh"
 
 @implementation XJSValue
 

@@ -6,17 +6,17 @@
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#import "XJSContext_Private.h"
+#import "XJSContext_Private.hh"
 
 #import "jsapi.h"
 #import "XLCAssertion.h"
 
-#import "NSError+XJSError.h"
+#import "NSError+XJSError_Private.h"
 #import "NSObject+XJSValueConvert.h"
 
-#import "XJSRuntime_Private.h"
-#import "XJSValue_Private.h"
-#import "XJSBinding.h"
+#import "XJSRuntime_Private.hh"
+#import "XJSValue_Private.hh"
+#import "XJSRuntimeEntry.hh"
 
 static NSMutableDictionary *contextDict;
 

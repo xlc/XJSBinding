@@ -12,10 +12,10 @@
 
 #import "jsapi.h"
 
-#import "XJSClass.h"
-#import "XJSConvert.h"
-#import "XJSContext_Private.h"
-#import "XJSValue_Private.h"
+#import "XJSClass.hh"
+#import "XJSConvert.hh"
+#import "XJSContext_Private.hh"
+#import "XJSValue_Private.hh"
 
 @interface XJSClassTests : XCTestCase
 

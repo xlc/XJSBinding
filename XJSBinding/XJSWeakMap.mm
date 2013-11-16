@@ -11,8 +11,8 @@
 #import "jsfriendapi.h"
 #import "XLCAssertion.h"
 
-#import "XJSValue_Private.h"
-#import "XJSContext_Private.h"
+#import "XJSValue_Private.hh"
+#import "XJSContext_Private.hh"
 
 @implementation XJSWeakMap
 {

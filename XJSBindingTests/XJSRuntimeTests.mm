@@ -10,7 +10,7 @@
 
 #import "XLCUtils.h"
 
-#import "XJSRuntime_Private.h"
+#import "XJSRuntime_Private.hh"
 
 @interface XJSRuntimeTests : XCTestCase
 

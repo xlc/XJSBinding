@@ -9,8 +9,8 @@
 #import <XCTest/XCTest.h>
 
 #import "XJSValueWeakRef.h"
-#import "XJSContext_Private.h"
-#import "XJSValue_Private.h"
+#import "XJSContext_Private.hh"
+#import "XJSValue_Private.hh"
 #import "XJSRuntime.h"
 
 @interface XJSValueWeakRefTests : XCTestCase

@@ -15,10 +15,4 @@ extern NSString * const XJSErrorLineNumberKey;
 extern NSString * const XJSErrorFileNameKey;
 extern NSString * const XJSErrorMessageKey;
 
-@interface NSError (XJSError)
 
-+ (NSError *)errorWithXJSDomainAndUserInfo:(NSDictionary *)dict;
-+ (NSError *)errorWithXJSDomainAndFileName:(NSString *)filename lineNumber:(NSUInteger)lineno message:(NSString *)message;
-+ (NSError *)errorWithXJSDomainAndDetailedErrors:(NSArray *)errors;
-
-@end

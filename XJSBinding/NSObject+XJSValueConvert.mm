@@ -12,7 +12,7 @@
 
 #import "XLCAssertion.h"
 
-#import "XJSValue_Private.h"
+#import "XJSValue_Private.hh"
 #import "XJSContext.h"
 
 XJSValue *XJSToValue(XJSContext *context, id obj)

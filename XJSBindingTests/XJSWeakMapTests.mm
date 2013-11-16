@@ -10,12 +10,12 @@
 
 #import "jsapi.h"
 #import "jsfriendapi.h"
-#import "XJSConvert.h"
+#import "XJSConvert.hh"
 
-#import "XJSContext_Private.h"
+#import "XJSContext_Private.hh"
 #import "XJSWeakMap.h"
-#import "XJSValue_Private.h"
-#import "XJSRuntime_Private.h"
+#import "XJSValue_Private.hh"
+#import "XJSRuntime_Private.hh"
 
 @interface XJSWeakMapTests : XCTestCase
 
