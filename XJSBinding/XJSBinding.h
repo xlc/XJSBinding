@@ -8,5 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-
+#import "XJSRuntime.h"
+#import "XJSContext.h"
+#import "XJSValue.h"
+#import "XJSWeakMap.h"
+#import "NSError_XJSErrorConstants.h"
 #import "XJSStructMetadata.h"
