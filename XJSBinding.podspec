@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
     s.homepage     = 'https://github.com/xlc/XJSBinding'
     s.license      = 'MIT'
     s.author       = { 'Xiliang Chen' => 'xlchen1291@gmail.com' }
-    s.source       = { :git => 'https://github.com/xlc/XJSBinding.git', :commit => '8e29b60ee5171082126bd0c554059bff345ad7c8' }
+    s.source       = { :git => 'https://github.com/xlc/XJSBinding.git', :commit => 'f593f04138d5c1b48466f0b561e22512ee3512b6' }
     s.source_files = 'XJSBinding/**/*.{h,hh,m,mm}'
     s.private_header_files = '*Private.h', '*.hh'
     s.preserve_paths = 'Spidermonkey/**/*'
