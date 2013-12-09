@@ -223,4 +223,13 @@
     XCTAssertEqualObjects(value[@"a"].toString, @"test");
 }
 
+- (void)testCreateObjCRuntimeWithNamespace
+{
+    [_context createObjCRuntimeWithNamespace:@"a.b.c"];
+    XJSValue *value = _context[@"a.b.c.NSObject"];
+    XCTAssertNotNil(value);
+    XCTAssertTrue(value.isObject);
+    XCTAssertEqualObjects(value.toObject, [NSObject class]);
+}
+
 @end

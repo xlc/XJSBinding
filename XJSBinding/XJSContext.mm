@@ -234,8 +234,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     }
     
     if ([name length]) {
-        JS::RootedValue val(_context, JS::ObjectOrNullValue(_runtimeEntryObject));
-        JS_SetProperty(_context, _globalObject, [name UTF8String], val);
+        self[name] = [[XJSValue alloc] initWithContext:self value:JS::ObjectOrNullValue(_runtimeEntryObject)];
     }
 }
 
