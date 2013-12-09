@@ -169,4 +169,58 @@
     XCTAssertEqual(value.toInt32, 2);
 }
 
+- (void)testKeyedSubscriptGetNamespace
+{
+    XJSValue *value;
+    
+    value = _context[@"a.b.c"];
+    XCTAssertNotNil(value);
+    XCTAssertTrue(value.isUndefined);
+    
+    value = _context[@"a.b"];
+    XCTAssertNotNil(value);
+    XCTAssertTrue(value.isUndefined);
+    
+    value = _context[@"a"];
+    XCTAssertNotNil(value);
+    XCTAssertTrue(value.isUndefined);
+}
+
+- (void)testKeyedSubscriptSetNamespace
+{
+    XJSValue *value;
+    
+    _context[@"a.b.c"] = @42;
+    
+    value = _context[@"a.b.c"];
+    XCTAssertNotNil(value);
+    XCTAssertEqual(value.toInt32, 42);
+    
+    value = _context[@"a.b"];
+    XCTAssertNotNil(value);
+    XCTAssertFalse(value.isPrimitive);
+    XCTAssertEqual(value[@"c"].toInt32, 42);
+    
+    value = _context[@"a"];
+    XCTAssertNotNil(value);
+    XCTAssertFalse(value.isPrimitive);
+    XCTAssertEqual(value[@"b"][@"c"].toInt32, 42);
+    
+    _context[@"a.a"] = @"test";
+    
+    value = _context[@"a.b.c"];
+    XCTAssertNotNil(value);
+    XCTAssertEqual(value.toInt32, 42);
+    
+    value = _context[@"a.a"];
+    XCTAssertNotNil(value);
+    XCTAssertEqualObjects(value.toString, @"test");
+    
+    value = _context[@"a"];
+    XCTAssertNotNil(value);
+    XCTAssertFalse(value.isPrimitive);
+    XCTAssertEqual(value[@"b"][@"c"].toInt32, 42);
+    XCTAssertEqualObjects(value[@"a"].toString, @"test");
+}
+
 @end

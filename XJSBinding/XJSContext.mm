@@ -245,25 +245,61 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 @implementation XJSContext(SubscriptSupport)
 
-- (XJSValue *)objectForKeyedSubscript:(NSString *)key   // TODO allow key to be dot seperated namespace. e.g. myapp.value
+- (XJSValue *)objectForKeyedSubscript:(NSString *)key
 {
+    NSArray *components = [key componentsSeparatedByString:@"."];
     @synchronized(_runtime) {
-        JS::RootedValue outval(_context);
-        if (JS_GetProperty(_context, _globalObject, [key UTF8String], &outval)) {
-            return [[XJSValue alloc] initWithContext:self value:outval];
+        JS::RootedObject obj(_context);
+        obj.set(_globalObject);
+        for (int i = 0; i < components.count - 1; ++i) {
+            NSString *path = components[i];
+            JS::RootedValue outval(_context);
+            if (JS_GetProperty(_context, obj, [path UTF8String], &outval)) {
+                if (outval.isObject()) {
+                    obj.set(outval.toObjectOrNull());
+                } else {
+                    return [XJSValue valueWithUndefinedInContext:self];
+                }
+            } else {
+                return nil;
+            }
+        }
+        
+        JS::RootedValue val(_context);
+        if (JS_GetProperty(_context, obj, [[components lastObject] UTF8String], &val)) {
+            return [[XJSValue alloc] initWithContext:self value:val];
+        } else {
+            return nil;
         }
     }
-    
-    return nil;
 }
 
-- (void)setObject:(id)object forKeyedSubscript:(NSString *)key  // TODO allow key to be dot seperated namespace. e.g. myapp.value
+- (void)setObject:(id)object forKeyedSubscript:(NSString *)key
 {
-    @synchronized(_runtime) {
-        JS::RootedValue inval(_context, XJSToValue(self, object).value);
-        JS_SetProperty(_context, _globalObject, [key UTF8String], inval);
-    }
+    NSArray *components = [key componentsSeparatedByString:@"."];
 
+    @synchronized(_runtime) {
+        JS::RootedObject obj(_context);
+        obj.set(_globalObject);
+        for (int i = 0; i < components.count - 1; ++i) {
+            NSString *path = components[i];
+            JS::RootedValue outval(_context);
+            if (JS_GetProperty(_context, _globalObject, [path UTF8String], &outval)) {
+                if (outval.isNullOrUndefined()) {
+                    JS::RootedValue val(_context, JS::ObjectOrNullValue(JS_NewObject(_context, NULL, NULL, NULL)));
+                    JS_SetProperty(_context, obj, [path UTF8String], val);
+                    obj.set(val.toObjectOrNull());
+                } else {
+                    obj.set(outval.toObjectOrNull());
+                }
+            } else {
+                return;
+            }
+        }
+        
+        JS::RootedValue inval(_context, XJSToValue(self, object).value);
+        JS_SetProperty(_context, obj, [[components lastObject] UTF8String], inval);
+    }
 }
 
 @end
