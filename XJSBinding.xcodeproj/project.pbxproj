@@ -27,7 +27,7 @@
 		0617DAB71811395C00D6884E /* XJSValueWeakRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0617DAB51811395C00D6884E /* XJSValueWeakRef.h */; };
 		0617DAB81811395C00D6884E /* XJSValueWeakRef.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0617DAB61811395C00D6884E /* XJSValueWeakRef.mm */; };
 		0617DAB91811395C00D6884E /* XJSValueWeakRef.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0617DAB61811395C00D6884E /* XJSValueWeakRef.mm */; };
-		0619AA7117F96CA1001631BD /* XJSHelperFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0619AA6F17F96CA1001631BD /* XJSHelperFunctions.h */; };
+		0619AA7117F96CA1001631BD /* XJSHelperFunctions.hh in Headers */ = {isa = PBXBuildFile; fileRef = 0619AA6F17F96CA1001631BD /* XJSHelperFunctions.hh */; };
 		0619AA7217F96CA1001631BD /* XJSHelperFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */; };
 		0619AA7317F96CA1001631BD /* XJSHelperFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */; };
 		0619AA7517F971DC001631BD /* XJSHelperFunctionsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */; };
@@ -148,7 +148,7 @@
 		0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = XJSRuntimeEntryTests.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0617DAB51811395C00D6884E /* XJSValueWeakRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSValueWeakRef.h; sourceTree = "<group>"; };
 		0617DAB61811395C00D6884E /* XJSValueWeakRef.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSValueWeakRef.mm; sourceTree = "<group>"; };
-		0619AA6F17F96CA1001631BD /* XJSHelperFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSHelperFunctions.h; sourceTree = "<group>"; };
+		0619AA6F17F96CA1001631BD /* XJSHelperFunctions.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XJSHelperFunctions.hh; sourceTree = "<group>"; };
 		0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSHelperFunctions.mm; sourceTree = "<group>"; };
 		0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSHelperFunctionsTests.mm; sourceTree = "<group>"; };
 		0619AA7717FC0DCF001631BD /* XJSClass.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XJSClass.hh; sourceTree = "<group>"; };
@@ -430,7 +430,7 @@
 				0660B9CD17DF23A800A3DD0C /* XJSConvert.mm */,
 				0616304B17F818DC0018F504 /* XJSInternalOperation.hh */,
 				0616304A17F818DC0018F504 /* XJSInternalOperation.mm */,
-				0619AA6F17F96CA1001631BD /* XJSHelperFunctions.h */,
+				0619AA6F17F96CA1001631BD /* XJSHelperFunctions.hh */,
 				0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */,
 			);
 			name = Helpers;
@@ -704,7 +704,7 @@
 				06A5A13A1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.h in Headers */,
 				066CECC117DBFC6E0078829C /* XJSValue.h in Headers */,
 				06208BD917E4084600F60D39 /* NSError_XJSErrorConstants.h in Headers */,
-				0619AA7117F96CA1001631BD /* XJSHelperFunctions.h in Headers */,
+				0619AA7117F96CA1001631BD /* XJSHelperFunctions.hh in Headers */,
 				066CECBD17DBFC6E0078829C /* XJSRuntime.h in Headers */,
 				060A9013181214DB002631A5 /* XJSWeakMap.h in Headers */,
 				0616305117F81A210018F504 /* XJSRuntimeEntry.hh in Headers */,

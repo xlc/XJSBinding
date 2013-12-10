@@ -17,7 +17,7 @@
 #import "XLCAssertion.h"
 
 #import "XJSConvert.hh"
-#import "XJSHelperFunctions.h"
+#import "XJSHelperFunctions.hh"
 #import "XJSInternalOperation.hh"
 #import "NSObject+XJSValueConvert.h"
 #import "XJSContext_Private.hh"

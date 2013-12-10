@@ -11,7 +11,7 @@
 #import <objc/runtime.h>
 #import <algorithm>
 
-#import "XJSHelperFunctions.h"
+#import "XJSHelperFunctions.hh"
 
 @interface _XJSHelperFunctionsTests_TestClass : NSObject
 

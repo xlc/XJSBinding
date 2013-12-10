@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 Xiliang Chen. All rights reserved.
 //
 
-#import "XJSHelperFunctions.h"
+#import "XJSHelperFunctions.hh"
 
 #import <objc/runtime.h>
 #include <algorithm>

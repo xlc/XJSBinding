@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "jsapi.h"
+
 /** 
  * Try to match selector with given name and number of arguments that colons in selector are replaced by underscores.
  * Ending underscore are optional. But when end with underscores make sure number of ending underscores matches to number of ending colons.
