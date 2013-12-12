@@ -87,6 +87,12 @@
 		066CECBE17DBFC6E0078829C /* XJSRuntime.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB317DBFC6E0078829C /* XJSRuntime.mm */; };
 		066CECC117DBFC6E0078829C /* XJSValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECB617DBFC6E0078829C /* XJSValue.h */; };
 		066CECC217DBFC6E0078829C /* XJSValue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB717DBFC6E0078829C /* XJSValue.mm */; };
+		0674ACE01857116C004491AD /* XJSLogger.hh in Headers */ = {isa = PBXBuildFile; fileRef = 0674ACDE1857116C004491AD /* XJSLogger.hh */; };
+		0674ACE11857116C004491AD /* XJSLogger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674ACDF1857116C004491AD /* XJSLogger.mm */; };
+		0674ACE21857116C004491AD /* XJSLogger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674ACDF1857116C004491AD /* XJSLogger.mm */; };
+		0674ACE418572200004491AD /* XJSLoggerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674ACE318572200004491AD /* XJSLoggerTests.mm */; };
+		0674ACE518572200004491AD /* XJSLoggerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674ACE318572200004491AD /* XJSLoggerTests.mm */; };
+		0674ACE618572200004491AD /* XJSLoggerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674ACE318572200004491AD /* XJSLoggerTests.mm */; };
 		067AAFD3181A73FA002DB3A2 /* XJSRuntimeEntryTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */; };
 		067AAFD4181A73FA002DB3A2 /* XJSHelperFunctionsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */; };
 		067AAFD5181A73FA002DB3A2 /* XJSClassTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */; };
@@ -196,6 +202,9 @@
 		066CECB317DBFC6E0078829C /* XJSRuntime.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSRuntime.mm; sourceTree = "<group>"; };
 		066CECB617DBFC6E0078829C /* XJSValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSValue.h; sourceTree = "<group>"; };
 		066CECB717DBFC6E0078829C /* XJSValue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSValue.mm; sourceTree = "<group>"; };
+		0674ACDE1857116C004491AD /* XJSLogger.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XJSLogger.hh; sourceTree = "<group>"; };
+		0674ACDF1857116C004491AD /* XJSLogger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSLogger.mm; sourceTree = "<group>"; };
+		0674ACE318572200004491AD /* XJSLoggerTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSLoggerTests.mm; sourceTree = "<group>"; };
 		0692BC6117D9D612009BFC18 /* libXJSBinding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libXJSBinding.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0692BC6417D9D612009BFC18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0692BC6717D9D612009BFC18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -432,6 +441,8 @@
 				0616304A17F818DC0018F504 /* XJSInternalOperation.mm */,
 				0619AA6F17F96CA1001631BD /* XJSHelperFunctions.hh */,
 				0619AA7017F96CA1001631BD /* XJSHelperFunctions.mm */,
+				0674ACDE1857116C004491AD /* XJSLogger.hh */,
+				0674ACDF1857116C004491AD /* XJSLogger.mm */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -573,6 +584,7 @@
 				0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */,
 				060A901E181689B3002631A5 /* XJSValueWeakRefTests.mm */,
 				066241FF181BBC08000E1F54 /* XJSStructMetadataTests.m */,
+				0674ACE318572200004491AD /* XJSLoggerTests.mm */,
 				0692BC7C17D9D612009BFC18 /* Supporting Files */,
 			);
 			path = XJSBindingTests;
@@ -710,6 +722,7 @@
 				0616305117F81A210018F504 /* XJSRuntimeEntry.hh in Headers */,
 				066CECB917DBFC6E0078829C /* XJSContext_Private.hh in Headers */,
 				0657FEEE181BA400000B29F6 /* XJSStructMetadata.h in Headers */,
+				0674ACE01857116C004491AD /* XJSLogger.hh in Headers */,
 				0619AA7917FC0DCF001631BD /* XJSClass.hh in Headers */,
 				0617DAB71811395C00D6884E /* XJSValueWeakRef.h in Headers */,
 			);
@@ -1080,6 +1093,7 @@
 				0660B9EE17E094FA00A3DD0C /* XJSRuntimeTests.mm in Sources */,
 				06624201181BBC08000E1F54 /* XJSStructMetadataTests.m in Sources */,
 				060A9018181220DD002631A5 /* XJSWeakMapTests.mm in Sources */,
+				0674ACE518572200004491AD /* XJSLoggerTests.mm in Sources */,
 				060A9020181689B3002631A5 /* XJSValueWeakRefTests.mm in Sources */,
 				0616305617F95BA90018F504 /* XJSRuntimeEntryTests.mm in Sources */,
 				0660B9F117E0950500A3DD0C /* XJSValueTests.mm in Sources */,
@@ -1097,6 +1111,7 @@
 				066AD6AE17F0588A00EADB2B /* XJSContextTests.mm in Sources */,
 				06624202181BBC08000E1F54 /* XJSStructMetadataTests.m in Sources */,
 				06DA4B7117F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
+				0674ACE618572200004491AD /* XJSLoggerTests.mm in Sources */,
 				060A9021181689B3002631A5 /* XJSValueWeakRefTests.mm in Sources */,
 				066AD6B017F0588A00EADB2B /* XJSRuntimeTests.mm in Sources */,
 				066AD6B117F0588A00EADB2B /* XJSValueTests.mm in Sources */,
@@ -1115,6 +1130,7 @@
 				0660B9CF17DF23A800A3DD0C /* XJSConvert.mm in Sources */,
 				0616304C17F818DC0018F504 /* XJSInternalOperation.mm in Sources */,
 				066CECBB17DBFC6E0078829C /* XJSContext.mm in Sources */,
+				0674ACE11857116C004491AD /* XJSLogger.mm in Sources */,
 				0619AA7217F96CA1001631BD /* XJSHelperFunctions.mm in Sources */,
 				0616305217F81A210018F504 /* XJSRuntimeEntry.mm in Sources */,
 				060A9014181214DB002631A5 /* XJSWeakMap.mm in Sources */,
@@ -1135,6 +1151,7 @@
 				0619AA7517F971DC001631BD /* XJSHelperFunctionsTests.mm in Sources */,
 				06624200181BBC08000E1F54 /* XJSStructMetadataTests.m in Sources */,
 				060A9017181220DD002631A5 /* XJSWeakMapTests.mm in Sources */,
+				0674ACE418572200004491AD /* XJSLoggerTests.mm in Sources */,
 				060A901F181689B3002631A5 /* XJSValueWeakRefTests.mm in Sources */,
 				0616305517F95BA90018F504 /* XJSRuntimeEntryTests.mm in Sources */,
 				065B1A6D17DC136B00AC0D63 /* XJSRuntimeTests.mm in Sources */,
@@ -1153,6 +1170,7 @@
 				06CFF4F417E1C0AE0081F388 /* XJSValue.mm in Sources */,
 				0616304D17F818DC0018F504 /* XJSInternalOperation.mm in Sources */,
 				06CFF4F517E1C0B10081F388 /* XJSConvert.mm in Sources */,
+				0674ACE21857116C004491AD /* XJSLogger.mm in Sources */,
 				0619AA7317F96CA1001631BD /* XJSHelperFunctions.mm in Sources */,
 				0616305317F81A210018F504 /* XJSRuntimeEntry.mm in Sources */,
 				060A9015181214DB002631A5 /* XJSWeakMap.mm in Sources */,
