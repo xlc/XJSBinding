@@ -43,6 +43,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 @implementation XJSContext
 {
     JSCompartment *_compartment;
+    JSFunction *_scopeWrapperFunc;
 }
 
 + (void)initialize
@@ -81,7 +82,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
         
         @synchronized(_runtime) {
             _context = JS_NewContext(runtime.runtime, 8192);
-            JS_SetOptions(_context, JSOPTION_VAROBJFIX);
+//            JS_SetOptions(_context, JSOPTION_VAROBJFIX);  // no I don't want this "fix"
             JS_SetErrorReporter(_context, reportError);
         }
         
@@ -174,19 +175,37 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (XJSValue *)evaluateString:(NSString *)script error:(NSError **)error
 {
-    return [self evaluateString:script fileName:nil lineNumber:0 error:error];
+    return [self evaluateString:script withScope:nil fileName:nil lineNumber:0 error:error];
 }
 
 - (XJSValue *)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)error
 {
 
+    return [self evaluateString:script withScope:nil fileName:filename lineNumber:lineno error:error];
+}
+
+- (XJSValue *)evaluateScriptFile:(NSString *)path error:(NSError **)error
+{
+    return [self evaluateScriptFile:path withScope:nil error:error];
+}
+
+- (XJSValue *)evaluateString:(NSString *)script withScope:(XJSValue *)scope error:(NSError **)error
+{
+    return [self evaluateString:script withScope:scope fileName:nil lineNumber:0 error:error];
+}
+
+- (XJSValue *)evaluateString:(NSString *)script withScope:(XJSValue *)scope fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)error
+{
     jsval outVal;
     [self pushErrorStack];
     
     BOOL ok;
     
+    BOOL useGlobalScope = !scope || scope.isPrimitive;
+    JSObject *scopeObject = useGlobalScope ? _globalObject : scope.value.toObjectOrNull();
+    
     @synchronized(_runtime) {
-        ok = JS_EvaluateScript(_context, _globalObject, [script UTF8String], (unsigned)[script length], [filename UTF8String], (unsigned)lineno, &outVal);
+        ok = JS_EvaluateScript(_context, scopeObject, [script UTF8String], (unsigned)[script length], [filename UTF8String], (unsigned)lineno, &outVal);
     }
     
     if (error) {
@@ -197,20 +216,17 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     [self popErrorStack];
     
     return value;
+
 }
 
-- (XJSValue *)evaluateScriptFile:(NSString *)path error:(NSError **)error
+// TODO avoid load whole file into memory
+- (XJSValue *)evaluateScriptFile:(NSString *)path withScope:(XJSValue *)scope error:(NSError **)error
 {
-    return [self evaluateScriptFile:path encoding:NSUTF8StringEncoding error:error];
-}
-
-- (XJSValue *)evaluateScriptFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error
-{
-    NSString *script = [NSString stringWithContentsOfFile:path encoding:enc error:error];
+    NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:error];
     if (!script) {
         return nil;
     }
-    return [self evaluateString:script fileName:path lineNumber:0 error:error];
+    return [self evaluateString:script withScope:scope fileName:path lineNumber:0 error:error];
 }
 
 #pragma mark -
@@ -224,8 +240,6 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (void)createObjCRuntimeWithNamespace:(NSString *)name
 {
-    // TODO allow name to be dot seperated namespace. e.g. myapp.objc
-    
     @synchronized(self) {
         if (!_runtimeEntryObject) {
             _runtimeEntryObject = XJSCreateRuntimeEntry(_context);

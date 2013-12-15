@@ -22,9 +22,6 @@
  */
 - (id)init;
 
-/**
- * JS runtime must be create in the same thread
- */
 - (id)initWithRuntime:(XJSRuntime *)runtime;
 
 // call this method to get all the magic of Objective-C binding
@@ -35,7 +32,11 @@
 - (XJSValue *)evaluateString:(NSString *)script error:(NSError **)error;
 - (XJSValue *)evaluateString:(NSString *)script fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)error;
 - (XJSValue *)evaluateScriptFile:(NSString *)path error:(NSError **)error;
-- (XJSValue *)evaluateScriptFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error;
+
+// nil scope for global scope
+- (XJSValue *)evaluateString:(NSString *)script withScope:(XJSValue *)scope error:(NSError **)error;
+- (XJSValue *)evaluateString:(NSString *)script withScope:(XJSValue *)scope fileName:(NSString *)filename lineNumber:(NSUInteger)lineno error:(NSError **)error;
+- (XJSValue *)evaluateScriptFile:(NSString *)path withScope:(XJSValue *)scope error:(NSError **)error;
 
 - (BOOL)isStringCompilableUnit:(NSString *)str;
 
