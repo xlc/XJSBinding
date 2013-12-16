@@ -19,6 +19,8 @@
 @property (assign, readonly) JSObject *globalObject;
 @property (assign, readonly) JSObject *runtimeEntryObject;
 
+@property (strong) XJSModuleManager *moduleManager; // mainly for test
+
 + (XJSContext *)contextForJSContext:(JSContext *)jscontext;
 
 - (void)pushErrorStack;

@@ -8,8 +8,8 @@
 
 #import "XJSContext_Private.hh"
 
+#import <XLCUtils/XLCUtils.h>
 #import "jsapi.h"
-#import "XLCAssertion.h"
 
 #import "NSError+XJSError_Private.h"
 #import "NSObject+XJSValueConvert.h"
@@ -17,6 +17,7 @@
 #import "XJSRuntime_Private.hh"
 #import "XJSValue_Private.hh"
 #import "XJSRuntimeEntry.hh"
+#import "XJSModuleManager.h"
 
 static NSMutableDictionary *contextDict;
 
@@ -201,10 +202,10 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     
     BOOL ok;
     
-    BOOL useGlobalScope = !scope || scope.isPrimitive;
-    JSObject *scopeObject = useGlobalScope ? _globalObject : scope.value.toObjectOrNull();
-    
     @synchronized(_runtime) {
+        BOOL useGlobalScope = !scope || scope.isPrimitive;
+        JSObject *scopeObject = useGlobalScope ? _globalObject : scope.value.toObjectOrNull();
+        
         ok = JS_EvaluateScript(_context, scopeObject, [script UTF8String], (unsigned)[script length], [filename UTF8String], (unsigned)lineno, &outVal);
     }
     
@@ -233,14 +234,29 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 - (BOOL)isStringCompilableUnit:(NSString *)str
 {
-    return JS_BufferIsCompilableUnit(_context, _globalObject, [str UTF8String], str.length);
+    @synchronized(_runtime) {
+        return JS_BufferIsCompilableUnit(_context, _globalObject, [str UTF8String], str.length);
+    }
 }
 
 #pragma mark -
 
+- (void)createModuleManager
+{
+    if (self.moduleManager) {
+        return;
+    }
+    
+    self.moduleManager = [[XJSModuleManager alloc] initWithContext:self scriptProvider:^NSString *(NSString *path) {
+        return [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    }];
+    
+    self[@"require"] = self.moduleManager.require;
+}
+
 - (void)createObjCRuntimeWithNamespace:(NSString *)name
 {
-    @synchronized(self) {
+    @synchronized(_runtime) {
         if (!_runtimeEntryObject) {
             _runtimeEntryObject = XJSCreateRuntimeEntry(_context);
             JS_AddObjectRoot(_context, &_runtimeEntryObject);

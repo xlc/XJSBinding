@@ -10,10 +10,12 @@
 
 @class XJSValue;
 @class XJSRuntime;
+@class XJSModuleManager;
 
 @interface XJSContext : NSObject
 
 @property (strong, readonly) XJSRuntime *runtime;
+@property (strong, readonly) XJSModuleManager *moduleManager;
 
 @property (strong) void (^errorHandler)(XJSContext *context, NSError *error);
 
@@ -23,6 +25,8 @@
 - (id)init;
 
 - (id)initWithRuntime:(XJSRuntime *)runtime;
+
+- (void)createModuleManager;
 
 // call this method to get all the magic of Objective-C binding
 - (void)createObjCRuntimeWithNamespace:(NSString *)name;
