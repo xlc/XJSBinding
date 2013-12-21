@@ -25,6 +25,7 @@
 - (XJSValue *)requireModule:(NSString *)moduleId;
 
 - (void)provideValue:(XJSValue *)exports forModuleId:(NSString *)moduleId;
+- (void)provideScript:(NSString *)script forModuleId:(NSString *)moduleId;
 - (void)provideBlock:(BOOL(^)(XJSValue *require, XJSValue *exports, XJSValue *module))block forModuleId:(NSString *)moduleId;
 
 @end

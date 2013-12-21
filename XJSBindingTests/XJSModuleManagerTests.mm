@@ -47,10 +47,11 @@
 
 - (void)tearDown
 {
+    XCTAssertTrue(_scripts.empty(), "all provided scripts should be consumed");
+    
     _context = nil;
     _manager = nil;
     _paths.clear();
-    _scripts.clear();
     
     [super tearDown];
 }
@@ -228,10 +229,6 @@
 
 - (void)testSearchPathRelative
 {
-    _manager.paths = @[@"scripts"];
-    
-    _scripts = std::deque<NSString *>(6); // nil * 6
-    
     [_manager provideValue:[self createDummyModule] forModuleId:@"scripts/b"];
     
     [_manager provideBlock:^BOOL(XJSValue *require, XJSValue *exports, XJSValue *module) {
@@ -245,10 +242,6 @@
 
 - (void)testSearchPathRelative2
 {
-    _manager.paths = @[@"scripts"];
-    
-    _scripts = std::deque<NSString *>(6); // nil * 6
-    
     [_manager provideValue:[self createDummyModule] forModuleId:@"c/d"];
     
     [_manager provideBlock:^BOOL(XJSValue *require, XJSValue *exports, XJSValue *module) {
@@ -263,6 +256,86 @@
     
     XJSValue *module = [_manager requireModule:@"test"];
     [self assertModule:module];
+}
+
+- (void)testProvideScript
+{
+    [_manager provideScript:@"exports.val=42;exports.name='test'" forModuleId:@"test"];
+    
+    XJSValue *module = [_manager requireModule:@"test"];
+    [self assertModule:module];
+}
+
+// https://github.com/commonjs/commonjs/tree/master/tests/modules/1.0/cyclic
+- (void)testCyclic
+{
+    _manager.paths = @[@"scripts"];
+    
+    _scripts.push_back(@"exports.a = function(){ return b; }; var b = require('b');");
+    _scripts.push_back(@"var a = require('a'); exports.b = function(){ return a; };");
+    
+    XJSValue *moduleA = [_manager requireModule:@"a"];
+    XJSValue *moduleB = [_manager requireModule:@"b"];
+    
+    XCTAssertNotNil(moduleA, "should be able to require module a");
+    XCTAssertNotNil(moduleB, "should be able to requrie module b");
+    
+    XCTAssertTrue(moduleA[@"a"].isCallable, "a.a should be a function");
+    XCTAssertTrue(moduleB[@"b"].isCallable, "b.b should be a function");
+    XCTAssertEqualObjects([moduleA[@"a"] callWithArguments:nil][@"b"], moduleB[@"b"], "a gets b");
+    XCTAssertEqualObjects([moduleB[@"b"] callWithArguments:nil][@"a"], moduleA[@"a"], "a gets b");
+}
+
+// https://github.com/commonjs/commonjs/tree/master/tests/modules/1.0/determinism
+- (void)testDeterminism
+{
+    [_manager provideScript:@"try {require('a');} catch (ex) { exports.success = true;}" forModuleId:@"submodule/a"];
+    [_manager provideScript:@"exports.success = require('submodule/a').success;" forModuleId:@"test"];
+    
+    XJSValue *module = [_manager requireModule:@"test"];
+    XCTAssertTrue(module[@"success"].toBool, "require does not fall back to relative modules when absolutes are not available");
+}
+
+// https://github.com/commonjs/commonjs/tree/master/tests/modules/1.0/exactExports
+- (void)testExactExports
+{
+    [_manager provideScript:@"exports.program = function(){ return require('program'); };" forModuleId:@"a"];
+    [_manager provideScript:@"var a = require('a'); exports.a = a; exports.exports = exports;" forModuleId:@"program"];
+    
+    XJSValue *module = [_manager requireModule:@"program"];
+    XCTAssertEqualObjects([module[@"a"][@"program"] callWithArguments:nil], module[@"exports"], "exact exports");
+}
+
+// https://github.com/commonjs/commonjs/blob/master/tests/modules/1.0/monkeys/a.js
+- (void)testMonkeys // Umm...
+{
+    [_manager provideScript:@"require('program').monkey = 10" forModuleId:@"a"];
+    [_manager provideScript:@"var a = require('a')" forModuleId:@"program"];
+    
+    XJSValue *module = [_manager requireModule:@"program"];
+    XCTAssertEqual(module[@"monkey"].toInt32, 10, "monkeys permitted");
+}
+
+// https://github.com/commonjs/commonjs/tree/master/tests/modules/1.0/relative
+- (void)testRelative
+{
+    [_manager provideScript:@"exports.foo = require('./b').foo" forModuleId:@"submodule/a"];
+    [_manager provideScript:@"exports.foo = {}" forModuleId:@"submodule/b"];
+    [_manager provideScript:@"exports.a = require('submodule/a').foo; exports.b = require('submodule/b').foo" forModuleId:@"program"];
+    
+    XJSValue *module = [_manager requireModule:@"program"];
+    XCTAssertEqualObjects(module[@"a"], module[@"b"], "a and b share foo through a relative require");
+}
+
+// https://github.com/commonjs/commonjs/tree/master/tests/modules/1.0/transitive
+- (void)testTransitive
+{
+    [_manager provideScript:@"exports.foo = require('b').foo;" forModuleId:@"a"];
+    [_manager provideScript:@"exports.foo = require('c').foo;" forModuleId:@"b"];
+    [_manager provideScript:@"exports.foo = {val:42};" forModuleId:@"c"];
+    
+    XJSValue *module = [_manager requireModule:@"a"];
+    XCTAssertEqual(module[@"foo"][@"val"].toInt32, 42);
 }
 
 #pragma mark - helpers

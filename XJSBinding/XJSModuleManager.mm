@@ -69,7 +69,9 @@ static JSBool XJSRequireFunc(JSContext *cx, unsigned argc, JS::Value *vp)
         
         return JS_TRUE;
     } else {
-        JS_ReportError(cx, "Fail to load module %s", [moduleId UTF8String]);
+        if (!JS_IsExceptionPending(cx)) {   // avoid override old exception
+            JS_ReportError(cx, "Fail to load module %s", [moduleId UTF8String]);
+        }
         
         return JS_FALSE;
     }
@@ -103,7 +105,10 @@ static JSBool XJSRequireFunc(JSContext *cx, unsigned argc, JS::Value *vp)
         if (!module) {
             module = ^BOOL(XJSValue *require, XJSValue *exports, XJSValue *module) {
                 NSString *script = [self scriptFromModuleId:moduleId];
-                if ([script length]) {
+                if (script) {   // find script
+                    if ([script length] == 0) { // empty script, fine
+                        return YES;
+                    }
                     XJSValue *scope = [XJSValue valueWithNewObjectInContext:_context];
                     scope[@"require"] = require;
                     scope[@"exports"] = exports;
@@ -129,6 +134,20 @@ static JSBool XJSRequireFunc(JSContext *cx, unsigned argc, JS::Value *vp)
     @synchronized(_context.runtime) {
         _modules[moduleId] = exports;
     }
+}
+
+- (void)provideScript:(NSString *)script forModuleId:(NSString *)moduleId
+{
+    [self provideBlock:^BOOL(XJSValue *require, XJSValue *exports, XJSValue *module) {
+        if ([script length] == 0) {
+            return YES;
+        }
+        XJSValue *scope = [XJSValue valueWithNewObjectInContext:_context];
+        scope[@"require"] = require;
+        scope[@"exports"] = exports;
+        scope[@"module"] = module;
+        return !![_context evaluateString:script withScope:scope fileName:moduleId lineNumber:0 error:NULL];
+    } forModuleId:moduleId];
 }
 
 - (void)provideBlock:(BOOL(^)(XJSValue *require, XJSValue *exports, XJSValue *module))block forModuleId:(NSString *)moduleId
@@ -179,6 +198,8 @@ static JSBool XJSRequireFunc(JSContext *cx, unsigned argc, JS::Value *vp)
     
     XJSValue *exports = [XJSValue valueWithNewObjectInContext:_context];
     XJSValue *module = [XJSValue valueWithNewObjectInContext:_context];
+    
+    _modules[moduleId] = exports;
     
     module[@"id"] = moduleId;
     module[@"exports"] = exports;
