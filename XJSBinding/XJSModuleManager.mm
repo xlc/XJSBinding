@@ -23,6 +23,8 @@
 
 @end
 
+static NSMutableDictionary *globalModules;
+
 @implementation XJSModuleManager
 {
     NSString *(^_scriptProvider)(NSString *path);
@@ -30,6 +32,49 @@
     NSMutableArray *_stack;
     XJSValueWeakRef *_require; // XJSModuleManager cannot hold strong ref to XJSContext
 }
+
+#pragma mark -
+
++ (void)initialize
+{
+    if (self == [XJSModuleManager class]) {
+        globalModules = [NSMutableDictionary dictionary];
+    }
+}
+
++ (void)provideValue:(XJSValue *)exports forModuleId:(NSString *)moduleId
+{
+    XASSERT(globalModules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, globalModules[moduleId]);
+    XASSERT([moduleId length] != 0, @"empty moduleId");
+    @synchronized(globalModules) {
+        globalModules[moduleId] = exports;
+    }
+}
+
++ (void)provideScript:(NSString *)script forModuleId:(NSString *)moduleId
+{
+    [self provideBlock:^BOOL(XJSValue *require, XJSValue *exports, XJSValue *module) {
+        if ([script length] == 0) {
+            return YES;
+        }
+        XJSValue *scope = [XJSValue valueWithNewObjectInContext:require.context];
+        scope[@"require"] = require;
+        scope[@"exports"] = exports;
+        scope[@"module"] = module;
+        return !![require.context evaluateString:script withScope:scope fileName:moduleId lineNumber:0 error:NULL];
+    } forModuleId:moduleId];
+}
+
++ (void)provideBlock:(BOOL(^)(XJSValue *require, XJSValue *exports, XJSValue *module))block forModuleId:(NSString *)moduleId
+{
+    XASSERT(globalModules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, globalModules[moduleId]);
+    XASSERT([moduleId length] != 0, @"empty moduleId");
+    @synchronized(globalModules) {
+        globalModules[moduleId] = block;
+    }
+}
+
+#pragma mark -
 
 - (id)initWithContext:(XJSContext *)context scriptProvider:(NSString *(^)(NSString *path))scriptProvider
 {
@@ -101,7 +146,7 @@ static JSBool XJSRequireFunc(JSContext *cx, unsigned argc, JS::Value *vp)
         
         [_stack addObject:moduleId];
         
-        id module = _modules[moduleId];
+        id module = _modules[moduleId] ?: [globalModules objectForKey:moduleId];    // globalModules[moduleId] make clang crash...
         if (!module) {
             module = ^BOOL(XJSValue *require, XJSValue *exports, XJSValue *module) {
                 NSString *script = [self scriptFromModuleId:moduleId];

@@ -99,6 +99,9 @@
 		0674ACFD185EF084004491AD /* XJSModuleManagerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674ACFC185EF084004491AD /* XJSModuleManagerTests.mm */; };
 		0674ACFE185EF084004491AD /* XJSModuleManagerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674ACFC185EF084004491AD /* XJSModuleManagerTests.mm */; };
 		0674ACFF185EF084004491AD /* XJSModuleManagerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674ACFC185EF084004491AD /* XJSModuleManagerTests.mm */; };
+		0674AD0718658BA8004491AD /* XJSModuleManager+XJSModules.h in Headers */ = {isa = PBXBuildFile; fileRef = 0674AD0518658BA8004491AD /* XJSModuleManager+XJSModules.h */; };
+		0674AD0818658BA8004491AD /* XJSModuleManager+XJSModules.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674AD0618658BA8004491AD /* XJSModuleManager+XJSModules.mm */; };
+		0674AD0918658BA8004491AD /* XJSModuleManager+XJSModules.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0674AD0618658BA8004491AD /* XJSModuleManager+XJSModules.mm */; };
 		067AAFD3181A73FA002DB3A2 /* XJSRuntimeEntryTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0616305417F95BA90018F504 /* XJSRuntimeEntryTests.mm */; };
 		067AAFD4181A73FA002DB3A2 /* XJSHelperFunctionsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7417F971DC001631BD /* XJSHelperFunctionsTests.mm */; };
 		067AAFD5181A73FA002DB3A2 /* XJSClassTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0619AA7C17FC2CC3001631BD /* XJSClassTests.mm */; };
@@ -214,6 +217,8 @@
 		0674ACED1859B0C9004491AD /* XJSModuleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSModuleManager.h; sourceTree = "<group>"; };
 		0674ACEE1859B0C9004491AD /* XJSModuleManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSModuleManager.mm; sourceTree = "<group>"; };
 		0674ACFC185EF084004491AD /* XJSModuleManagerTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSModuleManagerTests.mm; sourceTree = "<group>"; };
+		0674AD0518658BA8004491AD /* XJSModuleManager+XJSModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XJSModuleManager+XJSModules.h"; sourceTree = "<group>"; };
+		0674AD0618658BA8004491AD /* XJSModuleManager+XJSModules.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "XJSModuleManager+XJSModules.mm"; sourceTree = "<group>"; };
 		0692BC6117D9D612009BFC18 /* libXJSBinding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libXJSBinding.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0692BC6417D9D612009BFC18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0692BC6717D9D612009BFC18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -499,6 +504,8 @@
 			children = (
 				0674ACED1859B0C9004491AD /* XJSModuleManager.h */,
 				0674ACEE1859B0C9004491AD /* XJSModuleManager.mm */,
+				0674AD0518658BA8004491AD /* XJSModuleManager+XJSModules.h */,
+				0674AD0618658BA8004491AD /* XJSModuleManager+XJSModules.mm */,
 			);
 			name = XJSModuleManager;
 			sourceTree = "<group>";
@@ -736,6 +743,7 @@
 				066AD6C817F57B4700EADB2B /* NSObject+XJSValueConvert.h in Headers */,
 				06A5A13A1820F40E004F8143 /* XJSStructMetadata+XJSLoadCommonStructure.h in Headers */,
 				066CECC117DBFC6E0078829C /* XJSValue.h in Headers */,
+				0674AD0718658BA8004491AD /* XJSModuleManager+XJSModules.h in Headers */,
 				06208BD917E4084600F60D39 /* NSError_XJSErrorConstants.h in Headers */,
 				0619AA7117F96CA1001631BD /* XJSHelperFunctions.hh in Headers */,
 				066CECBD17DBFC6E0078829C /* XJSRuntime.h in Headers */,
@@ -1153,6 +1161,7 @@
 				0660B9CF17DF23A800A3DD0C /* XJSConvert.mm in Sources */,
 				0674ACF01859B0C9004491AD /* XJSModuleManager.mm in Sources */,
 				0616304C17F818DC0018F504 /* XJSInternalOperation.mm in Sources */,
+				0674AD0818658BA8004491AD /* XJSModuleManager+XJSModules.mm in Sources */,
 				066CECBB17DBFC6E0078829C /* XJSContext.mm in Sources */,
 				0674ACE11857116C004491AD /* XJSLogger.mm in Sources */,
 				0619AA7217F96CA1001631BD /* XJSHelperFunctions.mm in Sources */,
@@ -1195,6 +1204,7 @@
 				06CFF4F417E1C0AE0081F388 /* XJSValue.mm in Sources */,
 				0674ACF11859B0C9004491AD /* XJSModuleManager.mm in Sources */,
 				0616304D17F818DC0018F504 /* XJSInternalOperation.mm in Sources */,
+				0674AD0918658BA8004491AD /* XJSModuleManager+XJSModules.mm in Sources */,
 				06CFF4F517E1C0B10081F388 /* XJSConvert.mm in Sources */,
 				0674ACE21857116C004491AD /* XJSLogger.mm in Sources */,
 				0619AA7317F96CA1001631BD /* XJSHelperFunctions.mm in Sources */,

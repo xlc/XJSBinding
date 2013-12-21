@@ -338,6 +338,23 @@
     XCTAssertEqual(module[@"foo"][@"val"].toInt32, 42);
 }
 
+- (void)testBuildInModuleObjC
+{
+    XJSValue *module = [_manager requireModule:@"xjs/objc"];
+    XCTAssertNotNil(module);
+    
+    XCTAssertEqualObjects(module[@"NSObject"].toObject, [NSObject class]);
+}
+
+- (void)testBuildInModuleLog
+{
+    XJSValue *module = [_manager requireModule:@"xjs/log"];
+    XCTAssertNotNil(module);
+    
+    XCTAssertTrue(module.isCallable);
+    XCTAssertTrue(module[@"debug"].isCallable);
+}
+
 #pragma mark - helpers
 
 - (XJSValue *)createDummyModule
