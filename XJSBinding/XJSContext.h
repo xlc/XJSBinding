@@ -19,6 +19,8 @@
 
 @property (strong) void (^errorHandler)(XJSContext *context, NSError *error);
 
+@property (copy) NSString *name;
+
 /**
  * Create a JS context with a new JS runtime
  */

@@ -8,6 +8,7 @@
 
 #import "XJSContext_Private.hh"
 
+#import <libkern/OSAtomic.h>
 #import <XLCUtils/XLCUtils.h>
 #import "jsapi.h"
 
@@ -40,6 +41,8 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     XILOG(@"%s:%u:%s", report->filename ? report->filename : "<no filename>", (unsigned int) report->lineno, message);
     [[XJSContext contextForJSContext:cx] addError:[NSError errorWithXJSDomainAndFileName:@(report->filename ?: "") lineNumber:report->lineno message:@(message)]];
 }
+
+static volatile int32_t countextCount;
 
 @implementation XJSContext
 {
@@ -108,6 +111,8 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
             
             JS_FireOnNewGlobalObject(_context, global);
         };
+        
+        _name = [NSString stringWithFormat:@"Context %d", OSAtomicIncrement32(&countextCount)];
     }
     return self;
 }
@@ -129,6 +134,18 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     @synchronized(contextDict) {
         [contextDict removeObjectForKey:[NSValue valueWithPointer:_context]];
     }
+}
+
+#pragma mark -
+
+- (NSString *)description
+{
+    return self.name;
+}
+
+- (NSString *)debugDescription
+{
+    return [NSString stringWithFormat:@"<%@: %p; runtime = %@; name = %@>", [self class], self, self.runtime, self.name];
 }
 
 #pragma mark -
