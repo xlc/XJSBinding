@@ -46,11 +46,7 @@
 
 - (BOOL)isStringCompilableUnit:(NSString *)str;
 
-//
-////-------
-//
-//+ (XJSContext *)currentContext;
-//
++ (NSArray *)allContexts;
 
 @end
 

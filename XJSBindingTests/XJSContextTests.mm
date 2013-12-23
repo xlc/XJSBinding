@@ -267,4 +267,27 @@
     XCTAssertEqualObjects(value.toObject, [NSObject class]);
 }
 
+- (void)testAllContexts
+{
+    NSArray *cxs = [XJSContext allContexts];
+    XCTAssertEqual(cxs.count, (NSUInteger)1);
+    XCTAssertTrue([cxs containsObject:_context]);
+    
+    @autoreleasepool {
+        XJSContext *cx = [[XJSContext alloc] init];
+        
+        cxs = [XJSContext allContexts];
+        
+        XCTAssertEqual(cxs.count, (NSUInteger)2);
+        XCTAssertTrue([cxs containsObject:_context]);
+        XCTAssertTrue([cxs containsObject:cx]);
+        
+        cxs = nil;
+    }
+    
+    cxs = [XJSContext allContexts];
+    XCTAssertEqual(cxs.count, (NSUInteger)1);
+    XCTAssertTrue([cxs containsObject:_context]);
+}
+
 @end

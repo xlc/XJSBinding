@@ -69,6 +69,22 @@ static volatile int32_t countextCount;
     }
 }
 
++ (NSArray *)allContexts
+{
+    NSMutableArray *contexts = [NSMutableArray array];
+    
+    @synchronized(contextDict) {
+        for (id (^block)(void) in [contextDict allValues]) {
+            id cx = block();
+            if (cx) {
+                [contexts addObject:cx];
+            }
+        }
+    }
+    
+    return contexts;
+}
+
 #pragma mark -
 
 - (id)init {
