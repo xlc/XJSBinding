@@ -8,15 +8,20 @@
 
 #import "XJSValueWeakRef.h"
 
-#import "XLCAssertion.h"
-#import "NSObject+XJSValueConvert.h"
+#import <XLCUtils/XLCUtils.h>
 
-#import "XJSWeakMap.h"
+#import "jsapi.h"
+#import "jsfriendapi.h"
+
+#import "NSObject+XJSValueConvert.h"
+#import "XJSContext_Private.hh"
+#import "XJSValue_Private.hh"
 
 @implementation XJSValueWeakRef
 {
     __weak XJSValue *_value;
-    XJSWeakMap *_map;
+    __weak XJSContext *_context;
+    JSObject *_map;
 }
 
 - (id)initWithValue:(XJSValue *)value
@@ -24,10 +29,14 @@
     XASSERT_NOTNULL(value);
     self = [super init];
     if (self) {
-        _map = [[XJSWeakMap alloc] initWithContext:value.context];
         self.value = value;
     }
     return self;
+}
+
+- (void)dealloc
+{
+    self.value = nil; // also remove rooted map
 }
 
 - (XJSValue *)value
@@ -41,28 +50,58 @@
         return nil;
     }
     
-    XJSValue *allKeys = [_map allKeys];
-    
-    if (allKeys[@"length"].toInt32 == 0)
-    {
-        _map = nil; // no use anymore
+    XJSContext *cx = _context;
+    if (!cx) {
         return nil;
     }
     
-    val = allKeys[0];
-    _value = val;
-    return val;
+    JSObject *object;
+    
+    @synchronized(cx.runtime) {
+        if (!JS_NondeterministicGetWeakMapKeys(cx.context, _map, &object))
+            return nil;
+        
+        jsval outval;
+        JS_GetElement(cx.context, object, 0, &outval);
+        if (outval.isObject()) {
+            return [[XJSValue alloc] initWithContext:cx value:outval];
+        }
+    }
+    
+    return nil;
 }
 
 - (void)setValue:(XJSValue *)value
 {
     _value = value;
     
-    @synchronized(_map) {
-        [_map removeAllObjects];
-        if (!value.isPrimitive) {   // map key cannot be primitive type and no much reason to hold weak ref to primitive type
-            _map[value] = [XJSValue valueWithNullInContext:value.context];
+    XJSContext *oldcx = _context;
+    XJSContext *cx = value.context;
+    _context = cx;
+    
+    // remove old map
+    if (oldcx && _map) {
+        @synchronized(oldcx.runtime) {
+            JS_RemoveObjectRoot(oldcx.context, &_map);
         }
+    }
+    
+    // map key cannot be primitive type and no much reason to hold weak ref to primitive type
+    if (!value || value.isPrimitive) {
+        return;
+    }
+    
+    // create new map
+    @synchronized(cx.runtime) {
+        JS::RootedValue mapval(_context.context);
+        JS_GetProperty(_context.context, _context.globalObject, "WeakMap", &mapval);
+        XASSERT(mapval.isObject(), "WeakMap not avaiable");
+        _map = JS_New(_context.context, mapval.toObjectOrNull(), 0, NULL);
+        JS_AddObjectRoot(_context.context, &_map);
+        
+        jsval argv[2] = { value.value, JS::ObjectOrNullValue(JS_NewObject(cx.context, NULL, NULL, NULL)) };
+        jsval rval;
+        JS_CallFunctionName(cx.context, _map, "set", 2, argv, &rval);
     }
 }
 

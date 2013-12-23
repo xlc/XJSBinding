@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import <objc/runtime.h>
+#import <XLCUtils/NSObject+XLCUtilsMemoryDebug.h>
 
 #import "jsapi.h"
 
@@ -16,6 +16,7 @@
 #import "XJSConvert.hh"
 #import "XJSContext_Private.hh"
 #import "XJSValue_Private.hh"
+#import "XJSRuntime.h"
 
 @interface XJSClassTests : XCTestCase
 
@@ -54,11 +55,15 @@
     XCTAssertEqualObjects(str, [clsobj description]);
 }
 
-// TODO this test failed because I cannot make finalizer of JSObject to get called and because context is retained by XJSValueWeakRef I cannot destroy context easily
-- (void)ignored_testCreateInstanceObject
+- (void)testCreateInstanceObject
 {
+    // not using the one in setup because it leak reference to global auto release pool which cannot be released inside this method
+    _context = [[XJSContext alloc] init];
+    
     __weak id weakobj;
     @autoreleasepool {
+        [_context createObjCRuntimeWithNamespace:@"objc"];
+        
         id obj = [[NSObject alloc] init];
         weakobj = obj;
         
@@ -78,11 +83,15 @@
     XCTAssertNil(weakobj, @"should be released by context");
 }
 
-// TODO this test failed because I cannot make finalizer of JSObject to get called and because context is retained by XJSValueWeakRef I cannot destroy context easily
-- (void)ignored_testConstruct
+- (void)testConstruct
 {
+    // not using the one in setup because it leak reference to global auto release pool which cannot be released inside this method
+    _context = [[XJSContext alloc] init];
+    
     __weak id weakobj;
     @autoreleasepool {
+        [_context createObjCRuntimeWithNamespace:@"objc"];
+        
         Class cls = [NSObject class];
         JSObject *clsobj = XJSCreateJSObject(_context.context, cls);
         JSObject *newobj = JS_New(_context.context, clsobj, 0, NULL);
@@ -99,11 +108,15 @@
     XCTAssertNil(weakobj, @"should be released by context");
 }
 
-// TODO this test failed because I cannot make finalizer of JSObject to get called and because context is retained by XJSValueWeakRef I cannot destroy context easily
-- (void)ignored_testConstruct2
+- (void)testConstruct2
 {
+    // not using the one in setup because it leak reference to global auto release pool which cannot be released inside this method
+    _context = [[XJSContext alloc] init];
+    
     __weak id weakobj;
     @autoreleasepool {
+        [_context createObjCRuntimeWithNamespace:@"objc"];
+        
         Class cls = [NSObject class];
         JSObject *clsobj = XJSCreateJSObject(_context.context, cls);
         jsval rval;

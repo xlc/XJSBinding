@@ -8,8 +8,9 @@
 
 #import "XJSWeakMap.h"
 
+#import <XLCUtils/XLCUtils.h>
+
 #import "jsfriendapi.h"
-#import "XLCAssertion.h"
 
 #import "XJSValue_Private.hh"
 #import "XJSContext_Private.hh"
@@ -30,6 +31,7 @@
         @synchronized(_context.runtime) {
             JS::RootedValue mapval(context.context);
             JS_GetProperty(_context.context, _context.globalObject, "WeakMap", &mapval);
+            XASSERT(mapval.isObject(), "WeakMap not avaiable");
             obj = JS_New(_context.context, mapval.toObjectOrNull(), 0, NULL);
         }
         XASSERT_NOTNULL(obj);
