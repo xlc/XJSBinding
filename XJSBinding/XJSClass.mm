@@ -58,12 +58,16 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
     
     SEL sel = XJSSearchSelector(obj, selname, args.length());
     if (sel == NULL) {
-        JS_ReportError(cx, "Unable to find selector '%s' on object '%s' of class '%s'",
-                       selname,
-                       [[obj description] UTF8String],
-                       class_getName([obj class])
-                       );
-        return JS_FALSE;
+        if (args.length() == 0 && strcmp(selname, "toString") == 0) {
+            sel = @selector(description);
+        } else {
+            JS_ReportError(cx, "Unable to find selector '%s' on object '%s' of class '%s'",
+                           selname,
+                           [[obj description] UTF8String],
+                           class_getName([obj class])
+                           );
+            return JS_FALSE;
+        }
     }
     
     NSMethodSignature *signature = [obj methodSignatureForSelector:sel];
@@ -168,20 +172,17 @@ static JSBool XJSResolveImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId j
         
         JSAutoByteString str(cx, JS_ValueToString(cx, val));
         const char *selname = str.ptr();
-        if (strcmp(selname, "toString") == 0) {
-            selname = "description";
-        } else {
-            JSBool hasProperty = JS_FALSE;
-            JS_HasPropertyById(cx, proto, jid, &hasProperty);
-            if (hasProperty) {  // we are not going to override property inherited from Object except toString
-                return JS_TRUE;
-            }
+        
+        JSBool hasProperty = JS_FALSE;
+        JS_HasPropertyById(cx, proto, jid, &hasProperty);
+        if (hasProperty) {
+            return JS_TRUE;
         }
         
         JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, selname);
         JS::RootedValue funcval(cx, JS::ObjectOrNullValue(JS_GetFunctionObject(func)));
         
-        success = JS_SetProperty(cx, proto, str.ptr(), funcval);
+        success = JS_SetProperty(cx, proto, selname, funcval);
         XASSERT(success, "fail to set property");
     }
     
@@ -374,6 +375,12 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
         
         success = JS_LinkConstructorAndPrototype(cx, cstrval.toObjectOrNull(), proto);
         XASSERT(success, "fail to link constructor and prototype");
+        
+        JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, "toString");
+        JS::RootedValue funcval(cx, JS::ObjectOrNullValue(JS_GetFunctionObject(func)));
+        
+        success = JS_SetProperty(cx, proto, "toString", funcval);
+        XASSERT(success, "fail to set toString");
     }
     
     return jsobj;
