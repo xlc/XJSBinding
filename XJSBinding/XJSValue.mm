@@ -466,6 +466,25 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     return nil;
 }
 
+- (XJSValue *)call
+{
+    return [self callWithArguments:nil];
+}
+
+- (XJSValue *)callWithObject:(id)arg
+{
+    return [self callWithArguments:@[arg ?: [NSNull null]]];
+}
+
+- (XJSValue *)callWithObject:(id)arg andObject:(id)arg2
+{
+    return [self callWithArguments:@[arg ?: [NSNull null], arg2 ?: [NSNull null]]];
+}
+- (XJSValue *)callWithObject:(id)arg andObject:(id)arg2 andObject:(id)arg3
+{
+    return [self callWithArguments:@[arg ?: [NSNull null], arg2 ?: [NSNull null], arg3 ?: [NSNull null]]];
+}
+
 - (XJSValue *)constructWithArguments:(NSArray *)arguments
 {
     if (_value.isPrimitive()) {

@@ -78,6 +78,11 @@
 
 // Call this value as a function passing the specified arguments. Return nil on error.
 - (XJSValue *)callWithArguments:(NSArray *)arguments;
+- (XJSValue *)call;
+- (XJSValue *)callWithObject:(id)arg;
+- (XJSValue *)callWithObject:(id)arg andObject:(id)arg2;
+- (XJSValue *)callWithObject:(id)arg andObject:(id)arg2 andObject:(id)arg3;
+
 // Call this value as a constructor passing the specified arguments.
 - (XJSValue *)constructWithArguments:(NSArray *)arguments;
 // Access the property named "method" from this value; call the value resulting
