@@ -338,50 +338,60 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
 {
     JSBool success;
     
+    // create object
     JSClass *jscls = XJSGetJSClassForNSClass(object_getClass(obj));
     JS::RootedObject jsobj(cx, JS_NewObject(cx, jscls, NULL, NULL));
     
     JS_SetPrivate(jsobj, (__bridge_retained void *)obj);
     
-    JS::RootedObject proto(cx);
-    success = JS_GetPrototype(cx, jsobj, &proto);
-    XASSERT(success, @"fail to get prototype object");
-    
+    // get constructor
     JS::RootedValue cstrval(cx);
-    JS_GetProperty(cx, proto, "constructor", &cstrval); // JS_GetConstructor will report error if it cannot find a constructor, which is normal in our case
-    JS::RootedObject cstrobj(cx);
-    if (cstrval.isObjectOrNull()) {
-        cstrobj = cstrval.toObjectOrNull();
-    }
-    if (!cstrobj || !XJSGetAssosicatedObject(cstrobj)) {    // constructor is default one
+    if (obj == [NSObject class]) {
+        cstrval = JS::ObjectOrNullValue(jsobj); // refer to self
+    } else {
+        XJSContext *context = [XJSContext contextForJSContext:cx];
         
-        if (obj == [NSObject class]) {
-            cstrval = JS::ObjectOrNullValue(jsobj); // refer to self
-        } else {
-            XJSContext *context = [XJSContext contextForJSContext:cx];
-            
-            JSObject *runtime = context.runtimeEntryObject;
-            
-            Class cls = object_getClass(obj);
-            if (class_isMetaClass(cls))
-            {
-                cls = [NSObject class];
-            }
-            
-            success = JS_GetProperty(cx, runtime, class_getName(cls), &cstrval);
-            XASSERT(success, "fail to get constructor object");
-            XASSERT(cstrval.isObject(), "unable to get constructor object, class (%@) it not registered? ", cls);
+        JSObject *runtime = context.runtimeEntryObject;
+        XASSERT_NOTNULL(runtime);
+        Class cls = object_getClass(obj);
+        if (class_isMetaClass(cls))
+        {
+            cls = [NSObject class];
         }
+        
+        success = JS_GetProperty(cx, runtime, class_getName(cls), &cstrval);
+        XASSERT(success, "fail to get constructor object");
+        XASSERT(cstrval.isObject(), "unable to get constructor object, class (%@) it not registered? ", cls);
+    }
+    
+    // get or create prototype
+    JS::RootedObject proto(cx);
+    JS::RootedValue protoval(cx);
+
+    JSBool hasproto;
+    success = JS_AlreadyHasOwnProperty(cx, cstrval.toObjectOrNull(), "prototype", &hasproto);
+    XASSERT(success, "fail to call JS_AlreadyHasOwnProperty");
+    
+    if (hasproto) {
+        JS_GetProperty(cx, cstrval.toObjectOrNull(), "prototype", &protoval);
+        proto = protoval.toObjectOrNull();
+    } else {
+        proto = JS_NewObject(cx, NULL, NULL, NULL);
         
         success = JS_LinkConstructorAndPrototype(cx, cstrval.toObjectOrNull(), proto);
         XASSERT(success, "fail to link constructor and prototype");
         
+        // override toString
         JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, "toString");
         JS::RootedValue funcval(cx, JS::ObjectOrNullValue(JS_GetFunctionObject(func)));
-        
         success = JS_SetProperty(cx, proto, "toString", funcval);
         XASSERT(success, "fail to set toString");
+        
+        // set constructor
+        JS_SetProperty(cx, proto, "constructor", cstrval);
     }
+    
+    JS_SetPrototype(cx, jsobj, proto);
     
     return jsobj;
 }

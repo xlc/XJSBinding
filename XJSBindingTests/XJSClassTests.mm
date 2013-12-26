@@ -214,6 +214,71 @@
     XCTAssertNotEqual(obj, obj3);
 }
 
+- (void)testToString
+{
+    NSMutableString *str = [@"test" mutableCopy];
+    JSObject *obj = XJSGetOrCreateJSObject(_context.context, str);
+    
+    jsval val;
+    XCTAssertTrue(JS_CallFunctionName(_context.context, obj, "toString", 0, NULL, &val));
+    XCTAssertEqualObjects(XJSConvertJSValueToString(_context.context, val), @"test");
+    
+    [str appendString:@"test"];
+    
+    XCTAssertTrue(JS_CallFunctionName(_context.context, obj, "toString", 0, NULL, &val));
+    XCTAssertEqualObjects(XJSConvertJSValueToString(_context.context, val), @"testtest");
+    
+    XCTAssertTrue(JS_CallFunctionName(_context.context, obj, "description", 0, NULL, &val));
+    XCTAssertEqualObjects(XJSConvertJSValueToString(_context.context, val), @"testtest");
+    
+    [str setString:@"abc"];
+    
+    XCTAssertTrue(JS_CallFunctionName(_context.context, obj, "description", 0, NULL, &val));
+    XCTAssertEqualObjects(XJSConvertJSValueToString(_context.context, val), @"abc");
+}
+
+- (void)testPrototype
+{
+    NSMutableString *str = [@"test" mutableCopy];
+    
+    JS::RootedObject obj(_context.context, XJSGetOrCreateJSObject(_context.context, str));
+    JS::RootedObject obj2(_context.context, JS_NewObject(_context.context, NULL, NULL, NULL));
+    
+    jsval proto = _context[@"Object"][@"prototype"].value;
+    JS::RootedObject proto2Obj(_context.context);
+    JS_GetPrototype(_context.context, obj, &proto2Obj);
+    jsval proto2 = JS::ObjectOrNullValue(proto2Obj);
+    
+    JSBool equal;
+    JS_StrictlyEqual(_context.context, proto, proto2, &equal);
+    XCTAssertFalse(equal, "obj.__proto__ !== Object.prototype");
+    
+    JS::RootedValue val(_context.context);
+    XCTAssertTrue(JS_CallFunctionName(_context.context, obj2, "toString", 0, NULL, val.address()));
+    XCTAssertEqualObjects(XJSConvertJSValueToString(_context.context, val), @"[object Object]");
+}
+
+- (void)testPrototype2
+{
+    NSMutableString *str = [@"test" mutableCopy];
+    NSMutableString *str2 = [@"test2" mutableCopy];
+    
+    JS::RootedObject obj(_context.context, XJSGetOrCreateJSObject(_context.context, str));
+    JS::RootedObject obj2(_context.context, XJSGetOrCreateJSObject(_context.context, str2));
+    
+    JS::RootedObject protoObj(_context.context);
+    JS_GetPrototype(_context.context, obj, &protoObj);
+    jsval proto = JS::ObjectOrNullValue(protoObj);
+    
+    JS::RootedObject protoObj2(_context.context);
+    JS_GetPrototype(_context.context, obj2, &protoObj2);
+    jsval proto2 = JS::ObjectOrNullValue(protoObj2);
+    
+    JSBool equal;
+    JS_StrictlyEqual(_context.context, proto, proto2, &equal);
+    XCTAssertTrue(equal, "obj.__proto__ === obj2.__proto__");
+}
+
 @end
 
 @interface XJSClassCallMethodTests : XCTestCase
