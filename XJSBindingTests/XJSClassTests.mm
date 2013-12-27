@@ -305,6 +305,7 @@
 - (Class)classMethod { _invokedSel = _cmd; return [self class]; }
 - (SEL)selMethod { _invokedSel = _cmd; return _cmd; }
 - (const char *)cstrMethod { _invokedSel = _cmd; return "42"; }
+- (id)objectMethodWithObject:(id)obj { _invokedSel = _cmd; return obj; }
 
 - (void)voidMethodWithBool:(BOOL)b char:(char)c int:(int)i uint32:(uint32_t)ui32 uint64:(uint64_t)ui64 float:(float)f double:(double)d object:(id)o sel:(SEL)s class:(Class)cls cstr:(const char *)cstr
 {
@@ -502,6 +503,26 @@
     XCTAssertEqualObjects(ret.toString, @"42");
     XCTAssertEqual(_invokedSel, sel);
     XCTAssertEqualObjects(_args, args);
+}
+
+- (void)testObjectMethodWithObject
+{
+    id obj = [[NSObject alloc] init];
+    SEL sel = @selector(objectMethodWithObject:);
+    XJSValue *ret = [_val invokeMethod:NSStringFromSelector(sel) withArguments:@[obj]];
+    XCTAssertNotNil(ret);
+    XCTAssertTrue(ret.isObject);
+    XCTAssertEqualObjects(ret.toObject, obj);
+    XCTAssertEqual(_invokedSel, sel);
+}
+
+- (void)testObjectMethodWithObjectNullArgument
+{
+    SEL sel = @selector(objectMethodWithObject:);
+    XJSValue *ret = [_val invokeMethod:NSStringFromSelector(sel) withArguments:@[[NSNull null]]];
+    XCTAssertNotNil(ret);
+    XCTAssertTrue(ret.isNull);
+    XCTAssertEqual(_invokedSel, sel);
 }
 
 @end

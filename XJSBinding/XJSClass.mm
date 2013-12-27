@@ -90,15 +90,20 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
         } else if (ret.second) {    // id
             [invocation setArgument:&ret.second atIndex:i+2];
         } else {
-            JS_ReportError(cx, "Invalid argument. Method %c[%s %s] argument no. %d expected type %s get %s",
-                           [obj class] == obj ? '+' : '-',
-                           class_getName([obj class]),
-                           sel_getName(sel),
-                           i,
-                           type,
-                           [XJSConvertJSValueToSource(cx, args.get(i)) UTF8String]
-                           );
-            return JS_FALSE;
+            if (type[0] == _C_ID || type[0] == _C_CLASS) {
+                id nilobj = nil;
+                [invocation setArgument:&nilobj atIndex:i+2];
+            } else {
+                JS_ReportError(cx, "Invalid argument. Method %c[%s %s] argument no. %d expected type %s get %s",
+                               [obj class] == obj ? '+' : '-',
+                               class_getName([obj class]),
+                               sel_getName(sel),
+                               i,
+                               type,
+                               [XJSConvertJSValueToSource(cx, args.get(i)) UTF8String]
+                               );
+                return JS_FALSE;
+            }
         }
     }
 
