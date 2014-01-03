@@ -14,6 +14,7 @@
 #import "XJSValue_Private.hh"
 #import "XJSContext_Private.hh"
 #import "XJSValueWeakRef.h"
+#import "NSObject+XJSValueConvert.h"
 
 @interface XJSModuleManager ()
 
@@ -122,6 +123,56 @@ static JSBool XJSRequireFunc(JSContext *cx, unsigned argc, JS::Value *vp)
     }
 }
 
+static JSBool XJSGetPaths(JSContext *cx, JS::Handle<JSObject*> obj, JS::Handle<jsid> jid, JS::MutableHandle<JS::Value> vp)
+{
+    XJSContext *context = [XJSContext contextForJSContext:cx];
+    XJSModuleManager *manager = context.moduleManager;
+    
+    XJSValue *pathsVal = XJSToValue(context, manager.paths);
+    vp.set(pathsVal.value);
+    
+    return JS_TRUE;
+}
+
+static JSBool XJSSetPaths(JSContext *cx, JS::Handle<JSObject*> obj, JS::Handle<jsid> jid, JSBool strict, JS::MutableHandle<JS::Value> vp)
+{
+    if (!vp.isObjectOrNull()) {
+        JS_ReportError(cx, "require.paths must be an array of strings");
+        return JS_FALSE;
+    }
+    
+    XJSContext *context = [XJSContext contextForJSContext:cx];
+    XJSModuleManager *manager = context.moduleManager;
+    
+    XJSValue *val = [[XJSValue alloc] initWithContext:context value:vp];
+    
+    if (val.isNullOrUndefined) {
+        manager.paths = nil;
+        return JS_TRUE;
+    }
+    
+    NSArray *arr = val.toArray;
+    if (!arr) {
+        JS_ReportError(cx, "require.paths must be an array of strings");
+        return JS_FALSE;
+    }
+    
+    NSMutableArray *paths = [NSMutableArray arrayWithCapacity:arr.count];
+    
+    for (id element in arr) {
+        if ([element isKindOfClass:[NSString class]]) {
+            [paths addObject:element];
+        } else {
+            XWLOG("require.paths must be an array of strings. element (%@) ignored.", element);
+        }
+    }
+    
+    manager.paths = paths;
+    
+    return JS_TRUE;
+}
+
+
 - (XJSValue *)require
 {
     XJSValue *require = _require.value;
@@ -129,9 +180,11 @@ static JSBool XJSRequireFunc(JSContext *cx, unsigned argc, JS::Value *vp)
         return require;
     }
     
-    auto fun = JS_NewFunction(_context.context, XJSRequireFunc, 1, 0, NULL, "require");
-    auto obj = JS_GetFunctionObject(fun);
+    JSFunction *fun = JS_NewFunction(_context.context, XJSRequireFunc, 1, 0, NULL, "require");
+    JSObject *obj = JS_GetFunctionObject(fun);
     require = [[XJSValue alloc] initWithContext:_context value:JS::ObjectOrNullValue(obj)];
+    
+    JS_DefineProperty(_context.context, obj, "paths", JS::NullValue(), XJSGetPaths, XJSSetPaths, JSPROP_PERMANENT | JSPROP_SHARED);
     
     return require;
 }

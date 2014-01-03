@@ -355,6 +355,40 @@
     XCTAssertTrue(module[@"debug"].isCallable);
 }
 
+- (void)testGetPaths
+{
+    XCTAssertEqualObjects(_manager.require[@"paths"].toObject, @[]);
+    
+    _manager.paths = @[@"1", @"2"];
+    XCTAssertEqualObjects(_manager.require[@"paths"].toObject, (@[@"1", @"2"]));
+    
+    _manager.paths = nil;
+    XCTAssertEqualObjects(_manager.require[@"paths"].toObject, nil);
+    
+    _manager.paths = @[];
+    XCTAssertEqualObjects(_manager.require[@"paths"].toObject, @[]);
+    
+    _manager.paths = @[@"3", @"4"];
+    XCTAssertEqualObjects(_manager.require[@"paths"].toObject, (@[@"3", @"4"]));
+}
+
+- (void)testSetPaths
+{
+    XCTAssertEqualObjects(_manager.paths, @[]);
+    
+    _manager.require[@"paths"] = @[@"1", @"2"];
+    XCTAssertEqualObjects(_manager.paths, (@[@"1", @"2"]));
+
+    _manager.require[@"paths"] = nil;
+    XCTAssertEqualObjects(_manager.paths, nil);
+    
+    _manager.require[@"paths"] = @[];
+    XCTAssertEqualObjects(_manager.paths, @[]);
+    
+    _manager.require[@"paths"] = @[@"3", @"4"];
+    XCTAssertEqualObjects(_manager.paths, (@[@"3", @"4"]));
+}
+
 #pragma mark - helpers
 
 - (XJSValue *)createDummyModule
