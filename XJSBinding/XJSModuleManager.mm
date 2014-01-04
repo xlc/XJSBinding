@@ -172,6 +172,42 @@ static JSBool XJSSetPaths(JSContext *cx, JS::Handle<JSObject*> obj, JS::Handle<j
     return JS_TRUE;
 }
 
+static JSBool XJSProvide(JSContext *cx, unsigned argc, JS::Value *vp)
+{
+    auto args = JS::CallArgsFromVp(argc, vp);
+    
+    JSString *str = NULL;
+    if (!JS_ConvertArguments(cx, argc, args.array(), "S", &str)) {
+        return JS_FALSE;
+    }
+    
+    if (argc < 2) {
+        JS_ReportError(cx, "invalid argument for require.provide");
+        return JS_FALSE;
+    }
+    
+    JSObject *funcobj = args[1].toObjectOrNull();
+    if (!JS_ObjectIsCallable(cx, funcobj)) {
+        JS_ReportError(cx, "invalid argument for require.provide");
+        return JS_FALSE;
+    }
+    
+    XJSContext *context = [XJSContext contextForJSContext:cx];
+    XJSModuleManager *manager = context.moduleManager;
+    
+    JSAutoByteString bytestr;
+    NSString *moduleId = @(bytestr.encodeUtf8(cx, str));
+    
+    XJSValue *funcval = [[XJSValue alloc] initWithContext:context value:JS::ObjectOrNullValue(funcobj)];
+    
+    [manager provideBlock:^BOOL(XJSValue *require, XJSValue *exports, XJSValue *module) {
+        return !![funcval callWithObject:require andObject:exports andObject:module];
+    } forModuleId:moduleId];
+    
+    args.rval().set(JS::UndefinedValue());
+    
+    return JS_TRUE;
+}
 
 - (XJSValue *)require
 {
@@ -185,6 +221,7 @@ static JSBool XJSSetPaths(JSContext *cx, JS::Handle<JSObject*> obj, JS::Handle<j
     require = [[XJSValue alloc] initWithContext:_context value:JS::ObjectOrNullValue(obj)];
     
     JS_DefineProperty(_context.context, obj, "paths", JS::NullValue(), XJSGetPaths, XJSSetPaths, JSPROP_PERMANENT | JSPROP_SHARED);
+    JS_DefineFunction(_context.context, obj, "provide", XJSProvide, 2, JSPROP_PERMANENT | JSPROP_READONLY);
     
     return require;
 }
@@ -227,8 +264,11 @@ static JSBool XJSSetPaths(JSContext *cx, JS::Handle<JSObject*> obj, JS::Handle<j
 
 - (void)provideValue:(XJSValue *)exports forModuleId:(NSString *)moduleId
 {
-    XASSERT(_modules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, _modules[moduleId]);
-    XASSERT([moduleId length] != 0, @"empty moduleId");
+    XCLOG(_modules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, _modules[moduleId]);
+    if ([moduleId length] == 0) {
+        XFAIL(@"empty moduleId");
+        return;
+    }
     @synchronized(_context.runtime) {
         _modules[moduleId] = exports;
     }
@@ -250,8 +290,11 @@ static JSBool XJSSetPaths(JSContext *cx, JS::Handle<JSObject*> obj, JS::Handle<j
 
 - (void)provideBlock:(BOOL(^)(XJSValue *require, XJSValue *exports, XJSValue *module))block forModuleId:(NSString *)moduleId
 {
-    XASSERT(_modules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, _modules[moduleId]);
-        XASSERT([moduleId length] != 0, @"empty moduleId");
+    XCLOG(_modules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, _modules[moduleId]);
+    if ([moduleId length] == 0) {
+        XFAIL(@"empty moduleId");
+        return;
+    }
     @synchronized(_context.runtime) {
         _modules[moduleId] = [block copy];
     }

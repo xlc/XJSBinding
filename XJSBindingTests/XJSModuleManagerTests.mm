@@ -389,6 +389,19 @@
     XCTAssertEqualObjects(_manager.paths, (@[@"3", @"4"]));
 }
 
+- (void)testProvide
+{
+    XJSValue *func = [_context evaluateString:@"f=function (require, exports, module){exports.args = [require, exports, module]}" error:NULL];
+    [_manager.require[@"provide"] callWithObject:@"test" andObject:func];
+    
+    XJSValue *module = [_manager requireModule:@"test"];
+    
+    XJSValue *args = module[@"args"];
+    XCTAssertEqualObjects(args[0][@"name"].toString, @"require");
+    XCTAssertEqualObjects(args[1], module);
+    XCTAssertEqualObjects(args[2][@"exports"], module);
+}
+
 #pragma mark - helpers
 
 - (XJSValue *)createDummyModule
