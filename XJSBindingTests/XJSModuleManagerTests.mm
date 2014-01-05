@@ -402,6 +402,15 @@
     XCTAssertEqualObjects(args[2][@"exports"], module);
 }
 
+- (void)testLoadModuleFail
+{
+    XJSValue *module = [_manager requireModule:@"test"];
+    XCTAssertNil(module);
+    
+    module = [_manager requireModule:@"test"];
+    XCTAssertNil(module);
+}
+
 #pragma mark - helpers
 
 - (XJSValue *)createDummyModule

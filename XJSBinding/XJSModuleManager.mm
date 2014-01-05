@@ -346,6 +346,7 @@ static JSBool XJSProvide(JSContext *cx, unsigned argc, JS::Value *vp)
     module[@"exports"] = exports;
     bool success = ((BOOL(^)(XJSValue *, XJSValue *, XJSValue *))obj)(self.require, exports, module);
     if (!success) {
+        [_modules removeObjectForKey:moduleId];
         return nil;
     }
     
