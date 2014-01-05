@@ -290,7 +290,7 @@ static JSBool XJSProvide(JSContext *cx, unsigned argc, JS::Value *vp)
 
 - (void)provideBlock:(BOOL(^)(XJSValue *require, XJSValue *exports, XJSValue *module))block forModuleId:(NSString *)moduleId
 {
-    XCLOG(_modules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, _modules[moduleId]);
+    XCLOG(_modules[moduleId] != nil, @"module already exists for id: %@, module: %@", moduleId, _modules[moduleId]);
     if ([moduleId length] == 0) {
         XFAIL(@"empty moduleId");
         return;
