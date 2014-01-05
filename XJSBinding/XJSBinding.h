@@ -14,3 +14,4 @@
 #import "XJSWeakMap.h"
 #import "NSError_XJSErrorConstants.h"
 #import "XJSStructMetadata.h"
+#import "XJSModuleManager.h"
