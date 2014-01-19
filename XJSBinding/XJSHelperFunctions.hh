@@ -23,3 +23,5 @@
  * Read code for detail rules. But as long as standard Objective-C selector naming conversion is used it should be good.
  */
 SEL XJSSearchSelector(id obj, const char *selname, unsigned argc);
+
+NSString *XJSSearchProperty(JSContext *cx, JSObject *obj, SEL sel);

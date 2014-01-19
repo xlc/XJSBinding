@@ -99,3 +99,37 @@ SEL XJSSearchSelector(id obj, const char *selname, unsigned argc)
     SEL result = _XJSSearchSelector(obj, selname, argc);
     return (result && [obj respondsToSelector:result]) ? result : NULL;
 }
+
+NSString *XJSSearchProperty(JSContext *cx, JSObject *obj, SEL sel)
+{
+    XASSERT_NOTNULL(obj);
+    XASSERT_NOTNULL(sel);
+    
+    NSString *name = NSStringFromSelector(sel);
+    JSBool found;
+    
+    if (JS_HasProperty(cx, obj, [name UTF8String], &found) && found) {
+        return name;
+    }
+    
+    name = [name stringByReplacingOccurrencesOfString:@":" withString:@"_"];
+    
+    if (JS_HasProperty(cx, obj, [name UTF8String], &found) && found) {
+        return name;
+    }
+    
+    int count = 0;
+    for (NSInteger i = name.length - 1; i >= 0 && [name characterAtIndex:i] == '_'; --i) {
+        ++count;
+    }
+    
+    if (count) {
+        name = [name substringToIndex:name.length - count];
+        
+        if (JS_HasProperty(cx, obj, [name UTF8String], &found) && found) {
+            return name;
+        }
+    }
+    
+    return nil;
+}
