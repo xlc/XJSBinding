@@ -356,4 +356,25 @@
     [self _testObjectMethodWithArgs:[XJSAdopter adopterForClass:[XJSAdopterTestClass class] withValue:_value]];
 }
 
+- (void)_testSubscriptor:(id)adopter
+{
+    XCTAssertTrue([adopter[@"testField"] isUndefined]);
+    adopter[@"testField"] = @"testString";
+    XCTAssertEqualObjects([adopter[@"testField"] toObject], @"testString");
+    
+    adopter[@"voidMethod"] = [_context evaluateString:@"f=function(){}" error:NULL];
+    XCTAssertTrue([adopter respondsToSelector:@selector(voidMethod)]);
+    XCTAssertTrue([adopter[@"voidMethod"] isCallable]);
+}
+
+- (void)testProtocolSubscriptor
+{
+    [self _testSubscriptor:[XJSAdopter adopterForProtocol:@protocol(XJSAdopterTestProtocol) withValue:_value]];
+}
+
+- (void)testClassSubscriptor
+{
+    [self _testObjectMethodWithArgs:[XJSAdopter adopterForClass:[XJSAdopterTestClass class] withValue:_value]];
+}
+
 @end
