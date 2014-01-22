@@ -634,4 +634,38 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
 
 }
 
+- (void)testDeleteProperty
+{
+    _value = [XJSValue valueWithNewObjectInContext:_context];
+    
+    XCTAssertTrue([_value deleteProperty:@"a"], "delete _value.a === true");
+    
+    _value[@"a"] = @1;
+    
+    XCTAssertEqual(_value[@"a"].toInt32, 1, "_value.a === 1");
+    XCTAssertTrue([_value deleteProperty:@"b"], "delete _value.b === true");
+    XCTAssertEqual(_value[@"a"].toInt32, 1, "_value.a === 1");
+    
+    XCTAssertTrue([_value deleteProperty:@"a"], "delete _value.a === true");
+    XCTAssertTrue(_value[@"a"].isUndefined, "_value.a === undefined");
+    XCTAssertTrue([_value deleteProperty:@"a"], "delete _value.a === true");
+}
+
+- (void)testDeleteElement
+{
+    _value = [XJSValue valueWithNewArrayInContext:_context];
+    
+    XCTAssertTrue([_value deleteElementAtIndex:1], "delete _value[1] === true");
+    
+    _value[1] = @1;
+    
+    XCTAssertEqual(_value[1].toInt32, 1, "_value[1] === 1");
+    XCTAssertTrue([_value deleteElementAtIndex:2], "delete _value[2] === true");
+    XCTAssertEqual(_value[1].toInt32, 1, "_value[1] === 1");
+    
+    XCTAssertTrue([_value deleteElementAtIndex:1], "delete _value[1] === true");
+    XCTAssertTrue(_value[1].isUndefined, "_value[1] === undefined");
+    XCTAssertTrue([_value deleteElementAtIndex:1], "delete _value[1] === true");
+}
+
 @end

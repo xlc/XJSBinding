@@ -535,6 +535,30 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     return nil;
 }
 
+- (BOOL)deleteProperty:(NSString *)propertyName
+{
+    if (_value.isPrimitive() || [propertyName length] == 0) {
+        return YES;
+    }
+    
+    @synchronized(_context.runtime) {
+        JS::RootedValue val(_context.context);
+        return JS_DeleteProperty2(_context.context, _value.toObjectOrNull(), [propertyName UTF8String], &val) && val.toBoolean();
+    }
+}
+
+- (BOOL)deleteElementAtIndex:(uint32_t)index
+{
+    if (_value.isPrimitive()) {
+        return YES;
+    }
+    
+    @synchronized(_context.runtime) {
+        jsval val;
+        return JS_DeleteElement2(_context.context, _value.toObjectOrNull(), index, &val) && val.toBoolean();
+    }
+}
+
 @end
 
 #pragma mark - SubscriptSupport

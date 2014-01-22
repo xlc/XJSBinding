@@ -90,6 +90,11 @@
 // value, and the specified arguments.
 - (XJSValue *)invokeMethod:(NSString *)method withArguments:(NSArray *)arguments;
 
+// return true if no error and delete operator return true
+// return false if error or delete operator return false
+- (BOOL)deleteProperty:(NSString *)propertyName;
+- (BOOL)deleteElementAtIndex:(uint32_t)index;
+
 @end
 
 @interface XJSValue(SubscriptSupport)
