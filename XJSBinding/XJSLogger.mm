@@ -56,7 +56,7 @@ static JSBool XJSLogInfo(JSContext *cx, unsigned argc, JS::Value *vp)
 
 static JSBool XJSLogWarn(JSContext *cx, unsigned argc, JS::Value *vp)
 {
-    return XJSLog(cx, argc, vp, XLCLoggingLevelWarnning);
+    return XJSLog(cx, argc, vp, XLCLoggingLevelWarning);
 }
 
 static JSBool XJSLogError(JSContext *cx, unsigned argc, JS::Value *vp)

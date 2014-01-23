@@ -125,7 +125,7 @@ struct LoggerItem {
     XCTAssertEqual(_logs.size(), (size_t)1);
     
     auto item = _logs[0];
-    XCTAssertEqual(item.level, XLCLoggingLevelWarnning);
+    XCTAssertEqual(item.level, XLCLoggingLevelWarning);
     XCTAssertEqualObjects(item.func, @"a");
     XCTAssertEqual(item.lineno, 3);
     XCTAssertEqualObjects(item.message, @"1");
