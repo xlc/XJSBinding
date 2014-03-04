@@ -55,4 +55,8 @@ __END_DECLS
 
 @end
 
-// TODO  NSDictionary
+@interface NSDictionary (XJSValueConvert)
+
+- (XJSValue *)xjs_toValueInContext:(XJSContext *)context;
+
+@end

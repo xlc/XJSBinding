@@ -668,4 +668,36 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     XCTAssertTrue([_value deleteElementAtIndex:1], "delete _value[1] === true");
 }
 
+- (void)testObjectToDictionary
+{
+    _value = [XJSValue valueWithNewObjectInContext:_context];
+    
+    XCTAssertEqualObjects(_value.toDictionary, @{}, "empty object to empty dict");
+    
+    _value[1] = @2;
+    _value[@"key"] = @"value";
+    _value[@"obj"] = [XJSValue valueWithNewObjectInContext:_context];
+    
+    NSDictionary *expected = @{ @"1" : @2,
+                                @"key" : @"value",
+                                @"obj" : @{}
+                                };
+    
+    XCTAssertEqualObjects(_value.toDictionary, expected);
+}
+
+- (void)testArrayToDictionary
+{
+    _value = [XJSValue valueWithNewArrayInContext:_context];
+    
+    _value[0] = @"a";
+    _value[2] = @42;
+    
+    NSDictionary *expected = @{ @"0" : @"a",
+                                @"2" : @42
+                                };
+
+    XCTAssertEqualObjects(_value.toDictionary, expected);
+}
+
 @end

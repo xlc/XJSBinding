@@ -92,3 +92,12 @@ XJSValue *XJSToValue(XJSContext *context, id obj)
 }
 
 @end
+
+@implementation NSDictionary (XJSValueConvert)
+
+- (XJSValue *)xjs_toValueInContext:(XJSContext *)context
+{
+    return [XJSValue valueWithDictionary:self inContext:context];
+}
+
+@end

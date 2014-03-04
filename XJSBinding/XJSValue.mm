@@ -51,6 +51,23 @@
     }
 }
 
++ (XJSValue *)valueWithDictionary:(NSDictionary *)value inContext:(XJSContext *)context
+{
+    if (!value) {
+        return [self valueWithNullInContext:context];
+    }
+
+    @synchronized(context.runtime) {
+        XJSValue *ret = [self valueWithNewObjectInContext:context];
+        
+        [value enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            ret[key] = obj;
+        }];
+
+        return ret;
+    }
+}
+
 + (XJSValue *)valueWithBool:(BOOL)value inContext:(XJSContext *)context
 {
     return [[self alloc] initWithContext:context value:JS::BooleanValue(value)];
@@ -294,6 +311,45 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
     }
 }
 
+- (NSDictionary *)toDictionary
+{
+    if (self.isPrimitive) {
+        return nil;
+    }
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    JSContext *cx = _context.context;
+    
+    @synchronized(_context.runtime) {
+        JSObject *obj = _value.toObjectOrNull();
+        
+        JS::RootedValue prop(cx);
+        
+        JSIdArray *idarr = JS_Enumerate(cx, obj);
+        
+        int len = JS_IdArrayLength(cx, idarr);
+        for (int i = 0; i < len; i++)
+        {
+            jsval val;
+            jsid jid = JS_IdArrayGet(cx, idarr, i);
+            if (!JS_IdToValue(cx, jid, &val)) continue;
+            
+            NSString *key = XJSConvertJSValueToString(cx, val);
+            
+            if (!JS_GetPropertyById(cx, obj, jid, &prop)) continue;
+            
+            id propobj = [[[XJSValue alloc] initWithContext:_context value:prop] toObject];
+            
+            dict[key] = propobj ?: [NSNull null];
+        }
+        
+        JS_DestroyIdArray(cx, idarr);
+    }
+    
+    return dict;
+}
+
 - (id)toObject
 {
     switch (JS_TypeOfValue(_context.context, _value)) {
@@ -330,9 +386,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
                 return self.toArray;
             }
             
-            // TODO normal object to NSDictionary,
-            
-            return nil;
+            return self.toDictionary;
         }
         case JSTYPE_FUNCTION:
             // TODO XJSBlock?

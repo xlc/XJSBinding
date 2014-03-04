@@ -165,4 +165,32 @@
     XCTAssertEqual(rect, rect2);
 }
 
+- (void)testDictionary
+{
+    NSDictionary *dict;
+    
+    dict = @{};
+    _value = [dict xjs_toValueInContext:_context];
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive, "is object");
+    XCTAssertFalse(_value.isObject, "is native object");
+    XCTAssertEqualObjects(_value.description, @"({})", "empty object");
+    
+    dict = @{@"a" : @'b', @2 : @"test"};
+    _value = [dict xjs_toValueInContext:_context];
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive, "is object");
+    XCTAssertFalse(_value.isObject, "is native object");
+    XCTAssertEqual(_value[@"a"].toInt32, (int)'b');
+    XCTAssertEqualObjects(_value[@"2"].toString, @"test");
+    
+    dict = @{@"arr" : @[@1, @3, @4], @"dict" : @{@1 : @2}};
+    _value = [dict xjs_toValueInContext:_context];
+    XCTAssertNotNil(_value);
+    XCTAssertFalse(_value.isPrimitive, "is object");
+    XCTAssertFalse(_value.isObject, "is native object");
+    XCTAssertEqualObjects(_value[@"arr"].toArray, (@[@1, @3, @4]));
+    XCTAssertEqualObjects(_value[@"dict"].toDictionary, (@{@"1" : @2}));
+}
+
 @end

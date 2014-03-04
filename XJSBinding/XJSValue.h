@@ -18,6 +18,7 @@
 + (XJSValue *)valueWithObject:(id)value inContext:(XJSContext *)context;
 
 + (XJSValue *)valueWithArray:(NSArray *)value inContext:(XJSContext *)context;
++ (XJSValue *)valueWithDictionary:(NSDictionary *)value inContext:(XJSContext *)context;
 + (XJSValue *)valueWithString:(NSString *)value inContext:(XJSContext *)context;
 + (XJSValue *)valueWithDate:(NSDate *)date inContext:(XJSContext *)context;
 + (XJSValue *)valueWithNSValue:(NSValue *)value inContext:(XJSContext *)context;
@@ -41,6 +42,7 @@
 - (NSString *)toString;
 - (NSDate *)toDate;
 - (NSArray *)toArray;   // convert array-like object to NSArray
+- (NSDictionary *)toDictionary;
 - (id)toObject;
 - (NSValue *)toValueOfType:(const char *)type;
 
