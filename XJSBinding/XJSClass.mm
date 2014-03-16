@@ -23,6 +23,7 @@
 #import "XJSContext_Private.hh"
 #import "XJSValue_Private.hh"
 #import "XJSValueWeakRef.h"
+#import "XJSFunction.h"
 
 static JSBool XJSAddPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JS::MutableHandleValue vp)
 {
@@ -259,6 +260,44 @@ static void XJSFinalizeImpl(JSFreeOp *fop, JSObject *jsobj)
     (void)obj;  // use it
 }
 
+static JSBool XJSCallImpl(JSContext *cx, unsigned argc, JS::Value *vp)
+{
+    auto args = JS::CallArgsFromVp(argc, vp);
+    auto thisobj = args.calleev();
+    
+    id<XJSCallable> obj = XJSGetAssosicatedObject(thisobj.toObjectOrNull());
+    
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:args.length()];
+    XJSContext *xjscx = [XJSContext contextForJSContext:cx];
+    for (int i = 0; i < args.length(); ++i) {
+        [arr addObject:[[XJSValue alloc] initWithContext:xjscx value:args.get(i)]];
+    }
+    
+    id ret = nil;
+    
+    try {
+        @try {
+            ret = [obj callWithArguments:arr];
+        }
+        @catch (id exception) { // objc exception
+            jsval errval = XJSToValue(xjscx, exception).value;
+            JS_SetPendingException(cx, errval);
+            return JS_FALSE;
+        }
+    } catch (std::exception &e) {   // c++ exception
+        JS_ReportError(cx, e.what());
+        return JS_FALSE;
+    } catch (...) { // some random exception
+        JS_ReportError(cx, "Unknown exception");
+        return JS_FALSE;
+    }
+    
+    args.rval().set(XJSToValue(xjscx, ret).value);
+    
+    return JS_TRUE;
+}
+
+
 static JSClass XJSClassTemplate = {
     "XJSClassTemplate",         // name
     JSCLASS_HAS_PRIVATE,        // flags
@@ -293,6 +332,10 @@ static JSClass *XJSGetJSClassForNSClass(Class cls)
     jsclsdata = [NSMutableData dataWithBytes:&XJSClassTemplate length:sizeof(XJSClassTemplate)];
     
     JSClass *jscls = (JSClass *)[jsclsdata mutableBytes];
+    
+    if ([cls conformsToProtocol:@protocol(XJSCallable)]) {
+        jscls->call = XJSCallImpl;
+    }
     
     const char *clsname = class_getName(cls);
     [jsclsdata appendBytes:clsname length:strlen(clsname)];   // store name

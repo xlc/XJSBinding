@@ -36,8 +36,7 @@
     @autoreleasepool {
         XJSRuntime *runtime = [[XJSRuntime alloc] init];
         weakRuntime = runtime;
-        
-        XCTAssertNotEqual(runtime.runtime, NULL, @"should be assigned to a JSRuntime");
+        XCTAssertNotEqual(runtime.runtime, nullptr, @"should be assigned to a JSRuntime");
     }
     
     XCTAssertNil(weakRuntime, @"should not have retain cycle");

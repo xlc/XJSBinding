@@ -18,6 +18,7 @@
 #import "XJSContext_Private.hh"
 #import "XJSRuntime.h"
 #import "XJSClass.hh"
+#import "XJSFunction.h"
 
 @implementation XJSValue
 
@@ -373,7 +374,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
             if (!jsobj) {
                 return nil;
             }
-            id obj = XJSGetAssosicatedObject(_value.toObjectOrNull());
+            id obj = XJSGetAssosicatedObject(jsobj);
             if (obj) {
                 return obj;
             }
@@ -389,8 +390,12 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
             return self.toDictionary;
         }
         case JSTYPE_FUNCTION:
-            // TODO XJSBlock?
-            return nil;
+            id obj = XJSGetAssosicatedObject(_value.toObjectOrNull());
+            if (obj) {
+                return obj;
+            }
+
+            return [XJSFunction functionWithXJSValue:self];
     }
 }
 

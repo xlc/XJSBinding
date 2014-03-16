@@ -9,6 +9,8 @@
 #import <XCTest/XCTest.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#import <type_traits>
+
 #import "XJSConvert.hh"
 
 #import "XJSValue_Private.hh"
@@ -40,7 +42,9 @@
 template <typename T>
 void _assertEqual(id self, T actual, T expected, SEL selToTest)
 {
-    XCTAssertEqual(actual, expected, @"failed selector: %@", NSStringFromSelector(selToTest));
+    NSValue *actualVal = [NSValue valueWithBytes:&actual objCType:@encode(T)];
+    NSValue *expectedVal = [NSValue valueWithBytes:&expected objCType:@encode(T)];
+    XCTAssertEqualObjects(actualVal, expectedVal, @"failed selector: %@", NSStringFromSelector(selToTest));
 }
 
 template <typename NSObject>
@@ -543,7 +547,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     CGPoint p2;
     [val getValue:&p2];
-    XCTAssertEqual(p, p2);
+    XCTAssertEqualObjects([NSValue valueWithPoint:p], [NSValue valueWithPoint:p2]);
 }
 
 - (void)testCreateValueCGSize
@@ -562,7 +566,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     CGSize p2;
     [val getValue:&p2];
-    XCTAssertEqual(p, p2);
+    XCTAssertEqualObjects([NSValue valueWithSize:p], [NSValue valueWithSize:p2]);
 }
 
 - (void)testCreateValueCGRect
@@ -591,7 +595,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     CGRect p2;
     [val getValue:&p2];
-    XCTAssertEqual(p, p2);
+    XCTAssertEqualObjects([NSValue valueWithRect:p], [NSValue valueWithRect:p2]);
 }
 
 - (CGRect)createRectWithOrigin:(CGPoint)origin andSize:(CGSize)size
@@ -630,8 +634,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     CGRect rect;
     [val getValue:&rect];
-    XCTAssertEqual(CGRectMake(1.5, 2, 3, 4.5), rect);
-
+    XCTAssertEqualObjects([NSValue valueWithRect:CGRectMake(1.5, 2, 3, 4.5)], [NSValue valueWithRect:rect]);
 }
 
 - (void)testDeleteProperty

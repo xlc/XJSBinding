@@ -82,6 +82,11 @@
 		066AD6C817F57B4700EADB2B /* NSObject+XJSValueConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 066AD6C617F57B4700EADB2B /* NSObject+XJSValueConvert.h */; };
 		066AD6C917F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066AD6C717F57B4700EADB2B /* NSObject+XJSValueConvert.mm */; };
 		066AD6CA17F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066AD6C717F57B4700EADB2B /* NSObject+XJSValueConvert.mm */; };
+		066CA06D18D3CEE200BF9BF2 /* XJSFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CA06B18D3CEE200BF9BF2 /* XJSFunction.h */; };
+		066CA06E18D3CEE200BF9BF2 /* XJSFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 066CA06C18D3CEE200BF9BF2 /* XJSFunction.m */; };
+		066CA07018D46DE800BF9BF2 /* XJSFunctionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 066CA06F18D46DE800BF9BF2 /* XJSFunctionTests.m */; };
+		066CA07118D46DE800BF9BF2 /* XJSFunctionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 066CA06F18D46DE800BF9BF2 /* XJSFunctionTests.m */; };
+		066CA07218D46E1500BF9BF2 /* XJSFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 066CA06C18D3CEE200BF9BF2 /* XJSFunction.m */; };
 		066CECB917DBFC6E0078829C /* XJSContext_Private.hh in Headers */ = {isa = PBXBuildFile; fileRef = 066CECAE17DBFC6E0078829C /* XJSContext_Private.hh */; };
 		066CECBA17DBFC6E0078829C /* XJSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 066CECAF17DBFC6E0078829C /* XJSContext.h */; };
 		066CECBB17DBFC6E0078829C /* XJSContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066CECB017DBFC6E0078829C /* XJSContext.mm */; };
@@ -210,6 +215,9 @@
 		066AD6BF17F0588A00EADB2B /* XJSBindingTests-ios.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "XJSBindingTests-ios.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		066AD6C617F57B4700EADB2B /* NSObject+XJSValueConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+XJSValueConvert.h"; sourceTree = "<group>"; };
 		066AD6C717F57B4700EADB2B /* NSObject+XJSValueConvert.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSObject+XJSValueConvert.mm"; sourceTree = "<group>"; };
+		066CA06B18D3CEE200BF9BF2 /* XJSFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSFunction.h; sourceTree = "<group>"; };
+		066CA06C18D3CEE200BF9BF2 /* XJSFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSFunction.m; sourceTree = "<group>"; };
+		066CA06F18D46DE800BF9BF2 /* XJSFunctionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSFunctionTests.m; sourceTree = "<group>"; };
 		066CECAE17DBFC6E0078829C /* XJSContext_Private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XJSContext_Private.hh; sourceTree = "<group>"; };
 		066CECAF17DBFC6E0078829C /* XJSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSContext.h; sourceTree = "<group>"; };
 		066CECB017DBFC6E0078829C /* XJSContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSContext.mm; sourceTree = "<group>"; };
@@ -504,6 +512,8 @@
 				066AD6C717F57B4700EADB2B /* NSObject+XJSValueConvert.mm */,
 				0617DAB51811395C00D6884E /* XJSValueWeakRef.h */,
 				0617DAB61811395C00D6884E /* XJSValueWeakRef.mm */,
+				066CA06B18D3CEE200BF9BF2 /* XJSFunction.h */,
+				066CA06C18D3CEE200BF9BF2 /* XJSFunction.m */,
 			);
 			name = XJSValue;
 			sourceTree = "<group>";
@@ -623,6 +633,7 @@
 				0674ACE318572200004491AD /* XJSLoggerTests.mm */,
 				0674ACFC185EF084004491AD /* XJSModuleManagerTests.mm */,
 				06480DA3187D55A500FB9A95 /* XJSAdopterTests.m */,
+				066CA06F18D46DE800BF9BF2 /* XJSFunctionTests.m */,
 				0692BC7C17D9D612009BFC18 /* Supporting Files */,
 			);
 			path = XJSBindingTests;
@@ -773,6 +784,7 @@
 				066CECB917DBFC6E0078829C /* XJSContext_Private.hh in Headers */,
 				0657FEEE181BA400000B29F6 /* XJSStructMetadata.h in Headers */,
 				0674ACE01857116C004491AD /* XJSLogger.hh in Headers */,
+				066CA06D18D3CEE200BF9BF2 /* XJSFunction.h in Headers */,
 				0619AA7917FC0DCF001631BD /* XJSClass.hh in Headers */,
 				0617DAB71811395C00D6884E /* XJSValueWeakRef.h in Headers */,
 			);
@@ -900,7 +912,7 @@
 		0692BC5917D9D612009BFC18 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Xiliang Chen";
 				TargetAttributes = {
 					0620F8A617F04859008A86ED = {
@@ -1141,6 +1153,7 @@
 				06DA4B7017F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
 				0619AA7617F971DC001631BD /* XJSHelperFunctionsTests.mm in Sources */,
 				06480DA5187D55A500FB9A95 /* XJSAdopterTests.m in Sources */,
+				066CA07118D46DE800BF9BF2 /* XJSFunctionTests.m in Sources */,
 				0660B9EE17E094FA00A3DD0C /* XJSRuntimeTests.mm in Sources */,
 				06624201181BBC08000E1F54 /* XJSStructMetadataTests.m in Sources */,
 				060A9018181220DD002631A5 /* XJSWeakMapTests.mm in Sources */,
@@ -1193,6 +1206,7 @@
 				0619AA7A17FC0DCF001631BD /* XJSClass.mm in Sources */,
 				06D7CE6B187A9D2B008E1DE0 /* XJSAdopter.mm in Sources */,
 				066AD6C917F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */,
+				066CA06E18D3CEE200BF9BF2 /* XJSFunction.m in Sources */,
 				0617DAB81811395C00D6884E /* XJSValueWeakRef.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1206,6 +1220,7 @@
 				06DA4B6F17F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
 				0664602B17DDC4960071D23F /* XJSContextTests.mm in Sources */,
 				06480DA4187D55A500FB9A95 /* XJSAdopterTests.m in Sources */,
+				066CA07018D46DE800BF9BF2 /* XJSFunctionTests.m in Sources */,
 				0619AA7517F971DC001631BD /* XJSHelperFunctionsTests.mm in Sources */,
 				06624200181BBC08000E1F54 /* XJSStructMetadataTests.m in Sources */,
 				060A9017181220DD002631A5 /* XJSWeakMapTests.mm in Sources */,
@@ -1238,6 +1253,7 @@
 				0619AA7B17FC0DCF001631BD /* XJSClass.mm in Sources */,
 				06D7CE6C187A9D2B008E1DE0 /* XJSAdopter.mm in Sources */,
 				066AD6CA17F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */,
+				066CA07218D46E1500BF9BF2 /* XJSFunction.m in Sources */,
 				0617DAB91811395C00D6884E /* XJSValueWeakRef.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1267,7 +1283,6 @@
 		0620F8CD17F04859008A86ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1293,7 +1308,6 @@
 		0620F8CE17F04859008A86ED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1321,7 +1335,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1357,7 +1370,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1393,7 +1405,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/XJSBindingApp.app/XJSBindingApp";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1429,7 +1440,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/XJSBindingApp.app/XJSBindingApp";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1633,7 +1643,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E92E519FA01444FB9DD45FEC /* Pods-XJSBinding-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/XJSBinding_ios.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-ios-Prefix.pch";
@@ -1654,7 +1663,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E92E519FA01444FB9DD45FEC /* Pods-XJSBinding-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/XJSBinding_ios.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-ios-Prefix.pch";

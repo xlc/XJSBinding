@@ -561,6 +561,8 @@ class VectorBase : private AllocPolicy
 
 /* Vector Implementation */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuninitialized"
 template<typename T, size_t N, class AP, class TV>
 MOZ_ALWAYS_INLINE
 VectorBase<T, N, AP, TV>::VectorBase(AP ap)
@@ -573,6 +575,7 @@ VectorBase<T, N, AP, TV>::VectorBase(AP ap)
     entered(false)
 #endif
 {}
+#pragma clang diagnostic pop
 
 /* Move constructor. */
 template<typename T, size_t N, class AllocPolicy, class TV>
