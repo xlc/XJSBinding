@@ -29,6 +29,12 @@
     }
     
     @synchronized(context.runtime) {
+        if (!context.runtimeEntryObject) {
+            @throw [NSException exceptionWithName:@"Invalid Operation"
+                                           reason:@"Not possible to create JS object from ObjC object without ObjC runtime (call -[XJSContext createObjCRuntimeWithNamespace:])"
+                                         userInfo:@{@"context" : context,
+                                                    @"object" : value}];
+        }
         JSObject *obj = XJSGetOrCreateJSObject(context.context, value);
         return [[self alloc] initWithContext:context value:JS::ObjectOrNullValue(obj)];
     }

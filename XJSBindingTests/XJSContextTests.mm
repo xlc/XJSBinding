@@ -290,4 +290,9 @@
     XCTAssertTrue([cxs containsObject:_context]);
 }
 
+- (void)testUseObjCRuntimeWithoutCreate
+{
+    XCTAssertThrows(_context[@"a"] = [NSObject new], "cannot create JS object from ObjC object without ObjC runtime");
+}
+
 @end
