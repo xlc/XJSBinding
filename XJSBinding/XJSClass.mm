@@ -25,24 +25,114 @@
 #import "XJSValueWeakRef.h"
 #import "XJSFunction.h"
 
-static JSBool XJSAddPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JS::MutableHandleValue vp)
-{
-    return JS_PropertyStub(cx, obj, jid, vp);
-}
 
 static JSBool XJSGetPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JS::MutableHandleValue vp)
 {
-    return JS_PropertyStub(cx, obj, jid, vp);
-}
-
-static JSBool XJSDeletePropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JSBool *succeeded)
-{
-    return JS_DeletePropertyStub(cx, obj, jid, succeeded);
+    jsval val;
+    JS_IdToValue(cx, jid, &val);
+    NSString *propname = XJSConvertJSValueToString(cx, val);
+    id nsobj = XJSGetAssosicatedObject(obj);
+    SEL sel = XJSObjectGetPropertyGetter(nsobj, [propname UTF8String]);
+    if (sel && [nsobj respondsToSelector:sel]) {
+        
+        NSMethodSignature *signature = [nsobj methodSignatureForSelector:sel];
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+        [invocation setTarget:nsobj];
+        [invocation setSelector:sel];
+        NSUInteger retsize = [signature methodReturnLength];
+        alignas(sizeof(NSInteger)) unsigned char buff[retsize];
+        
+        try {
+            @try {
+                [invocation invoke];
+            }
+            @catch (id exception) { // objc exception
+                jsval errval = XJSToValue([XJSContext contextForJSContext:cx], exception).value;
+                JS_SetPendingException(cx, errval);
+                return JS_FALSE;
+            }
+        } catch (std::exception &e) {   // c++ exception
+            JS_ReportError(cx, e.what());
+            return JS_FALSE;
+        } catch (...) { // some random exception
+            JS_ReportError(cx, "Unknown exception");
+            return JS_FALSE;
+        }
+        
+        [invocation getReturnValue:buff];
+        return XJSValueFromType(cx, [signature methodReturnType], buff, vp);
+        
+    } else {
+        JS_ReportError(cx, "Unable to get property '%s' from object '%s'",
+                       [propname UTF8String],
+                       XJSConvertJSValueToString(cx, JS::ObjectOrNullValue(obj)));
+        return JS_FALSE;
+    }
 }
 
 static JSBool XJSSetPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId jid, JSBool strict, JS::MutableHandleValue vp)
 {
-    return JS_StrictPropertyStub(cx, obj, jid, strict, vp);
+    jsval val;
+    JS_IdToValue(cx, jid, &val);
+    NSString *propname = XJSConvertJSValueToString(cx, val);
+    id nsobj = XJSGetAssosicatedObject(obj);
+    SEL sel = XJSObjectGetPropertySetter(nsobj, [propname UTF8String]);
+    if (sel && [nsobj respondsToSelector:sel]) {
+        
+        NSMethodSignature *signature = [nsobj methodSignatureForSelector:sel];
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+        [invocation setTarget:nsobj];
+        [invocation setSelector:sel];
+        const char *type = [signature getArgumentTypeAtIndex:2];
+        auto ret = XJSValueToType(cx, vp, type);
+        if (ret.first) { // NSValue
+            NSValue *nsval = ret.first;
+            NSUInteger size;
+            NSGetSizeAndAlignment(type, &size, NULL);
+            alignas(sizeof(NSInteger)) unsigned char buff[size];   // not sure alignas is required
+            [nsval getValue:&buff];
+            [invocation setArgument:buff atIndex:2];
+        } else if (ret.second) {    // id
+            [invocation setArgument:&ret.second atIndex:2];
+        } else {
+            if (type[0] == _C_ID || type[0] == _C_CLASS) {
+                id nilobj = nil;
+                [invocation setArgument:&nilobj atIndex:2];
+            } else {
+                JS_ReportError(cx, "Unable to set property '%s' to value '%s' for object '%s'",
+                               [propname UTF8String],
+                               XJSConvertJSValueToString(cx, vp),
+                               XJSConvertJSValueToString(cx, JS::ObjectOrNullValue(obj)));
+                return JS_FALSE;
+            }
+        }
+        
+        try {
+            @try {
+                [invocation invoke];
+            }
+            @catch (id exception) { // objc exception
+                jsval errval = XJSToValue([XJSContext contextForJSContext:cx], exception).value;
+                JS_SetPendingException(cx, errval);
+                return JS_FALSE;
+            }
+        } catch (std::exception &e) {   // c++ exception
+            JS_ReportError(cx, e.what());
+            return JS_FALSE;
+        } catch (...) { // some random exception
+            JS_ReportError(cx, "Unknown exception");
+            return JS_FALSE;
+        }
+        
+        return JS_TRUE;
+        
+    } else {
+        JS_ReportError(cx, "Unable to set property '%s' to value '%s' for object '%s'",
+                       [propname UTF8String],
+                       XJSConvertJSValueToString(cx, vp),
+                       XJSConvertJSValueToString(cx, JS::ObjectOrNullValue(obj)));
+        return JS_FALSE;
+    }
 }
 
 static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
@@ -54,8 +144,13 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
     const char *selname = str.ptr();
     XASSERT_NOTNULL(selname);
     
-    auto thisobj = args.thisv();
-    id obj = XJSGetAssosicatedObject(thisobj.toObjectOrNull());
+    auto thisobj = args.thisv().toObjectOrNull();
+    id obj = thisobj ? XJSGetAssosicatedObject(thisobj) : nil;
+    if (!obj) {
+        XDLOG(@"Unable to call selector %s on %@. undefine returned.", selname, XJSConvertJSValueToSource(cx, args.thisv()));
+        args.rval().set(JS::UndefinedValue());
+        return JS_TRUE;
+    }
     
     SEL sel = XJSSearchSelector(obj, selname, args.length());
     if (sel == NULL) {
@@ -185,6 +280,22 @@ static JSBool XJSResolveImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId j
             return JS_TRUE;
         }
         
+        XJSContext *context = [XJSContext contextForJSContext:cx];
+        if (!context.treatePropertyAsMethod) {
+            id nsobj = XJSGetAssosicatedObject(obj);
+            if (XJSObjectHasProperty(nsobj, selname)) {
+                
+                BOOL isReadonly = !XJSObjectGetPropertySetter(nsobj, selname);
+                unsigned flags = JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED;
+                if (isReadonly) {
+                    flags |= JSPROP_READONLY;
+                }
+                JS_DefineProperty(cx, obj, selname, JS::UndefinedValue(), XJSGetPropertyImpl, XJSSetPropertyImpl, flags);
+                
+                return YES;
+            }
+        }
+        
         JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, selname);
         JS::RootedValue funcval(cx, JS::ObjectOrNullValue(JS_GetFunctionObject(func)));
         
@@ -301,10 +412,10 @@ static JSBool XJSCallImpl(JSContext *cx, unsigned argc, JS::Value *vp)
 static JSClass XJSClassTemplate = {
     "XJSClassTemplate",         // name
     JSCLASS_HAS_PRIVATE,        // flags
-    XJSAddPropertyImpl,         // add
-    XJSDeletePropertyImpl,      // delet
-    XJSGetPropertyImpl,         // get
-    XJSSetPropertyImpl,         // set
+    JS_PropertyStub,            // add
+    JS_DeletePropertyStub,      // delet
+    JS_PropertyStub,            // get
+    JS_StrictPropertyStub,      // set
     JS_EnumerateStub,           // enumerate
     XJSResolveImpl,             // resolve
     JS_ConvertStub,             // convert
@@ -434,9 +545,6 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
         JS::RootedValue funcval(cx, JS::ObjectOrNullValue(JS_GetFunctionObject(func)));
         success = JS_SetProperty(cx, proto, "toString", funcval);
         XASSERT(success, "fail to set toString");
-        
-        // set constructor
-        JS_SetProperty(cx, proto, "constructor", cstrval);
     }
     
     JS_SetPrototype(cx, jsobj, proto);
@@ -448,7 +556,7 @@ id XJSGetAssosicatedObject(JSObject *jsobj)
 {
     XASSERT_NOTNULL(jsobj);
     JSClass *jscls = JS_GetClass(jsobj);
-    if (jscls->addProperty != XJSAddPropertyImpl) {    // check class type
+    if (jscls->resolve != XJSResolveImpl) {    // check class type
         return nil;
     }
     

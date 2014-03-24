@@ -152,7 +152,7 @@
     
     CGPoint p2 = {};
     [[_value toValueOfType:@encode(CGPoint)] getValue:&p2];
-    XCTAssertEqualObjects([NSValue valueWithPoint:p], [NSValue valueWithPoint:p2]);
+    XCTAssertEqualObjects([NSValue valueWithBytes:(const void *)&p objCType:@encode(CGPoint)], [NSValue valueWithBytes:(const void *)&p2 objCType:@encode(CGPoint)]);
     
     CGRect rect = {{1,2},{3,4}};
     value = [NSValue valueWithBytes:&rect objCType:@encode(CGRect)];
@@ -162,7 +162,7 @@
     
     CGRect rect2 = {};
     [[_value toValueOfType:@encode(CGRect)] getValue:&rect2];
-    XCTAssertEqualObjects([NSValue valueWithRect:rect], [NSValue valueWithRect:rect2]);
+    XCTAssertEqualObjects([NSValue valueWithBytes:(const void *)&rect objCType:@encode(CGRect)], [NSValue valueWithBytes:(const void *)&rect2 objCType:@encode(CGRect)]);
 }
 
 - (void)testDictionary

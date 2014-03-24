@@ -15,6 +15,27 @@
 #import "XJSContext_Private.hh"
 #import "XJSValue.h"
 
+@interface XJSContextTestDummy : NSObject
+
+@property int intValue;
+@property id objectValue;
+@property (getter = isBool, setter = setBool:) BOOL boolValue;
+
+- (void)setDoubleValue:(double)d;
+- (double)doubleValue;
+
+- (id)notProperty;
+
+@end
+
+@implementation XJSContextTestDummy { double _d; }
+
+- (void)setDoubleValue:(double)d { _d = d; }
+- (double)doubleValue {return _d;}
+- (id)notProperty {return @"not";}
+
+@end
+
 @interface XJSContextTests : XCTestCase
 
 @end
@@ -52,6 +73,8 @@
         XCTAssertNotNil(context.runtime, @"should have runtime");
         
         XCTAssertEqual([XJSContext contextForJSContext:jscontext], context, @"should match");
+        
+        XCTAssertTrue(context.treatePropertyAsMethod, "default to YES");
     }
     
     XCTAssertNil(weakContext, @"should not have retain cycle");
@@ -293,6 +316,42 @@
 - (void)testUseObjCRuntimeWithoutCreate
 {
     XCTAssertThrows(_context[@"a"] = [NSObject new], "cannot create JS object from ObjC object without ObjC runtime");
+    [_context createObjCRuntimeWithNamespace:nil];
+    XCTAssertNoThrow(_context[@"a"] = [NSObject new], "should be fine now");
+}
+
+- (void)testTreatePropertyAsMethod
+{
+    [_context createObjCRuntimeWithNamespace:nil];
+    
+    _context.treatePropertyAsMethod = NO;
+    
+    XJSContextTestDummy *dummy = [[XJSContextTestDummy alloc] init];
+    
+    XJSValue *val = [XJSValue valueWithObject:dummy inContext:_context];
+    
+    XCTAssertEqual(val[@"intValue"].toInt32, 0, "dummy.intValue == 0");
+    val[@"intValue"] = @42;
+    XCTAssertEqual(val[@"intValue"].toInt32, 42, "dummy.intValue == 42");
+    XCTAssertEqual(dummy.intValue, 42);
+    
+    XCTAssertTrue(val[@"objectValue"].isNull, "dummy.objectValue == null");
+    val[@"objectValue"] = @"test";
+    XCTAssertEqualObjects(val[@"objectValue"].toObject, @"test", "dummy.objectValue == 'test'");
+    XCTAssertEqualObjects(dummy.objectValue, @"test");
+    
+    XCTAssertEqual(val[@"boolValue"].toBool, NO, "dummy.boolValue == NO");
+    val[@"boolValue"] = @YES;
+    XCTAssertEqual(val[@"boolValue"].toBool, YES, "dummy.boolValue == YES");
+    XCTAssertEqual(dummy.boolValue, YES);
+    
+    XCTAssertEqual(val[@"doubleValue"].toDouble, 0, "dummy.doubleValue == 0");
+    val[@"doubleValue"] = @42;
+    XCTAssertEqual(val[@"doubleValue"].toDouble, 42, "dummy.doubleValue == 42");
+    XCTAssertEqual(dummy.doubleValue, 42);
+    
+    XCTAssertTrue([val[@"notProperty"] isCallable], "dummy.notProperty is function");
+    XCTAssertEqualObjects([val invokeMethod:@"notProperty" withArguments:nil].toString, @"not", "dummy.notProperty() == 'not'");
 }
 
 @end

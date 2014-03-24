@@ -547,7 +547,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     CGPoint p2;
     [val getValue:&p2];
-    XCTAssertEqualObjects([NSValue valueWithPoint:p], [NSValue valueWithPoint:p2]);
+    XCTAssertEqualObjects([NSValue valueWithBytes:(const void *)&p objCType:@encode(CGPoint)], [NSValue valueWithBytes:(const void *)&p2 objCType:@encode(CGPoint)]);
 }
 
 - (void)testCreateValueCGSize
@@ -566,7 +566,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     CGSize p2;
     [val getValue:&p2];
-    XCTAssertEqualObjects([NSValue valueWithSize:p], [NSValue valueWithSize:p2]);
+    XCTAssertEqualObjects([NSValue valueWithBytes:(const void *)&p objCType:@encode(CGSize)], [NSValue valueWithBytes:(const void *)&p2 objCType:@encode(CGSize)]);
 }
 
 - (void)testCreateValueCGRect
@@ -595,7 +595,7 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     
     CGRect p2;
     [val getValue:&p2];
-    XCTAssertEqualObjects([NSValue valueWithRect:p], [NSValue valueWithRect:p2]);
+    XCTAssertEqualObjects([NSValue valueWithBytes:(const void *)&p objCType:@encode(CGRect)], [NSValue valueWithBytes:(const void *)&p2 objCType:@encode(CGRect)]);
 }
 
 - (CGRect)createRectWithOrigin:(CGPoint)origin andSize:(CGSize)size
@@ -632,9 +632,9 @@ void _testValueConvert(XJSValueTests *self, SEL _cmd, XJSContext *cx, SEL selToT
     XCTAssertNotNil(val);
     XCTAssertEqualObjects(@(val.objCType), @(@encode(CGRect)));
     
-    CGRect rect;
+    CGRect rect, rect2 = CGRectMake(1.5, 2, 3, 4.5);
     [val getValue:&rect];
-    XCTAssertEqualObjects([NSValue valueWithRect:CGRectMake(1.5, 2, 3, 4.5)], [NSValue valueWithRect:rect]);
+    XCTAssertEqualObjects([NSValue valueWithBytes:(const void *)&rect objCType:@encode(CGRect)], [NSValue valueWithBytes:(const void *)&rect2 objCType:@encode(CGRect)]);
 }
 
 - (void)testDeleteProperty

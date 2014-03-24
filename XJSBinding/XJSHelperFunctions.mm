@@ -133,3 +133,94 @@ NSString *XJSSearchProperty(JSContext *cx, JSObject *obj, SEL sel)
     
     return nil;
 }
+
+BOOL XJSObjectHasProperty(id obj, const char *prop)
+{
+    XASSERT_NOTNULL(obj);
+    XASSERT_NOTNULL(prop);
+    
+    if (class_getProperty([obj class], prop)) {
+        return YES;
+    }
+    
+    if (![obj respondsToSelector:sel_getUid(prop)]) {
+
+        NSString *gettername = [NSString stringWithFormat:@"is%c%s", // bool property normally with getter of isXxx
+                                 toupper(prop[0]),
+                                 prop+1];
+        
+        if (![obj respondsToSelector:NSSelectorFromString(gettername)]) {
+            return NO;
+        }
+        
+    }
+    
+    NSString *settername = [NSString stringWithFormat:@"set%c%s:", // setXxx
+                            toupper(prop[0]),
+                            prop+1];
+
+    if ([obj respondsToSelector:NSSelectorFromString(settername)]) {
+        return YES;
+    }
+    
+    
+    
+    return NO;
+}
+
+SEL XJSObjectGetPropertyGetter(id obj, const char *prop)
+{
+    XASSERT_NOTNULL(obj);
+    XASSERT_NOTNULL(prop);
+    
+    objc_property_t p = class_getProperty([obj class], prop);
+    
+    if (p) {
+        const char * getter = property_copyAttributeValue(p, "G");
+        return sel_getUid(getter ?: prop); // custom getter or standard getter
+    }
+    
+    SEL sel = sel_getUid(prop);
+    
+    if ([obj respondsToSelector:sel]) {
+        return sel;
+    }
+    
+    NSString *gettername = [NSString stringWithFormat:@"is%c%s",
+                            toupper(prop[0]),
+                            prop+1];
+    
+    sel = NSSelectorFromString(gettername);
+    if ([obj respondsToSelector:sel]) {
+        return sel;
+    }
+    
+    return NULL;
+}
+
+SEL XJSObjectGetPropertySetter(id obj, const char *prop)
+{
+    XASSERT_NOTNULL(obj);
+    XASSERT_NOTNULL(prop);
+ 
+    objc_property_t p = class_getProperty([obj class], prop);
+    
+    if (p) {
+        const char * setter = property_copyAttributeValue(p, "S");
+        
+        if (setter) {
+            return sel_getUid(setter);
+        }
+    }
+    
+    NSString *gettername = [NSString stringWithFormat:@"set%c%s:",
+                            toupper(prop[0]),
+                            prop+1];
+    
+    SEL sel = NSSelectorFromString(gettername);
+    if ([obj respondsToSelector:sel]) {
+        return sel;
+    }
+    
+    return  NULL;
+}

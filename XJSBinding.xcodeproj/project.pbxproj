@@ -140,6 +140,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0622A51718E024FF008E2A93 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0692BC5917D9D612009BFC18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0620F8A617F04859008A86ED;
+			remoteInfo = XJSBindingApp;
+		};
+		0622A51918E02505008E2A93 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0692BC5917D9D612009BFC18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06CFF4CE17E1BFD10081F388;
+			remoteInfo = "XJSBinding-ios";
+		};
 		0692BC7817D9D612009BFC18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0692BC5917D9D612009BFC18 /* Project object */;
@@ -823,6 +837,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0622A51A18E02505008E2A93 /* PBXTargetDependency */,
 			);
 			name = "XJSBindingTests-ios";
 			productName = "XJSBindingTests-ios";
@@ -842,6 +857,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0622A51818E024FF008E2A93 /* PBXTargetDependency */,
 			);
 			name = "XJSBindingTests-ios-device";
 			productName = "XJSBindingTests-ios";
@@ -1261,6 +1277,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0622A51818E024FF008E2A93 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0620F8A617F04859008A86ED /* XJSBindingApp */;
+			targetProxy = 0622A51718E024FF008E2A93 /* PBXContainerItemProxy */;
+		};
+		0622A51A18E02505008E2A93 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06CFF4CE17E1BFD10081F388 /* XJSBinding-ios */;
+			targetProxy = 0622A51918E02505008E2A93 /* PBXContainerItemProxy */;
+		};
 		0692BC7917D9D612009BFC18 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0692BC6017D9D612009BFC18 /* XJSBinding */;

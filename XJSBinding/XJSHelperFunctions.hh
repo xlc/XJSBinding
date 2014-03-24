@@ -25,3 +25,8 @@
 SEL XJSSearchSelector(id obj, const char *selname, unsigned argc);
 
 NSString *XJSSearchProperty(JSContext *cx, JSObject *obj, SEL sel);
+
+
+BOOL XJSObjectHasProperty(id obj, const char *prop);
+SEL XJSObjectGetPropertyGetter(id obj, const char *prop);
+SEL XJSObjectGetPropertySetter(id obj, const char *prop);

@@ -283,12 +283,12 @@
     
     _context[@"count"] = @0;
     
-    [adopter voidMethodWithBool:YES char:'c' int:42 uint64:1ul << 42 float:0.5 double:0.25 object:@"test"];
+    [adopter voidMethodWithBool:YES char:'c' int:42 uint64:1ull << 42 float:0.5 double:0.25 object:@"test"];
     XCTAssertEqual(_context[@"count"].toInt32, 1);
-    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@YES, @'c', @42, @(1ul << 42), @0.5f, @0.25, @"test"]));
+    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@YES, @'c', @42, @(1ull << 42), @0.5f, @0.25, @"test"]));
 
-    [adopter voidMethodWithBool:NO char:'d' int:43 uint64:1ul << 43 float:0.25 double:0.125 object:@"str"];
-    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@NO, @'d', @43, @(1ul << 43), @0.25f, @0.125, @"str"]));
+    [adopter voidMethodWithBool:NO char:'d' int:43 uint64:1ull << 43 float:0.25 double:0.125 object:@"str"];
+    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@NO, @'d', @43, @(1ull << 43), @0.25f, @0.125, @"str"]));
     XCTAssertEqual(_context[@"count"].toInt32, 2);
 }
 
@@ -308,13 +308,13 @@
     
     _context[@"count"] = @0;
     
-    BOOL ret = [adopter boolMethodWithBool:YES char:'c' int:42 uint64:1ul << 42 float:0.5 double:0.25 object:@"test"];
+    BOOL ret = [adopter boolMethodWithBool:YES char:'c' int:42 uint64:1ull << 42 float:0.5 double:0.25 object:@"test"];
     XCTAssertEqual(_context[@"count"].toInt32, 1);
-    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@YES, @'c', @42, @(1ul << 42), @0.5f, @0.25, @"test"]));
+    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@YES, @'c', @42, @(1ull << 42), @0.5f, @0.25, @"test"]));
     XCTAssertTrue(ret);
     
-    ret = [adopter boolMethodWithBool:NO char:'d' int:43 uint64:1ul << 43 float:0.25 double:0.125 object:nil];
-    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@NO, @'d', @43, @(1ul << 43), @0.25f, @0.125, [NSNull null]]));
+    ret = [adopter boolMethodWithBool:NO char:'d' int:43 uint64:1ull << 43 float:0.25 double:0.125 object:nil];
+    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@NO, @'d', @43, @(1ull << 43), @0.25f, @0.125, [NSNull null]]));
     XCTAssertEqual(_context[@"count"].toInt32, 2);
     XCTAssertFalse(ret);
 }
@@ -335,13 +335,13 @@
     
     _context[@"count"] = @0;
     
-    id ret = [adopter objectMethodWithBool:YES char:'c' int:42 uint64:1ul << 42 float:0.5 double:0.25 object:@"test"];
+    id ret = [adopter objectMethodWithBool:YES char:'c' int:42 uint64:1ull << 42 float:0.5 double:0.25 object:@"test"];
     XCTAssertEqual(_context[@"count"].toInt32, 1);
-    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@YES, @'c', @42, @(1ul << 42), @0.5f, @0.25, @"test"]));
+    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@YES, @'c', @42, @(1ull << 42), @0.5f, @0.25, @"test"]));
     XCTAssertEqualObjects(ret, @"test");
     
-    ret = [adopter objectMethodWithBool:NO char:'d' int:43 uint64:1ul << 43 float:0.25 double:0.125 object:nil];
-    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@NO, @'d', @43, @(1ul << 43), @0.25f, @0.125, [NSNull null]]));
+    ret = [adopter objectMethodWithBool:NO char:'d' int:43 uint64:1ull << 43 float:0.25 double:0.125 object:nil];
+    XCTAssertEqualObjects(_context[@"args"].toArray, (@[@NO, @'d', @43, @(1ull << 43), @0.25f, @0.125, [NSNull null]]));
     XCTAssertEqual(_context[@"count"].toInt32, 2);
     XCTAssertNil(ret);
 }

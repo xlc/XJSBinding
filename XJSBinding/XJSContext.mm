@@ -94,6 +94,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
     if (self) {
         _runtime = runtime;
         _errorStack = [NSMutableArray array];
+        _treatePropertyAsMethod = YES;
         
         __weak __typeof__(self) weakSelf = self;
         
