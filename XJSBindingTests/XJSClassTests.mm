@@ -334,6 +334,13 @@
     return "42";
 }
 
+- (void *)pointerMethodWithPointer:(id *)ptr
+{
+    _invokedSel = _cmd;
+    _args = @[ @((NSUInteger)ptr) ];
+    return 0;
+}
+
 - (void)setUp
 {
     [super setUp];
@@ -519,6 +526,15 @@
 - (void)testObjectMethodWithObjectNullArgument
 {
     SEL sel = @selector(objectMethodWithObject:);
+    XJSValue *ret = [_val invokeMethod:NSStringFromSelector(sel) withArguments:@[[NSNull null]]];
+    XCTAssertNotNil(ret);
+    XCTAssertTrue(ret.isNull);
+    XCTAssertEqual(_invokedSel, sel);
+}
+
+- (void)testPointerMethodWithPointer
+{
+    SEL sel = @selector(pointerMethodWithPointer:);
     XJSValue *ret = [_val invokeMethod:NSStringFromSelector(sel) withArguments:@[[NSNull null]]];
     XCTAssertNotNil(ret);
     XCTAssertTrue(ret.isNull);

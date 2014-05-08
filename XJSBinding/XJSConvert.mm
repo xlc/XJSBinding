@@ -179,10 +179,15 @@ std::pair<NSValue *, id> XJSValueToType(JSContext *cx, jsval val, const char *en
         case _C_STRUCT_B:  // '{'
             return { XJSValueToStruct(cx, val, encode), nil };
             
-            // unsuportted type
+        case _C_PTR:  //      '^'   pointer
+            if (xval.isNullOrUndefined || (xval.isInt32 && xval.toInt32 == 0)) {
+                return MakePair(encode, size, nullptr);
+            }
+            // else unsupported
+            
+            // unsupported type
         case _C_UNION_B:  //  '('   support union??
         case _C_ARY_B:  //    '['   support array??
-        case _C_PTR:  //      '^'   support pointer??
             
             // WTF
         case _C_BFLD:  //     'b'
@@ -194,7 +199,7 @@ std::pair<NSValue *, id> XJSValueToType(JSContext *cx, jsval val, const char *en
         case _C_UNION_E:  //  ')'
         case _C_ARY_E:  //    ']'
         default:
-            XWLOG(@"unsouportted type %s", encode);
+            XWLOG(@"unsupported type %s", encode);
             return {};
     }
 }
@@ -299,10 +304,15 @@ JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, JS::Muta
         case _C_STRUCT_B:  // '{'
             return XJSValueFromStruct(cx, encode, value, outval);
             
+        case _C_PTR:  //      '^'   pointer
+            if (*(void **)value == nullptr) {
+                outval.setNull();
+                return JS_TRUE;
+            }
+            
             // unsuportted type
         case _C_UNION_B:  //  '('   support union??
         case _C_ARY_B:  //    '['   support array??
-        case _C_PTR:  //      '^'   support pointer??
             
             // WTF
         case _C_BFLD:  //     'b'
