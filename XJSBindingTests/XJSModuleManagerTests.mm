@@ -411,6 +411,60 @@
     XCTAssertNil(module);
 }
 
+- (void)testReloadAll
+{
+    [_manager provideScript:@"a = 1;" forModuleId:@"test"];
+    
+    XCTAssertEqual(_context[@"a"].toInt32, 0, "module not loaded");
+    
+    [_manager requireModule:@"test"];
+    
+    XCTAssertEqual(_context[@"a"].toInt32, 1, "module loaded");
+    
+    _context[@"a"] = @0;
+    
+    [_manager requireModule:@"test"];
+    
+    XCTAssertEqual(_context[@"a"].toInt32, 0, "module not reloaded");
+    
+    [_manager.require[@"reload"] call];
+    
+    XCTAssertEqual(_context[@"a"].toInt32, 0, "module not reloaded");
+    
+    [_manager requireModule:@"test"];
+ 
+    XCTAssertEqual(_context[@"a"].toInt32, 1, "module reloaded");
+}
+
+- (void)testRelaodOne
+{
+    [_manager provideScript:@"a = 1; exports.a = 1" forModuleId:@"test"];
+    [_manager provideScript:@"b = 1;" forModuleId:@"test2"];
+    
+    [_manager requireModule:@"test"];
+    [_manager requireModule:@"test2"];
+    
+    XCTAssertEqual(_context[@"a"].toInt32, 1, "module loaded");
+    XCTAssertEqual(_context[@"b"].toInt32, 1, "module loaded");
+    
+    _context[@"a"] = @0;
+    _context[@"b"] = @0;
+    
+    XJSValue *module = [_manager requireModule:@"test"];
+    XCTAssertEqual(module[@"a"].toInt32, 1);
+    
+    XCTAssertEqual(_context[@"a"].toInt32, 0, "module not reloaded");
+    
+    module = [_manager.require[@"reload"] callWithObject:@"test"];
+    XCTAssertEqual(module[@"a"].toInt32, 1);
+    
+    XCTAssertEqual(_context[@"a"].toInt32, 1, "module reloaded");
+    
+    [_manager requireModule:@"test2"];
+    
+    XCTAssertEqual(_context[@"b"].toInt32, 0, "other module not reloaded");
+}
+
 #pragma mark - helpers
 
 - (XJSValue *)createDummyModule

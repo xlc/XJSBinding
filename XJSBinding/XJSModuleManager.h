@@ -32,4 +32,7 @@
 + (void)provideScript:(NSString *)script forModuleId:(NSString *)moduleId;
 + (void)provideBlock:(BOOL(^)(XJSValue *require, XJSValue *exports, XJSValue *module))block forModuleId:(NSString *)moduleId;
 
+- (void)reloadAll;
+- (XJSValue *)reloadModule:(NSString *)moduleId;
+
 @end

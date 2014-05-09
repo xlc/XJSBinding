@@ -30,6 +30,7 @@ static NSMutableDictionary *globalModules;
 {
     NSString *(^_scriptProvider)(NSString *path);
     NSMutableDictionary *_modules;
+    NSMutableDictionary *_providedModules;
     NSMutableArray *_stack;
     XJSValueWeakRef *_require; // XJSModuleManager cannot hold strong ref to XJSContext
 }
@@ -86,6 +87,7 @@ static NSMutableDictionary *globalModules;
         _context = context;
         _scriptProvider = scriptProvider;
         _modules = [NSMutableDictionary dictionary];
+        _providedModules = [NSMutableDictionary dictionary];
         _stack = [NSMutableArray array];
         _paths = [NSArray array];
     }
@@ -209,6 +211,42 @@ static JSBool XJSProvide(JSContext *cx, unsigned argc, JS::Value *vp)
     return JS_TRUE;
 }
 
+static JSBool XJSReload(JSContext *cx, unsigned argc, JS::Value *vp)
+{
+    auto args = JS::CallArgsFromVp(argc, vp);
+    
+    XJSContext *context = [XJSContext contextForJSContext:cx];
+    XJSModuleManager *manager = context.moduleManager;
+    
+    if (argc == 0) {
+        [manager reloadAll];
+        args.rval().set(JS::UndefinedValue());
+        return JS_TRUE;
+    }
+    
+    JSString *jsstr;
+    if (!JS_ConvertArguments(cx, argc, args.array(), "S", &jsstr)) {
+        return JS_FALSE;
+    }
+    
+    JSAutoByteString str;
+    
+    NSString *moduleId = @(str.encodeUtf8(cx, jsstr));
+    
+    XJSValue *val = [manager reloadModule:moduleId];
+    if (val) {
+        args.rval().set(val.value);
+        
+        return JS_TRUE;
+    } else {
+        if (!JS_IsExceptionPending(cx)) {   // avoid override old exception
+            JS_ReportError(cx, "Fail to reload module %s", [moduleId UTF8String]);
+        }
+        
+        return JS_FALSE;
+    }
+}
+
 - (XJSValue *)require
 {
     XJSValue *require = _require.value;
@@ -222,6 +260,7 @@ static JSBool XJSProvide(JSContext *cx, unsigned argc, JS::Value *vp)
     
     JS_DefineProperty(_context.context, obj, "paths", JS::NullValue(), XJSGetPaths, XJSSetPaths, JSPROP_PERMANENT | JSPROP_SHARED);
     JS_DefineFunction(_context.context, obj, "provide", XJSProvide, 2, JSPROP_PERMANENT | JSPROP_READONLY);
+    JS_DefineFunction(_context.context, obj, "reload", XJSReload, 1, JSPROP_PERMANENT | JSPROP_READONLY);
     
     return require;
 }
@@ -236,7 +275,10 @@ static JSBool XJSProvide(JSContext *cx, unsigned argc, JS::Value *vp)
         
         [_stack addObject:moduleId];
         
-        id module = _modules[moduleId] ?: [globalModules objectForKey:moduleId];    // globalModules[moduleId] make clang crash...
+        id module = _modules[moduleId]  // check cached modules
+        ?: _providedModules[moduleId]   // check provided modules
+        ?: globalModules[moduleId];     // check gloabl modules
+        
         if (!module) {
             module = ^BOOL(XJSValue *require, XJSValue *exports, XJSValue *module) {
                 NSString *script = [self scriptFromModuleId:moduleId];
@@ -264,13 +306,12 @@ static JSBool XJSProvide(JSContext *cx, unsigned argc, JS::Value *vp)
 
 - (void)provideValue:(XJSValue *)exports forModuleId:(NSString *)moduleId
 {
-    XCLOG(_modules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, _modules[moduleId]);
     if ([moduleId length] == 0) {
-        XFAIL(@"empty moduleId");
+        XFAIL(@"empty moduleId %@", moduleId);
         return;
     }
     @synchronized(_context.runtime) {
-        _modules[moduleId] = exports;
+        _providedModules[moduleId] = exports;
     }
 }
 
@@ -290,13 +331,28 @@ static JSBool XJSProvide(JSContext *cx, unsigned argc, JS::Value *vp)
 
 - (void)provideBlock:(BOOL(^)(XJSValue *require, XJSValue *exports, XJSValue *module))block forModuleId:(NSString *)moduleId
 {
-    XCLOG(_modules[moduleId] != nil, @"module already exists for id: %@, module: %@", moduleId, _modules[moduleId]);
     if ([moduleId length] == 0) {
         XFAIL(@"empty moduleId");
         return;
     }
     @synchronized(_context.runtime) {
-        _modules[moduleId] = [block copy];
+        _providedModules[moduleId] = [block copy];
+    }
+}
+
+- (void)reloadAll
+{
+    @synchronized(_context.runtime) {
+        [_modules removeAllObjects];
+    }
+}
+
+- (XJSValue *)reloadModule:(NSString *)moduleId
+{
+    @synchronized(_context.runtime) {
+        moduleId = [self resolveModuleId:moduleId];
+        [_modules removeObjectForKey:moduleId];
+        return [self requireModule:moduleId];
     }
 }
 
