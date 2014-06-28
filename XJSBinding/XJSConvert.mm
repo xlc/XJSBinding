@@ -87,7 +87,7 @@ static JSBool XJSValueFromStruct(JSContext *cx, const char *encode, void *value,
 {
     auto data = [XJSStructMetadata metadataForEncoding:@(encode)];
     if (!data) {
-        return nil;
+        return JS_FALSE;
     }
     
     JSObject *obj = JS_NewObject(cx, NULL, NULL, NULL);

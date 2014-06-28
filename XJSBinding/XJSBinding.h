@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "XJSRuntime.h"
-#import "XJSContext.h"
-#import "XJSValue.h"
-#import "XJSWeakMap.h"
-#import "NSError_XJSErrorConstants.h"
-#import "XJSStructMetadata.h"
-#import "XJSModuleManager.h"
+#import <XJSBinding/XJSRuntime.h>
+#import <XJSBinding/XJSContext.h>
+#import <XJSBinding/XJSValue.h>
+#import <XJSBinding/XJSWeakMap.h>
+#import <XJSBinding/NSError_XJSErrorConstants.h>
+#import <XJSBinding/XJSStructMetadata.h>
+#import <XJSBinding/XJSModuleManager.h>
+#import <XJSBinding/XJSFunction.h>
+#import <XJSBinding/XJSAdopter.h>
