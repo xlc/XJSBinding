@@ -22,7 +22,7 @@
 
 - (id)initWithContext:(XJSContext *)context
 {
-    XASSERT_NOTNULL(context);
+    XLCAssertNotNullCritical(context);
     self = [super init];
     if (self) {
         _context = context;
@@ -31,10 +31,10 @@
         @synchronized(_context.runtime) {
             JS::RootedValue mapval(context.context);
             JS_GetProperty(_context.context, _context.globalObject, "WeakMap", &mapval);
-            XASSERT(mapval.isObject(), "WeakMap not avaiable");
+            XLCAssertCritical(mapval.isObject(), "WeakMap not avaiable");
             obj = JS_New(_context.context, mapval.toObjectOrNull(), 0, NULL);
         }
-        XASSERT_NOTNULL(obj);
+        XLCAssertNotNullCritical(obj);
         _value = [[XJSValue alloc] initWithContext:_context value:JS::ObjectOrNullValue(obj)];
     }
     return self;
@@ -42,15 +42,27 @@
 
 - (XJSValue *)objectForKey:(XJSValue *)key
 {
-    XASSERT_NOTNULL(key);
-    XASSERT(!key.isPrimitive, "key must be js object");
+    if (!key) {
+        XLCFail("key must not be null");
+        return nil;
+    }
+    if (key.isPrimitive) {
+        XLCFail(@"key must be js object. key = %@", key);
+        return nil;
+    }
     return [_value invokeMethod:@"get" withArguments:@[key]];
 }
 
 - (void)setObject:(XJSValue *)object forKey:(XJSValue *)key
 {
-    XASSERT_NOTNULL(key);
-    XASSERT(!key.isPrimitive, "key must be js object");
+    if (!key) {
+        XLCFail("key must not be null");
+        return;
+    }
+    if (key.isPrimitive) {
+        XLCFail(@"key must be js object. key = %@", key);
+        return;
+    }
     if (object) {
         [_value invokeMethod:@"set" withArguments:@[key, object]];
     } else {
@@ -60,7 +72,14 @@
 
 - (void)removeObjectForKey:(XJSValue *)key
 {
-    XASSERT(!key.isPrimitive, "key must be js object");
+    if (!key) {
+        XLCFail("key must not be null");
+        return;
+    }
+    if (key.isPrimitive) {
+        XLCFail(@"key must be js object. key = %@", key);
+        return;
+    }
     [_value invokeMethod:@"delete" withArguments:@[key]];
 }
 

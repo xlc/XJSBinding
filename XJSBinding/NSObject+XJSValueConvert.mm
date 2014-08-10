@@ -41,7 +41,7 @@ XJSValue *XJSToValue(XJSContext *context, id obj)
         return self;
     }
     
-    XASSERT(self.isPrimitive || context.runtime == self.context.runtime, @"Move object from one runtime to another runtime is not supported yet");
+    XLCAssertCritical(self.isPrimitive || context.runtime == self.context.runtime, @"Move object from one runtime to another runtime is not supported yet");
     
     return [[XJSValue alloc] initWithContext:context value:self.value];
 }

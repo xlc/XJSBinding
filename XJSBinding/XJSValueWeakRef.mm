@@ -26,7 +26,6 @@
 
 - (id)initWithValue:(XJSValue *)value
 {
-    XASSERT_NOTNULL(value);
     self = [super init];
     if (self) {
         self.value = value;
@@ -95,7 +94,7 @@
     @synchronized(cx.runtime) {
         JS::RootedValue mapval(_context.context);
         JS_GetProperty(_context.context, _context.globalObject, "WeakMap", &mapval);
-        XASSERT(mapval.isObject(), "WeakMap not avaiable");
+        XLCAssertCritical(mapval.isObject(), "WeakMap not avaiable");
         _map = JS_New(_context.context, mapval.toObjectOrNull(), 0, NULL);
         JS_AddObjectRoot(_context.context, &_map);
         

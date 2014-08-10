@@ -10,7 +10,8 @@
 
 #import "jsapi.h"
 
-#import "XLCAssertion.h"
+#import <XLCUtils/XLCUtils.h>
+#import "XJSLogging_Private.h"
 #import "NSError+XJSError_Private.h"
 #import "NSObject+XJSValueConvert.h"
 
@@ -153,7 +154,7 @@
 
 - (id)initWithContext:(XJSContext *)context value:(jsval)val
 {
-    XASSERT_NOTNULL(context);
+    XLCAssertNotNullCritical(context);
     
     self = [super init];
     if (self) {
@@ -240,7 +241,7 @@
 {
     NSString *message = [NSString stringWithFormat:@"Invalid selector (-[XJSValue %@]) called on value (%@)", NSStringFromSelector(sel),  self];
     NSError *error = [NSError errorWithXJSDomainAndUserInfo:@{XJSErrorMessageKey: message}];
-    XILOG(@"%@", message);
+    XJSLogInfo(@"%@", message);
     [self.context addError:error];
 }
 
@@ -283,7 +284,7 @@ TO_PRIMITIVE_METHOD_IMPL2(BOOL, toBool, (ret = JS::ToBoolean(_value), true))
             success = JS_CallFunctionName(_context.context, _value.toObjectOrNull(), "getTime", 0, NULL, &val);
         }
         if (success) {
-            XASSERT(val.isNumber(), @"date.getTime() did not return a number");
+            XLCAssert(val.isNumber(), @"date.getTime() did not return a number");
             return [NSDate dateWithTimeIntervalSince1970:val.toNumber()];
         }
     }

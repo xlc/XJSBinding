@@ -72,8 +72,8 @@ static NSMutableDictionary *metadataDict;
 
 - (id)initWithEncoding:(NSString *)encoding fields:(NSArray *)fields
 {
-    XASSERT_NOTNULL(encoding);
-    XASSERT_NOTNULL(fields);
+    XLCAssertNotNullCritical(encoding);
+    XLCAssertNotNullCritical(fields);
     self = [super init];
     if (self) {
         _encoding = encoding;
@@ -97,9 +97,7 @@ static NSMutableDictionary *metadataDict;
         return input+1;
     }
     
-    XFAIL("Invalid encoding: %@, expect: %c got: %c", _encoding, c, input[0]);
-    @throw [NSException exceptionWithName:@"EncodingParsingError" reason:@"Invalid or unsupported encoding" userInfo:@{@"Encoding" : _encoding}];
-
+    XLCFailCritical("Invalid encoding: %@, expect: %c got: %c", _encoding, c, input[0]);
 }
 
 - (void)parseEncoding
@@ -110,8 +108,7 @@ static NSMutableDictionary *metadataDict;
     
     const char *findresult = std::find(encoding, end, '=');
     if (findresult == end) {
-        XFAIL("Invalid encoding: %@, cannot find '='", _encoding);
-        @throw [NSException exceptionWithName:@"EncodingParsingError" reason:@"Invalid or unsupported encoding" userInfo:@{@"Encoding" : _encoding}];
+        XLCFailCritical("Invalid encoding: %@, cannot find '='", _encoding);
     }
     if (encoding[0] == _C_UNDEF) { // anonymous struct
         static std::atomic_uint count;

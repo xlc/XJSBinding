@@ -16,7 +16,7 @@
 
 #import "XJSConvert.hh"
 
-static JSBool XJSLog(JSContext *cx, unsigned argc, JS::Value *vp, XLCLoggingLevel level)
+static JSBool XJSLog(JSContext *cx, unsigned argc, JS::Value *vp, int level)
 {
     auto args = JS::CallArgsFromVp(argc, vp);
     
@@ -35,9 +35,10 @@ static JSBool XJSLog(JSContext *cx, unsigned argc, JS::Value *vp, XLCLoggingLeve
     auto frame = stacks->frames; // & stacks->frames[0]
     auto jsfunname = frame->fun ? JS_GetFunctionDisplayId(frame->fun) : NULL;
     JSAutoByteString bytestr;
-    auto funname = jsfunname ? bytestr.encodeUtf8(cx, jsfunname) : JS_GetScriptFilename(cx, frame->script);
+    auto funname = jsfunname ? bytestr.encodeUtf8(cx, jsfunname) : "(unknown)";
+    auto filename = JS_GetScriptFilename(cx, frame->script) ?: "(unknown)";
     
-    [XLCLogger logWithLevel:level function:funname line:frame->lineno message:@"%@", str];
+    [DDLog log:NO level:XLCLogLevel flag:level context:0 file:filename function:funname line:frame->lineno tag:nil format:@"%@", str];
     
     args.rval().set(XJSConvertStringToJSValue(cx, str));
     
@@ -46,22 +47,22 @@ static JSBool XJSLog(JSContext *cx, unsigned argc, JS::Value *vp, XLCLoggingLeve
 
 static JSBool XJSLogDebug(JSContext *cx, unsigned argc, JS::Value *vp)
 {
-    return XJSLog(cx, argc, vp, XLCLoggingLevelDebug);
+    return XJSLog(cx, argc, vp, LOG_FLAG_DEBUG);
 }
 
 static JSBool XJSLogInfo(JSContext *cx, unsigned argc, JS::Value *vp)
 {
-    return XJSLog(cx, argc, vp, XLCLoggingLevelInfo);
+    return XJSLog(cx, argc, vp, LOG_FLAG_INFO);
 }
 
 static JSBool XJSLogWarn(JSContext *cx, unsigned argc, JS::Value *vp)
 {
-    return XJSLog(cx, argc, vp, XLCLoggingLevelWarning);
+    return XJSLog(cx, argc, vp, LOG_FLAG_WARN);
 }
 
 static JSBool XJSLogError(JSContext *cx, unsigned argc, JS::Value *vp)
 {
-    return XJSLog(cx, argc, vp, XLCLoggingLevelError);
+    return XJSLog(cx, argc, vp, LOG_FLAG_ERROR);
 }
 
 JSObject *XJSCreateLogger(JSContext *cx)

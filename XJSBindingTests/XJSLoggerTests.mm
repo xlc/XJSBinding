@@ -16,13 +16,14 @@
 #include "XJSContext_Private.hh"
 #include "XJSValue_Private.hh"
 
-@interface XJSLoggerTests : XCTestCase
+@interface XJSLoggerTests : XCTestCase <DDLogger>
 
 @end
 
 struct LoggerItem {
-    XLCLoggingLevel level;
+    int level;
     NSString *func;
+    NSString *file;
     int lineno;
     NSString *message;
 };
@@ -46,17 +47,28 @@ struct LoggerItem {
     
     _context[@"log"] = _logger;
     
-    [XLCLogger setLogger:^(XLCLoggingLevel level, const char *function, int lineno, NSString *message) {
-        _logs.push_back({level, function ? @(function) : nil, lineno, message});
-    } forKey:@"XJSLoggerTests"];
+    
+    [DDLog addLogger:self];
 }
 
 - (void)tearDown
 {
-    [XLCLogger removeLoggerForKey:@"XJSLoggerTests"];
+    [DDLog removeLogger:self];
     
     [super tearDown];
 }
+
+- (void)logMessage:(DDLogMessage *)logMessage
+{
+    _logs.push_back({logMessage->logFlag,
+        logMessage->function ? @(logMessage->function) : nil,
+        @(logMessage->file),
+        logMessage->lineNumber,
+        logMessage->logMsg});
+}
+
+- (id <DDLogFormatter>)logFormatter { return nil; }
+- (void)setLogFormatter:(id <DDLogFormatter>)formatter {}
 
 - (void)testCreate
 {
@@ -74,10 +86,10 @@ struct LoggerItem {
                   lineNumber:1
                        error:NULL];
     
-    XCTAssertEqual(_logs.size(), (size_t)1);
+    XCTAssertEqual(_logs.size(), 1u);
     
     auto item = _logs[0];
-    XCTAssertEqual(item.level, XLCLoggingLevelInfo);
+    XCTAssertEqual(item.level, LOG_FLAG_INFO);
     XCTAssertEqualObjects(item.func, @"a");
     XCTAssertEqual(item.lineno, 3);
     XCTAssertEqualObjects(item.message, @"1");
@@ -93,7 +105,7 @@ struct LoggerItem {
     XCTAssertEqual(_logs.size(), (size_t)1);
     
     auto item = _logs[0];
-    XCTAssertEqual(item.level, XLCLoggingLevelDebug);
+    XCTAssertEqual(item.level, LOG_FLAG_DEBUG);
     XCTAssertEqualObjects(item.func, @"a");
     XCTAssertEqual(item.lineno, 3);
     XCTAssertEqualObjects(item.message, @"1");
@@ -109,7 +121,7 @@ struct LoggerItem {
     XCTAssertEqual(_logs.size(), (size_t)1);
     
     auto item = _logs[0];
-    XCTAssertEqual(item.level, XLCLoggingLevelInfo);
+    XCTAssertEqual(item.level, LOG_FLAG_INFO);
     XCTAssertEqualObjects(item.func, @"a");
     XCTAssertEqual(item.lineno, 3);
     XCTAssertEqualObjects(item.message, @"1");
@@ -125,7 +137,7 @@ struct LoggerItem {
     XCTAssertEqual(_logs.size(), (size_t)1);
     
     auto item = _logs[0];
-    XCTAssertEqual(item.level, XLCLoggingLevelWarning);
+    XCTAssertEqual(item.level, LOG_FLAG_WARN);
     XCTAssertEqualObjects(item.func, @"a");
     XCTAssertEqual(item.lineno, 3);
     XCTAssertEqualObjects(item.message, @"1");
@@ -141,7 +153,7 @@ struct LoggerItem {
     XCTAssertEqual(_logs.size(), (size_t)1);
     
     auto item = _logs[0];
-    XCTAssertEqual(item.level, XLCLoggingLevelError);
+    XCTAssertEqual(item.level, LOG_FLAG_ERROR);
     XCTAssertEqualObjects(item.func, @"a");
     XCTAssertEqual(item.lineno, 3);
     XCTAssertEqualObjects(item.message, @"1");
@@ -155,21 +167,23 @@ struct LoggerItem {
                        error:NULL];
     
     [_context evaluateString:@"\n\nfunction test(){log(1, 2, 'test')};test();"
-                    fileName:@"test"
+                    fileName:@"test2"
                   lineNumber:1
                        error:NULL];
     
     XCTAssertEqual(_logs.size(), (size_t)2);
     
     auto item = _logs[0];
-    XCTAssertEqual(item.level, XLCLoggingLevelInfo);
+    XCTAssertEqual(item.level, LOG_FLAG_INFO);
     XCTAssertEqualObjects(item.func, @"a");
+    XCTAssertEqualObjects(item.file, @"test");
     XCTAssertEqual(item.lineno, 3);
     XCTAssertEqualObjects(item.message, @"1 2 test");
     
     item = _logs[1];
-    XCTAssertEqual(item.level, XLCLoggingLevelInfo);
+    XCTAssertEqual(item.level, LOG_FLAG_INFO);
     XCTAssertEqualObjects(item.func, @"test");
+    XCTAssertEqualObjects(item.file, @"test2");
     XCTAssertEqual(item.lineno, 3);
     XCTAssertEqualObjects(item.message, @"1 2 test");
 }
@@ -184,8 +198,9 @@ struct LoggerItem {
     XCTAssertEqual(_logs.size(), (size_t)1);
     
     auto item = _logs[0];
-    XCTAssertEqual(item.level, XLCLoggingLevelInfo);
-    XCTAssertEqualObjects(item.func, @"test");
+    XCTAssertEqual(item.level, LOG_FLAG_INFO);
+    XCTAssertEqualObjects(item.func, @"(unknown)");
+    XCTAssertEqualObjects(item.file, @"test");
     XCTAssertEqual(item.lineno, 1);
     XCTAssertEqualObjects(item.message, @"1");
 }
@@ -198,8 +213,8 @@ struct LoggerItem {
     XCTAssertEqual(_logs.size(), (size_t)1);
     
     auto item = _logs[0];
-    XCTAssertEqual(item.level, XLCLoggingLevelInfo);
-    XCTAssertNil(item.func);
+    XCTAssertEqual(item.level, LOG_FLAG_INFO);
+    XCTAssertEqualObjects(item.func, @"(unknown)");
     XCTAssertEqual(item.lineno, 0);
     XCTAssertEqualObjects(item.message, @"1");
 }

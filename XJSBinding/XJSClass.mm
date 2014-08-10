@@ -13,8 +13,10 @@
 
 #import <objc/runtime.h>
 
+#import <XLCUtils/XLCUtils.h>
 #import "jsapi.h"
-#import "XLCAssertion.h"
+
+#import "XJSLogging_Private.h"
 
 #import "XJSConvert.hh"
 #import "XJSHelperFunctions.hh"
@@ -142,12 +144,12 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
     JSFunction *func = JS_ValueToFunction(cx, JS::ObjectValue(args.callee()));
     JSAutoByteString str(cx, JS_GetFunctionId(func));
     const char *selname = str.ptr();
-    XASSERT_NOTNULL(selname);
+    XLCAssert(selname);
     
     auto thisobj = args.thisv().toObjectOrNull();
     id obj = thisobj ? XJSGetAssosicatedObject(thisobj) : nil;
     if (!obj) {
-        XDLOG(@"Unable to call selector %s on %@. undefine returned.", selname, XJSConvertJSValueToSource(cx, args.thisv()));
+        XJSLogInfo(@"Unable to call selector %s on %@. undefine returned.", selname, XJSConvertJSValueToSource(cx, args.thisv()));
         args.rval().set(JS::UndefinedValue());
         return JS_TRUE;
     }
@@ -167,7 +169,7 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
     }
     
     NSMethodSignature *signature = [obj methodSignatureForSelector:sel];
-    XASSERT_NOTNULL(signature);
+    XLCAssert(signature);
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     [invocation setTarget:obj];
     [invocation setSelector:sel];
@@ -228,7 +230,7 @@ static JSBool XJSCallMethod(JSContext *cx, unsigned argc, JS::Value *vp)
         JSBool success = XJSValueFromType(cx, [signature methodReturnType], buff, &retval);
         if (!success) {
             retval = JS::UndefinedValue();
-            XELOG(@"Method %c[%s %s] invoked successful but unable to convert returned value (%s) to jsval.",
+            XJSLogWarn(@"Method %c[%s %s] invoked successful but unable to convert returned value (%s) to jsval.",
                   [obj class] == obj ? '+' : '-',
                   class_getName([obj class]),
                   sel_getName(sel),
@@ -264,12 +266,12 @@ static JSBool XJSResolveImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId j
     JSBool success;
     
     success = JS_IdToValue(cx, jid, val.address());
-    XASSERT(success, "fail to get id");
+    XLCAssert(success, "fail to get id");
     
     if (val.isString()) {
         JS::RootedObject proto(cx);
         success = JS_GetPrototype(cx, obj, &proto);
-        XASSERT(success && proto, "fail to get prototype");
+        XLCAssert(success && proto, "fail to get prototype");
         
         JSAutoByteString str(cx, JS_ValueToString(cx, val));
         const char *selname = str.ptr();
@@ -300,7 +302,7 @@ static JSBool XJSResolveImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId j
         JS::RootedValue funcval(cx, JS::ObjectOrNullValue(JS_GetFunctionObject(func)));
         
         success = JS_SetProperty(cx, proto, selname, funcval);
-        XASSERT(success, "fail to set property");
+        XLCAssert(success, "fail to set property");
     }
     
     return JS_TRUE;
@@ -329,7 +331,7 @@ static JSBool XJSConstructor(JSContext *cx, unsigned argc, jsval *vp)
     auto args = JS::CallArgsFromVp(argc, vp);
     
     id cls = XJSGetAssosicatedObject(&args.callee());
-    XASSERT_NOTNULL(cls);
+    XLCAssertNotNull(cls);
     
     if (![cls respondsToSelector:@selector(alloc)]) {
         JS_ReportError(cx, "'%s'(%s) is not a constructor", [[cls description] UTF8String], [XJSConvertJSValueToSource(cx, args.calleev()) UTF8String]);
@@ -511,7 +513,11 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
         XJSContext *context = [XJSContext contextForJSContext:cx];
         
         JSObject *runtime = context.runtimeEntryObject;
-        XASSERT_NOTNULL(runtime);
+        if (!runtime) {
+            XLCFail("Failed to get runtime entry object. Did you forget to call -[XJSContext createObjCRuntimeWithNamespace:]? context = %@", context);
+            return NULL;
+        }
+        
         Class cls = object_getClass(obj);
         if (class_isMetaClass(cls))
         {
@@ -519,8 +525,14 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
         }
         
         success = JS_GetProperty(cx, runtime, class_getName(cls), &cstrval);
-        XASSERT(success, "fail to get constructor object");
-        XASSERT(cstrval.isObject(), "unable to get constructor object, class (%@) it not registered? ", cls);
+        if (!success) {
+            XLCFail("fail to get constructor object");
+            return NULL;
+        }
+        if (!cstrval.isObject()) {
+            XLCFail("unable to get constructor object, class (%@) it not registered? ", cls);
+            return NULL;
+        }
     }
     
     // get or create prototype
@@ -529,7 +541,7 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
 
     JSBool hasproto;
     success = JS_AlreadyHasOwnProperty(cx, cstrval.toObjectOrNull(), "prototype", &hasproto);
-    XASSERT(success, "fail to call JS_AlreadyHasOwnProperty");
+    XLCAssert(success, "fail to call JS_AlreadyHasOwnProperty");
     
     if (hasproto) {
         JS_GetProperty(cx, cstrval.toObjectOrNull(), "prototype", &protoval);
@@ -538,13 +550,13 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
         proto = JS_NewObject(cx, NULL, NULL, NULL);
         
         success = JS_LinkConstructorAndPrototype(cx, cstrval.toObjectOrNull(), proto);
-        XASSERT(success, "fail to link constructor and prototype");
+        XLCAssert(success, "fail to link constructor and prototype");
         
         // override toString
         JSFunction *func = JS_NewFunction(cx, XJSCallMethod, 0, 0, NULL, "toString");
         JS::RootedValue funcval(cx, JS::ObjectOrNullValue(JS_GetFunctionObject(func)));
         success = JS_SetProperty(cx, proto, "toString", funcval);
-        XASSERT(success, "fail to set toString");
+        XLCAssert(success, "fail to set toString");
     }
     
     JS_SetPrototype(cx, jsobj, proto);
@@ -554,7 +566,10 @@ JSObject *XJSCreateJSObject(JSContext *cx, id obj)
 
 id XJSGetAssosicatedObject(JSObject *jsobj)
 {
-    XASSERT_NOTNULL(jsobj);
+    if (!jsobj) {
+        XLCFail("Invalid argument. jsobj is null");
+        return nil;
+    }
     JSClass *jscls = JS_GetClass(jsobj);
     if (jscls->resolve != XJSResolveImpl) {    // check class type
         return nil;

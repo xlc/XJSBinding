@@ -11,6 +11,8 @@
 #import <XLCUtils/XLCUtils.h>
 #import "jsapi.h"
 
+#import "XJSLogging_Private.h"
+
 #import "NSError+XJSError_Private.h"
 #import "NSObject+XJSValueConvert.h"
 
@@ -37,7 +39,7 @@ static JSClass global_class = {
 
 /* The error reporter callback. */
 static void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
-    XILOG(@"%s:%u:%s", report->filename ? report->filename : "<no filename>", (unsigned int) report->lineno, message);
+    XJSLogInfo(@"%s:%u:%s", report->filename ? report->filename : "<no filename>", (unsigned int) report->lineno, message);
     [[XJSContext contextForJSContext:cx] addError:[NSError errorWithXJSDomainAndFileName:@(report->filename ?: "") lineNumber:report->lineno message:@(message)]];
 }
 
@@ -119,7 +121,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
             JS_InitStandardClasses(_context, global);
             
             _globalObject = global;
-            XASSERT(_globalObject != NULL, @"fail to create gloabl object");
+            XLCAssertNotNullCritical(_globalObject, @"failed to create gloabl object");
             
             JS_AddObjectRoot(_context, &_globalObject);
             

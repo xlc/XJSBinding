@@ -94,16 +94,20 @@ static SEL _XJSSearchSelector(id obj, const char *selname, unsigned argc)
 
 SEL XJSSearchSelector(id obj, const char *selname, unsigned argc)
 {
-    XASSERT_NOTNULL(obj);
-    XASSERT_NOTNULL(selname);
+    if (!obj || !selname) {
+        XLCFail("Invalid arguments. obj = %@, selname = %s, argc = %u", obj, selname ?: "(null)", argc);
+        return NULL;
+    }
     SEL result = _XJSSearchSelector(obj, selname, argc);
     return (result && [obj respondsToSelector:result]) ? result : NULL;
 }
 
 NSString *XJSSearchProperty(JSContext *cx, JSObject *obj, SEL sel)
 {
-    XASSERT_NOTNULL(obj);
-    XASSERT_NOTNULL(sel);
+    if (!cx || !obj || !sel) {
+        XLCFail("Invalid arguments. cx = %@, obj = %p, sel = %s", cx, obj, sel_getName(sel) ?: "(null)");
+        return NULL;
+    }
     
     NSString *name = NSStringFromSelector(sel);
     JSBool found;
@@ -136,8 +140,10 @@ NSString *XJSSearchProperty(JSContext *cx, JSObject *obj, SEL sel)
 
 BOOL XJSObjectHasProperty(id obj, const char *prop)
 {
-    XASSERT_NOTNULL(obj);
-    XASSERT_NOTNULL(prop);
+    if (!obj || !prop) {
+        XLCFail("Invalid arguments. obj = %@, prop = %s", obj, prop ?: "(null)");
+        return NULL;
+    }
     
     if (class_getProperty([obj class], prop)) {
         return YES;
@@ -170,8 +176,10 @@ BOOL XJSObjectHasProperty(id obj, const char *prop)
 
 SEL XJSObjectGetPropertyGetter(id obj, const char *prop)
 {
-    XASSERT_NOTNULL(obj);
-    XASSERT_NOTNULL(prop);
+    if (!obj || !prop) {
+        XLCFail("Invalid arguments. obj = %@, prop = %s", obj, prop ?: "(null)");
+        return NULL;
+    }
     
     objc_property_t p = class_getProperty([obj class], prop);
     
@@ -200,8 +208,10 @@ SEL XJSObjectGetPropertyGetter(id obj, const char *prop)
 
 SEL XJSObjectGetPropertySetter(id obj, const char *prop)
 {
-    XASSERT_NOTNULL(obj);
-    XASSERT_NOTNULL(prop);
+    if (!obj || !prop) {
+        XLCFail("Invalid arguments. obj = %@, prop = %s", obj, prop ?: "(null)");
+        return NULL;
+    }
  
     objc_property_t p = class_getProperty([obj class], prop);
     

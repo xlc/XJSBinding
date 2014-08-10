@@ -107,7 +107,7 @@ static void forwardInvocationImpl(id self, XJSValue *value, NSInvocation *invoca
 
 + (id)adopterForClass:(Class)cls withValue:(XJSValue *)value
 {
-    XASSERT_NOTNULL(cls);
+    XLCAssertNotNullCritical(cls);
     
     if (!value || value.isPrimitive) {
         return nil;
@@ -207,7 +207,7 @@ static void forwardInvocationImpl(id self, XJSValue *value, NSInvocation *invoca
 
 + (id)adopterForProtocol:(Protocol *)protocol withValue:(XJSValue *)value
 {
-    XASSERT_NOTNULL(protocol);
+    XLCAssertNotNullCritical(protocol);
     
     if (!value || value.isPrimitive) {
         return nil;

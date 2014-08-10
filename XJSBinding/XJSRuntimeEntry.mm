@@ -9,8 +9,9 @@
 #import "XJSRuntimeEntry.hh"
 
 #import <objc/runtime.h>
+#import <XLCUtils/XLCUtils.h>
 #import "jsapi.h"
-#import "XLCAssertion.h"
+#import "XJSLogging_Private.h"
 
 #import "XJSInternalOperation.hh"
 #import "XJSClass.hh"
@@ -21,7 +22,7 @@ static JSBool XJSPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::HandleId 
         return JS_PropertyStub(cx, obj, jid, vp);
     }
     JSAutoByteString str;
-    XLCILOG(@"invalid add property: %s", str.encodeUtf8(cx, JSID_TO_STRING(jid)));
+    XJSLogInfo(@"invalid add property: %s", str.encodeUtf8(cx, JSID_TO_STRING(jid)));
     return JS_FALSE;
 }
 
@@ -30,7 +31,7 @@ static JSBool XJSDeletePropertyImpl(JSContext *cx, JS::HandleObject obj, JS::Han
     if (XJSInternalOperation::IsInternalOepration(cx)) {
         return JS_DeletePropertyStub(cx, obj, jid, succeeded);
     }
-    XLCILOG(@"invalid delete property: %s", JSAutoByteString().encodeUtf8(cx, JSID_TO_STRING(jid)));
+    XJSLogInfo(@"invalid delete property: %s", JSAutoByteString().encodeUtf8(cx, JSID_TO_STRING(jid)));
     *succeeded = JS_FALSE;  // cannot delete
     return JS_TRUE; // no error
 }
@@ -41,7 +42,7 @@ static JSBool XJSSetPropertyImpl(JSContext *cx, JS::HandleObject obj, JS::Handle
         return JS_StrictPropertyStub(cx, obj, jid, strict, vp);
     }
     JSAutoByteString str;
-    XLCILOG(@"invalid set property: %s", str.encodeUtf8(cx, JSID_TO_STRING(jid)));
+    XJSLogInfo(@"invalid set property: %s", str.encodeUtf8(cx, JSID_TO_STRING(jid)));
     return JS_FALSE;
 }
 

@@ -11,6 +11,8 @@
 #import <XLCUtils/XLCUtils.h>
 #import "jsapi.h"
 
+#import "XJSLogging_Private.h"
+
 #import "XJSValue_Private.hh"
 #import "XJSContext_Private.hh"
 #import "XJSValueWeakRef.h"
@@ -46,8 +48,8 @@ static NSMutableDictionary *globalModules;
 
 + (void)provideValue:(XJSValue *)exports forModuleId:(NSString *)moduleId
 {
-    XASSERT(globalModules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, globalModules[moduleId]);
-    XASSERT([moduleId length] != 0, @"empty moduleId");
+    XLCAssert(globalModules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, globalModules[moduleId]);
+    XLCAssert([moduleId length] != 0, @"empty moduleId");
     @synchronized(globalModules) {
         globalModules[moduleId] = exports;
     }
@@ -69,8 +71,8 @@ static NSMutableDictionary *globalModules;
 
 + (void)provideBlock:(BOOL(^)(XJSValue *require, XJSValue *exports, XJSValue *module))block forModuleId:(NSString *)moduleId
 {
-    XASSERT(globalModules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, globalModules[moduleId]);
-    XASSERT([moduleId length] != 0, @"empty moduleId");
+    XLCAssert(globalModules[moduleId] == nil, @"module already exists for id: %@, module: %@", moduleId, globalModules[moduleId]);
+    XLCAssert([moduleId length] != 0, @"empty moduleId");
     @synchronized(globalModules) {
         globalModules[moduleId] = block;
     }
@@ -80,7 +82,7 @@ static NSMutableDictionary *globalModules;
 
 - (id)initWithContext:(XJSContext *)context scriptProvider:(NSString *(^)(NSString *path))scriptProvider
 {
-    XASSERT_NOTNULL(scriptProvider);
+    XLCAssertNotNullCritical(scriptProvider);
     
     self = [super init];
     if (self) {
@@ -165,7 +167,7 @@ static JSBool XJSSetPaths(JSContext *cx, JS::Handle<JSObject*> obj, JS::Handle<j
         if ([element isKindOfClass:[NSString class]]) {
             [paths addObject:element];
         } else {
-            XWLOG("require.paths must be an array of strings. element (%@) ignored.", element);
+            XJSLogInfo("require.paths must be an array of strings. element (%@) ignored.", element);
         }
     }
     
@@ -307,7 +309,7 @@ static JSBool XJSReload(JSContext *cx, unsigned argc, JS::Value *vp)
 - (void)provideValue:(XJSValue *)exports forModuleId:(NSString *)moduleId
 {
     if ([moduleId length] == 0) {
-        XFAIL(@"empty moduleId %@", moduleId);
+        XLCFail(@"empty moduleId");
         return;
     }
     @synchronized(_context.runtime) {
@@ -332,7 +334,7 @@ static JSBool XJSReload(JSContext *cx, unsigned argc, JS::Value *vp)
 - (void)provideBlock:(BOOL(^)(XJSValue *require, XJSValue *exports, XJSValue *module))block forModuleId:(NSString *)moduleId
 {
     if ([moduleId length] == 0) {
-        XFAIL(@"empty moduleId");
+        XLCFail(@"empty moduleId");
         return;
     }
     @synchronized(_context.runtime) {

@@ -10,7 +10,9 @@
 
 #import <objc/runtime.h>
 
-#import "XLCAssertion.h"
+#import <XLCUtils/XLCUtils.h>
+
+#import "XJSLogging_Private.h"
 
 #import "NSObject+XJSValueConvert.h"
 #import "XJSValue_Private.hh"
@@ -55,7 +57,7 @@ static NSValue * XJSValueToStruct(JSContext *cx, jsval val, const char *encode)
     
     NSUInteger size;
     auto encode2 = NSGetSizeAndAlignment(encode, &size, NULL);
-    XASSERT(encode2[0] == '\0', @"encode should only contain one type");
+    XLCAssert(encode2[0] == '\0', @"encode should only contain one type");
     
     alignas(sizeof(NSInteger)) char buff[size];
     bzero(buff, size);
@@ -115,7 +117,7 @@ static JSBool XJSValueFromStruct(JSContext *cx, const char *encode, void *value,
 template <typename T>
 static std::pair<NSValue *, id> MakePair(const char *encode, NSUInteger size, T val)
 {
-    XASSERT(size == sizeof(val), @"expected type with size %lu but return type with size %lu", (unsigned long)size, (unsigned long)sizeof(val));
+    XLCAssert(size == sizeof(val), @"expected type with size %lu but return type with size %lu", (unsigned long)size, (unsigned long)sizeof(val));
     return { [NSValue valueWithBytes:&val objCType:encode], (id)nil };
 }
 
@@ -123,13 +125,13 @@ std::pair<NSValue *, id> XJSValueToType(JSContext *cx, jsval val, const char *en
 {
     NSUInteger size;
     auto encode2 = NSGetSizeAndAlignment(encode, &size, NULL);
-    XASSERT(encode2[0] == '\0', @"encode should only contain one type");
+    XLCAssert(encode2[0] == '\0', @"encode should only contain one type");
     XJSValue *xval = [[XJSValue alloc] initWithContext:[XJSContext contextForJSContext:cx] value:val];
     
     switch (encode[0]) {
         case _C_CLASS:  //    '#'
         case _C_ID:  //       '@'
-            XASSERT(size == sizeof(id), @"expected type with size %lu but return type with size %lu", (unsigned long)size, (unsigned long)sizeof(id));
+            XLCAssert(size == sizeof(id), @"expected type with size %lu but return type with size %lu", (unsigned long)size, (unsigned long)sizeof(id));
             return { (NSValue *)nil, xval.toObject };
 
         case _C_SEL:  //      ':'
@@ -173,7 +175,7 @@ std::pair<NSValue *, id> XJSValueToType(JSContext *cx, jsval val, const char *en
             if (encode[1] == _C_CHARPTR) {  // const char *
                 return MakePair(encode, size, [XJSConvertJSValueToString(cx, val) UTF8String]);
             }
-            XWLOG(@"ignore encode modifier 'r' (const) for type %s", encode);
+            XJSLogInfo(@"ignore encode modifier 'r' (const) for type %s", encode);
             return XJSValueToType(cx, val, encode+1);
             
         case _C_STRUCT_B:  // '{'
@@ -199,24 +201,22 @@ std::pair<NSValue *, id> XJSValueToType(JSContext *cx, jsval val, const char *en
         case _C_UNION_E:  //  ')'
         case _C_ARY_E:  //    ']'
         default:
-            XWLOG(@"unsupported type %s", encode);
+            XJSLogWarn(@"unsupported type %s", encode);
             return {};
     }
 }
 
 JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, JS::MutableHandleValue outval)
 {
-    XASSERT_NOTNULL(value);
-    
     NSUInteger size;
     auto encode2 = NSGetSizeAndAlignment(encode, &size, NULL);
-    XASSERT(encode2[0] == '\0', @"encode should only contain one type");
+    XLCAssert(encode2[0] == '\0', @"encode should only contain one type");
     
     switch (encode[0]) {
         case _C_CLASS:  //    '#'
         case _C_ID:  //       '@'
         {
-            XASSERT(size == sizeof(id), @"expected type with size %lu but return type with size %lu", (unsigned long)size, sizeof(id));
+            XLCAssert(size == sizeof(id), @"expected type with size %lu but return type with size %lu", (unsigned long)size, sizeof(id));
             id obj = *(id __autoreleasing *)value;
             outval.set(XJSToValue([XJSContext contextForJSContext:cx], obj).value);
             return JS_TRUE;
@@ -298,7 +298,7 @@ JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, JS::Muta
                 outval.set(JS::StringValue(JS_NewStringCopyZ(cx, *(const char **)value)));
                 return JS_TRUE;
             }
-            XWLOG(@"ignore encode modifier 'r' (const) for type %s", encode);
+            XJSLogInfo(@"ignore encode modifier 'r' (const) for type %s", encode);
             return XJSValueFromType(cx, encode+1, value, outval);
             
         case _C_STRUCT_B:  // '{'
@@ -324,7 +324,7 @@ JSBool XJSValueFromType(JSContext *cx, const char *encode, void *value, JS::Muta
         case _C_UNION_E:  //  ')'
         case _C_ARY_E:  //    ']'
         default:
-            XWLOG(@"unsouportted type %s", encode);
+            XJSLogWarn(@"unsouportted type %s", encode);
             return JS_FALSE;
     }
 }
