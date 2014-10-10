@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0416179728381DD9E7020270 /* libPods-XJSBinding-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF8E49DA5B2345D6A9A1C654 /* libPods-XJSBinding-ios.a */; };
 		060A9013181214DB002631A5 /* XJSWeakMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 060A9011181214DB002631A5 /* XJSWeakMap.h */; };
 		060A9014181214DB002631A5 /* XJSWeakMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 060A9012181214DB002631A5 /* XJSWeakMap.mm */; };
 		060A9015181214DB002631A5 /* XJSWeakMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 060A9012181214DB002631A5 /* XJSWeakMap.mm */; };
@@ -50,7 +51,6 @@
 		0620F8B117F04859008A86ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0620F8AF17F04859008A86ED /* InfoPlist.strings */; };
 		0620F8B317F04859008A86ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0620F8B217F04859008A86ED /* main.m */; };
 		0620F8B717F04859008A86ED /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0620F8B617F04859008A86ED /* AppDelegate.mm */; };
-		0620F8B917F04859008A86ED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0620F8B817F04859008A86ED /* Images.xcassets */; };
 		0620F8D417F0487C008A86ED /* libXJSBinding-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CFF4CF17E1BFD10081F388 /* libXJSBinding-ios.a */; };
 		0627CD2517E1BA4A00D0BB7C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0627CD2417E1BA4A00D0BB7C /* Foundation.framework */; };
 		0627CD2617E1BA4E00D0BB7C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC7517D9D612009BFC18 /* XCTest.framework */; };
@@ -81,7 +81,6 @@
 		066AD6B617F0588A00EADB2B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0692BC7517D9D612009BFC18 /* XCTest.framework */; };
 		066AD6B717F0588A00EADB2B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0627CD2417E1BA4A00D0BB7C /* Foundation.framework */; };
 		066AD6B817F0588A00EADB2B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0660B9DE17E094CA00A3DD0C /* UIKit.framework */; };
-		066AD6B917F0588A00EADB2B /* libPods-XJSBindingTests-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 011E04E2669844BCB2BD6A8E /* libPods-XJSBindingTests-ios.a */; };
 		066AD6C817F57B4700EADB2B /* NSObject+XJSValueConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 066AD6C617F57B4700EADB2B /* NSObject+XJSValueConvert.h */; };
 		066AD6C917F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066AD6C717F57B4700EADB2B /* NSObject+XJSValueConvert.mm */; };
 		066AD6CA17F57B4700EADB2B /* NSObject+XJSValueConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 066AD6C717F57B4700EADB2B /* NSObject+XJSValueConvert.mm */; };
@@ -136,10 +135,10 @@
 		06DA4B6F17F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 06DA4B6E17F58FAD00C9C3B6 /* XJSValueConvertTests.mm */; };
 		06DA4B7017F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 06DA4B6E17F58FAD00C9C3B6 /* XJSValueConvertTests.mm */; };
 		06DA4B7117F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 06DA4B6E17F58FAD00C9C3B6 /* XJSValueConvertTests.mm */; };
-		0D6311F05AF64626936572FE /* libPods-XJSBinding-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF8E49DA5B2345D6A9A1C654 /* libPods-XJSBinding-ios.a */; };
+		14FB9975DF164A6C36C17BD8 /* libPods-XJSBinding-XJSBindingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21EADE83A31D2F2BDFE4F53E /* libPods-XJSBinding-XJSBindingTests.a */; };
+		3879D1855AB8C02CF84A2C8D /* libPods-XJSBinding-ios-XJSBindingTests-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7062070C72EBE9DA499640CB /* libPods-XJSBinding-ios-XJSBindingTests-ios.a */; };
+		6EDB0BD77F02D291ACC90AF6 /* libPods-XJSBinding-ios-XJSBindingApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E002A2B7E448BE69DB1DE914 /* libPods-XJSBinding-ios-XJSBindingApp.a */; };
 		869C10B1AFF5475D890D61F2 /* libPods-XJSBinding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E34A372E8FC46218FB0FEA9 /* libPods-XJSBinding.a */; };
-		8BAA6F77B978462DA13C0F12 /* libPods-XJSBindingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B00A57B74E481C8E10386A /* libPods-XJSBindingTests.a */; };
-		96D46D894CDD47ACAF8E0C9F /* libPods-XJSBindingTests-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 011E04E2669844BCB2BD6A8E /* libPods-XJSBindingTests-ios.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +163,13 @@
 			remoteGlobalIDString = 0692BC6017D9D612009BFC18;
 			remoteInfo = XJSBinding;
 		};
+		0694729319E806C300337B75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0692BC5917D9D612009BFC18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06CFF4CE17E1BFD10081F388;
+			remoteInfo = "XJSBinding-ios";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -179,6 +185,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		001EA94C8A2672C1DB6913D9 /* Pods-XJSBinding-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding-ios/Pods-XJSBinding-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		011E04E2669844BCB2BD6A8E /* libPods-XJSBindingTests-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBindingTests-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		060A9011181214DB002631A5 /* XJSWeakMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSWeakMap.h; sourceTree = "<group>"; };
 		060A9012181214DB002631A5 /* XJSWeakMap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSWeakMap.mm; sourceTree = "<group>"; };
@@ -210,7 +217,6 @@
 		0620F8B417F04859008A86ED /* XJSBindingApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XJSBindingApp-Prefix.pch"; sourceTree = "<group>"; };
 		0620F8B517F04859008A86ED /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0620F8B617F04859008A86ED /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		0620F8B817F04859008A86ED /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0620F8D517F04881008A86ED /* libPods-XJSBinding-ios-XLCUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-XJSBinding-ios-XLCUtils.a"; path = "Pods/build/Debug-iphoneos/libPods-XJSBinding-ios-XLCUtils.a"; sourceTree = "<group>"; };
 		0620F8D717F04885008A86ED /* libPods-XJSBinding-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-XJSBinding-ios.a"; path = "Pods/build/Debug-iphoneos/libPods-XJSBinding-ios.a"; sourceTree = "<group>"; };
 		0624EC771836E08A00D2F7BC /* XJSBinding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XJSBinding.h; sourceTree = "<group>"; };
@@ -347,14 +353,26 @@
 		06D7CE69187A9D2B008E1DE0 /* XJSAdopter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSAdopter.mm; sourceTree = "<group>"; };
 		06DA4B6E17F58FAD00C9C3B6 /* XJSValueConvertTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = XJSValueConvertTests.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		06E53817182792E80057C2BD /* XJSBindingTests-ios-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XJSBindingTests-ios-Info.plist"; path = "XJSBindingTests/XJSBindingTests-ios-Info.plist"; sourceTree = SOURCE_ROOT; };
+		0C84790926115198876D5904 /* Pods-XJSBinding-XJSBindingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-XJSBindingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding-XJSBindingTests/Pods-XJSBinding-XJSBindingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		13B00A57B74E481C8E10386A /* libPods-XJSBindingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBindingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		19DCF33337D74A589F235EA8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		21EADE83A31D2F2BDFE4F53E /* libPods-XJSBinding-XJSBindingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBinding-XJSBindingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E34A372E8FC46218FB0FEA9 /* libPods-XJSBinding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBinding.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBindingTests.xcconfig"; path = "Pods/Pods-XJSBindingTests.xcconfig"; sourceTree = "<group>"; };
-		6C8587EDBAD849DE9054F8B6 /* Pods-XJSBinding.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding.xcconfig"; path = "Pods/Pods-XJSBinding.xcconfig"; sourceTree = "<group>"; };
-		B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBindingTests-ios.xcconfig"; path = "Pods/Pods-XJSBindingTests-ios.xcconfig"; sourceTree = "<group>"; };
+		3112361C3A5564448776A1D3 /* Pods-XJSBinding-ios-XJSBindingTests-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-ios-XJSBindingTests-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding-ios-XJSBindingTests-ios/Pods-XJSBinding-ios-XJSBindingTests-ios.release.xcconfig"; sourceTree = "<group>"; };
+		4CEB3D8AF1B16239647DFDE7 /* Pods-XJSBindingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBindingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBindingTests/Pods-XJSBindingTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4D1B83DAAD298C41286CA12D /* Pods-XJSBinding-XJSBindingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-XJSBindingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding-XJSBindingTests/Pods-XJSBinding-XJSBindingTests.release.xcconfig"; sourceTree = "<group>"; };
+		4F6D385C8AB0C044A13B4B03 /* Pods-XJSBinding.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding.release.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding/Pods-XJSBinding.release.xcconfig"; sourceTree = "<group>"; };
+		588B734FA507D1F628D6573D /* Pods-XJSBinding-ios-XJSBindingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-ios-XJSBindingApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding-ios-XJSBindingApp/Pods-XJSBinding-ios-XJSBindingApp.release.xcconfig"; sourceTree = "<group>"; };
+		5F5A30E34A03BAB4E7986D5E /* Pods-XJSBinding-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding-ios/Pods-XJSBinding-ios.release.xcconfig"; sourceTree = "<group>"; };
+		7062070C72EBE9DA499640CB /* libPods-XJSBinding-ios-XJSBindingTests-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBinding-ios-XJSBindingTests-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C877CDB5C6AF84ACB0ED449 /* Pods-XJSBindingTests-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBindingTests-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBindingTests-ios/Pods-XJSBindingTests-ios.release.xcconfig"; sourceTree = "<group>"; };
+		7DA4591712337ACAD9EDEA57 /* Pods-XJSBinding.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding/Pods-XJSBinding.debug.xcconfig"; sourceTree = "<group>"; };
+		816A7762C28E27AD0D7B82BD /* Pods-XJSBindingTests-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBindingTests-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBindingTests-ios/Pods-XJSBindingTests-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		CA056F2D78A27F1BCF30A87E /* Pods-XJSBinding-ios-XJSBindingApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-ios-XJSBindingApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding-ios-XJSBindingApp/Pods-XJSBinding-ios-XJSBindingApp.debug.xcconfig"; sourceTree = "<group>"; };
 		CF8E49DA5B2345D6A9A1C654 /* libPods-XJSBinding-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBinding-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E92E519FA01444FB9DD45FEC /* Pods-XJSBinding-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-ios.xcconfig"; path = "Pods/Pods-XJSBinding-ios.xcconfig"; sourceTree = "<group>"; };
+		DC51A71A345F103CFD3A58F8 /* Pods-XJSBindingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBindingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBindingTests/Pods-XJSBindingTests.release.xcconfig"; sourceTree = "<group>"; };
+		E002A2B7E448BE69DB1DE914 /* libPods-XJSBinding-ios-XJSBindingApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XJSBinding-ios-XJSBindingApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2892AD94B2162EBDC79468B /* Pods-XJSBinding-ios-XJSBindingTests-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJSBinding-ios-XJSBindingTests-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XJSBinding-ios-XJSBindingTests-ios/Pods-XJSBinding-ios-XJSBindingTests-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +385,7 @@
 				0620F8AA17F04859008A86ED /* CoreGraphics.framework in Frameworks */,
 				0620F8AB17F04859008A86ED /* UIKit.framework in Frameworks */,
 				0620F8A817F04859008A86ED /* Foundation.framework in Frameworks */,
+				6EDB0BD77F02D291ACC90AF6 /* libPods-XJSBinding-ios-XJSBindingApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +398,7 @@
 				0627CD2617E1BA4E00D0BB7C /* XCTest.framework in Frameworks */,
 				0627CD2517E1BA4A00D0BB7C /* Foundation.framework in Frameworks */,
 				0660B9DF17E094CA00A3DD0C /* UIKit.framework in Frameworks */,
-				96D46D894CDD47ACAF8E0C9F /* libPods-XJSBindingTests-ios.a in Frameworks */,
+				3879D1855AB8C02CF84A2C8D /* libPods-XJSBinding-ios-XJSBindingTests-ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +411,6 @@
 				066AD6B617F0588A00EADB2B /* XCTest.framework in Frameworks */,
 				066AD6B717F0588A00EADB2B /* Foundation.framework in Frameworks */,
 				066AD6B817F0588A00EADB2B /* UIKit.framework in Frameworks */,
-				066AD6B917F0588A00EADB2B /* libPods-XJSBindingTests-ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,7 +431,7 @@
 				0692BC7A17D9D612009BFC18 /* libXJSBinding.a in Frameworks */,
 				0692BC7717D9D612009BFC18 /* Cocoa.framework in Frameworks */,
 				0692BC7617D9D612009BFC18 /* XCTest.framework in Frameworks */,
-				8BAA6F77B978462DA13C0F12 /* libPods-XJSBindingTests.a in Frameworks */,
+				14FB9975DF164A6C36C17BD8 /* libPods-XJSBinding-XJSBindingTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,7 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06CFF4D017E1BFD10081F388 /* Foundation.framework in Frameworks */,
-				0D6311F05AF64626936572FE /* libPods-XJSBinding-ios.a in Frameworks */,
+				0416179728381DD9E7020270 /* libPods-XJSBinding-ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,7 +472,6 @@
 			children = (
 				0620F8B517F04859008A86ED /* AppDelegate.h */,
 				0620F8B617F04859008A86ED /* AppDelegate.mm */,
-				0620F8B817F04859008A86ED /* Images.xcassets */,
 				0620F8AD17F04859008A86ED /* Supporting Files */,
 			);
 			path = XJSBindingApp;
@@ -559,10 +576,7 @@
 				0620F8AC17F04859008A86ED /* XJSBindingApp */,
 				0692BC6317D9D612009BFC18 /* Frameworks */,
 				0692BC6217D9D612009BFC18 /* Products */,
-				5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */,
-				B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */,
-				E92E519FA01444FB9DD45FEC /* Pods-XJSBinding-ios.xcconfig */,
-				6C8587EDBAD849DE9054F8B6 /* Pods-XJSBinding.xcconfig */,
+				FAFEB6AF459EE8A34A61A93D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -598,6 +612,9 @@
 				011E04E2669844BCB2BD6A8E /* libPods-XJSBindingTests-ios.a */,
 				CF8E49DA5B2345D6A9A1C654 /* libPods-XJSBinding-ios.a */,
 				2E34A372E8FC46218FB0FEA9 /* libPods-XJSBinding.a */,
+				21EADE83A31D2F2BDFE4F53E /* libPods-XJSBinding-XJSBindingTests.a */,
+				7062070C72EBE9DA499640CB /* libPods-XJSBinding-ios-XJSBindingTests-ios.a */,
+				E002A2B7E448BE69DB1DE914 /* libPods-XJSBinding-ios-XJSBindingApp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -780,6 +797,27 @@
 			name = XJSAdopter;
 			sourceTree = "<group>";
 		};
+		FAFEB6AF459EE8A34A61A93D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7DA4591712337ACAD9EDEA57 /* Pods-XJSBinding.debug.xcconfig */,
+				4F6D385C8AB0C044A13B4B03 /* Pods-XJSBinding.release.xcconfig */,
+				001EA94C8A2672C1DB6913D9 /* Pods-XJSBinding-ios.debug.xcconfig */,
+				5F5A30E34A03BAB4E7986D5E /* Pods-XJSBinding-ios.release.xcconfig */,
+				4CEB3D8AF1B16239647DFDE7 /* Pods-XJSBindingTests.debug.xcconfig */,
+				DC51A71A345F103CFD3A58F8 /* Pods-XJSBindingTests.release.xcconfig */,
+				816A7762C28E27AD0D7B82BD /* Pods-XJSBindingTests-ios.debug.xcconfig */,
+				7C877CDB5C6AF84ACB0ED449 /* Pods-XJSBindingTests-ios.release.xcconfig */,
+				0C84790926115198876D5904 /* Pods-XJSBinding-XJSBindingTests.debug.xcconfig */,
+				4D1B83DAAD298C41286CA12D /* Pods-XJSBinding-XJSBindingTests.release.xcconfig */,
+				F2892AD94B2162EBDC79468B /* Pods-XJSBinding-ios-XJSBindingTests-ios.debug.xcconfig */,
+				3112361C3A5564448776A1D3 /* Pods-XJSBinding-ios-XJSBindingTests-ios.release.xcconfig */,
+				CA056F2D78A27F1BCF30A87E /* Pods-XJSBinding-ios-XJSBindingApp.debug.xcconfig */,
+				588B734FA507D1F628D6573D /* Pods-XJSBinding-ios-XJSBindingApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -819,13 +857,16 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0620F8CC17F04859008A86ED /* Build configuration list for PBXNativeTarget "XJSBindingApp" */;
 			buildPhases = (
+				702244F8AFA8457C62147EB8 /* Check Pods Manifest.lock */,
 				0620F8A317F04859008A86ED /* Sources */,
 				0620F8A417F04859008A86ED /* Frameworks */,
 				0620F8A517F04859008A86ED /* Resources */,
+				F15D1F9F7B17CA7E6032912A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0694729419E806C300337B75 /* PBXTargetDependency */,
 			);
 			name = XJSBindingApp;
 			productName = XJSBindingApp;
@@ -860,7 +901,6 @@
 				066AD6AD17F0588A00EADB2B /* Sources */,
 				066AD6B217F0588A00EADB2B /* Frameworks */,
 				066AD6BA17F0588A00EADB2B /* Resources */,
-				066AD6BB17F0588A00EADB2B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -936,7 +976,7 @@
 		0692BC5917D9D612009BFC18 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Xiliang Chen";
 				TargetAttributes = {
 					0620F8A617F04859008A86ED = {
@@ -978,7 +1018,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0620F8B117F04859008A86ED /* InfoPlist.strings in Resources */,
-				0620F8B917F04859008A86ED /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,21 +1060,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		066AD6BB17F0588A00EADB2B /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-XJSBindingTests-ios-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		0DD5340876524480ADBBFE9F /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1066,6 +1090,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		702244F8AFA8457C62147EB8 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		72429FF9763644B7B0F33649 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1078,7 +1117,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-XJSBinding-ios-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XJSBinding-ios/Pods-XJSBinding-ios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8E4587273A3B42EB8453FA2A /* Copy Pods Resources */ = {
@@ -1093,7 +1132,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-XJSBindingTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XJSBinding-XJSBindingTests/Pods-XJSBinding-XJSBindingTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BED9FB68EF7F40439E46A352 /* Check Pods Manifest.lock */ = {
@@ -1138,7 +1177,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-XJSBinding-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XJSBinding/Pods-XJSBinding-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F15D1F9F7B17CA7E6032912A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XJSBinding-ios-XJSBindingApp/Pods-XJSBinding-ios-XJSBindingApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F2841BD441ED49A0A7F7B3CA /* Copy Pods Resources */ = {
@@ -1153,7 +1207,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-XJSBindingTests-ios-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XJSBinding-ios-XJSBindingTests-ios/Pods-XJSBinding-ios-XJSBindingTests-ios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1302,6 +1356,11 @@
 			target = 0692BC6017D9D612009BFC18 /* XJSBinding */;
 			targetProxy = 0692BC7817D9D612009BFC18 /* PBXContainerItemProxy */;
 		};
+		0694729419E806C300337B75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06CFF4CE17E1BFD10081F388 /* XJSBinding-ios */;
+			targetProxy = 0694729319E806C300337B75 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1318,11 +1377,12 @@
 /* Begin XCBuildConfiguration section */
 		0620F8CD17F04859008A86ED /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA056F2D78A27F1BCF30A87E /* Pods-XJSBinding-ios-XJSBindingApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiliang Chen (3ZXMJUF2N4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiliang Chen (3ZXMJUF2N4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1333,7 +1393,10 @@
 				INFOPLIST_FILE = "XJSBindingApp/XJSBindingApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "-ljs_static";
+				OTHER_LDFLAGS = (
+					"-ljs_static",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1343,11 +1406,12 @@
 		};
 		0620F8CE17F04859008A86ED /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 588B734FA507D1F628D6573D /* Pods-XJSBinding-ios-XJSBindingApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiliang Chen (3ZXMJUF2N4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiliang Chen (3ZXMJUF2N4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1358,7 +1422,10 @@
 				INFOPLIST_FILE = "XJSBindingApp/XJSBindingApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "-ljs_static";
+				OTHER_LDFLAGS = (
+					"-ljs_static",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1369,7 +1436,7 @@
 		};
 		0660B9EA17E094CA00A3DD0C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */;
+			baseConfigurationReference = F2892AD94B2162EBDC79468B /* Pods-XJSBinding-ios-XJSBindingTests-ios.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1382,16 +1449,14 @@
 				GCC_PREFIX_HEADER = "XJSBindingTests/XJSBindingTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"$(inherited)",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
-					"-ObjC",
+					"$(inherited)",
 					"-ljs_static",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1404,7 +1469,7 @@
 		};
 		0660B9EB17E094CA00A3DD0C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */;
+			baseConfigurationReference = 3112361C3A5564448776A1D3 /* Pods-XJSBinding-ios-XJSBindingTests-ios.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1416,16 +1481,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBindingTests/XJSBindingTests-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"$(inherited)",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
-					"-ObjC",
+					"$(inherited)",
 					"-ljs_static",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1439,7 +1502,7 @@
 		};
 		066AD6BD17F0588A00EADB2B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */;
+			baseConfigurationReference = F2892AD94B2162EBDC79468B /* Pods-XJSBinding-ios-XJSBindingTests-ios.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/XJSBindingApp.app/XJSBindingApp";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1452,18 +1515,13 @@
 				GCC_PREFIX_HEADER = "XJSBindingTests/XJSBindingTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"$(inherited)",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-ljs_static",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "XJSBindingTests-ios";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1474,7 +1532,7 @@
 		};
 		066AD6BE17F0588A00EADB2B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B710EE40E8C94573A0CE26F4 /* Pods-XJSBindingTests-ios.xcconfig */;
+			baseConfigurationReference = 3112361C3A5564448776A1D3 /* Pods-XJSBinding-ios-XJSBindingTests-ios.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/XJSBindingApp.app/XJSBindingApp";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1486,18 +1544,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBindingTests/XJSBindingTests-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"$(inherited)",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-ljs_static",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "XJSBindingTests-ios";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1543,7 +1596,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				ORDER_FILE = "";
-				OTHER_CFLAGS = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1579,15 +1631,15 @@
 				LIBRARY_SEARCH_PATHS = "${SRCROOT}/Spidermonkey/release";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ORDER_FILE = "";
-				OTHER_CFLAGS = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		0692BC8617D9D612009BFC18 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C8587EDBAD849DE9054F8B6 /* Pods-XJSBinding.xcconfig */;
+			baseConfigurationReference = 7DA4591712337ACAD9EDEA57 /* Pods-XJSBinding.debug.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1602,8 +1654,9 @@
 		};
 		0692BC8717D9D612009BFC18 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C8587EDBAD849DE9054F8B6 /* Pods-XJSBinding.xcconfig */;
+			baseConfigurationReference = 4F6D385C8AB0C044A13B4B03 /* Pods-XJSBinding.release.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1618,7 +1671,7 @@
 		};
 		0692BC8917D9D612009BFC18 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */;
+			baseConfigurationReference = 0C84790926115198876D5904 /* Pods-XJSBinding-XJSBindingTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1630,14 +1683,12 @@
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"$(inherited)",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
 				OTHER_LDFLAGS = (
-					"-ObjC",
+					"$(inherited)",
 					"-ljs_static",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1648,7 +1699,7 @@
 		};
 		0692BC8A17D9D612009BFC18 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B40002052AB4383A210D82D /* Pods-XJSBindingTests.xcconfig */;
+			baseConfigurationReference = 4D1B83DAAD298C41286CA12D /* Pods-XJSBinding-XJSBindingTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1659,14 +1710,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJSBinding/XJSBinding-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/XLCUtils\"",
+					"$(inherited)",
 					"\"${SRCROOT}/Spidermonkey/include\"",
 				);
 				INFOPLIST_FILE = "XJSBindingTests/XJSBindingTests-Info.plist";
 				OTHER_LDFLAGS = (
-					"-ObjC",
+					"$(inherited)",
 					"-ljs_static",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1677,7 +1726,7 @@
 		};
 		06CFF4EC17E1BFD10081F388 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E92E519FA01444FB9DD45FEC /* Pods-XJSBinding-ios.xcconfig */;
+			baseConfigurationReference = 001EA94C8A2672C1DB6913D9 /* Pods-XJSBinding-ios.debug.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/XJSBinding_ios.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1697,7 +1746,7 @@
 		};
 		06CFF4ED17E1BFD10081F388 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E92E519FA01444FB9DD45FEC /* Pods-XJSBinding-ios.xcconfig */;
+			baseConfigurationReference = 5F5A30E34A03BAB4E7986D5E /* Pods-XJSBinding-ios.release.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/XJSBinding_ios.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
