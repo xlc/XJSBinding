@@ -20,6 +20,20 @@
                ReferencedContainer = "container:XJSBinding.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BAFE57F6E4A1B2E904566F30"
+               BuildableName = "libPods-XJSBinding-ios.a"
+               BlueprintName = "Pods-XJSBinding-ios"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -39,6 +53,15 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "06CFF4CE17E1BFD10081F388"
+            BuildableName = "libXJSBinding-ios.a"
+            BlueprintName = "XJSBinding-ios"
+            ReferencedContainer = "container:XJSBinding.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -67,6 +90,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "06CFF4CE17E1BFD10081F388"
+            BuildableName = "libXJSBinding-ios.a"
+            BlueprintName = "XJSBinding-ios"
+            ReferencedContainer = "container:XJSBinding.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

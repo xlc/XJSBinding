@@ -1,0 +1,13 @@
+language: objective-c
+xcode_workspace: XJSBinding.xcworkspace
+before_install:
+      - gem install cocoapods --no-rdoc --no-ri --no-document --quiet 
+      - pod repo update --silent
+      - brew update
+      - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
+matrix:
+    include:
+        - xcode_sdk: macosx
+          xcode_scheme: XJSBinding
+        - xcode_sdk: iphonesimulator
+          xcode_scheme: XJSBinding-ios
