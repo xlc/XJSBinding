@@ -12,11 +12,11 @@ target 'XJSBinding-ios' do
     platform :ios, '7.0'
     import_pods
 
-    target 'XJSBindingTests-ios' do
+    target 'XJSBindingTests-ios', :exclusive => true do
         import_pods_test
     end
 
-    target 'XJSBindingApp' do
+    target 'XJSBindingApp', :exclusive => true do
         import_pods_test
     end
 end
@@ -25,7 +25,7 @@ target 'XJSBinding' do
     platform :osx, '10.9'
     import_pods
 
-    target 'XJSBindingTests' do
+    target 'XJSBindingTests', :exclusive => true do
         import_pods_test
     end
 end
