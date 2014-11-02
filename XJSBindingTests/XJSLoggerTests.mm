@@ -21,7 +21,7 @@
 @end
 
 struct LoggerItem {
-    int level;
+    NSUInteger level;
     NSString *func;
     NSString *file;
     int lineno;
