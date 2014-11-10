@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
     s.name         = 'XJSBinding'
-    s.version      = '0.1.1'
+    s.version      = '0.1.1b'
     s.summary      = 'Javascript binding for Objective-C. Powered by Spidermonkey JS engine.'
     s.homepage     = 'https://github.com/xlc/XJSBinding'
     s.license      = 'MIT'
     s.author       = { 'Xiliang Chen' => 'xlchen1291@gmail.com' }
-    s.source       = { :git => 'https://github.com/xlc/XJSBinding.git', :tag => '0.1.1' }
-    s.source_files = 'XJSBinding/**/*.{h,hh,m,mm}'
+    s.source       = { :git => 'https://github.com/xlc/XJSBinding.git', :tag => "#{s.version}" }
+    s.source_files = 'XJSBinding/**/*.{h,hh,m,mm}', 'Spidermonkey/**/*.h'
     s.private_header_files = '*Private.h', '*.hh'
     s.preserve_paths = 'Spidermonkey/**/*'
     s.header_mappings_dir = 'Spidermonkey/include'
