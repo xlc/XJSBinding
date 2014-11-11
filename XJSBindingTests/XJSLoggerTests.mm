@@ -24,7 +24,7 @@ struct LoggerItem {
     NSUInteger level;
     NSString *func;
     NSString *file;
-    int lineno;
+    NSUInteger lineno;
     NSString *message;
 };
 
@@ -60,11 +60,11 @@ struct LoggerItem {
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
-    _logs.push_back({logMessage->logFlag,
-        logMessage->function ? @(logMessage->function) : nil,
-        @(logMessage->file),
-        logMessage->lineNumber,
-        logMessage->logMsg});
+    _logs.push_back({logMessage.flag,
+        logMessage.function,
+        logMessage.file,
+        logMessage.line,
+        logMessage.message});
 }
 
 - (id <DDLogFormatter>)logFormatter { return nil; }
