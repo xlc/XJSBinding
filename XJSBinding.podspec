@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = 'XJSBinding'
-    s.version      = '0.1.1b'
+    s.version      = '0.1.3'
     s.summary      = 'Javascript binding for Objective-C. Powered by Spidermonkey JS engine.'
     s.homepage     = 'https://github.com/xlc/XJSBinding'
     s.license      = 'MIT'
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
     s.dependency 'XLCUtils'
     s.libraries = 'z'
     s.xcconfig = { 'OTHER_LDFLAGS' => '-ObjC -ljs_static',
-                   'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/XJSBinding/Spidermonkey/include"',
+                   'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/XJSBinding/Spidermonkey/include" "${PODS_ROOT}/Headers"',
                    'LIBRARY_SEARCH_PATHS' => '"${PODS_ROOT}/XJSBinding/Spidermonkey/${CONFIGURATION}"' }
 
     s.ios.deployment_target = '6.0'
