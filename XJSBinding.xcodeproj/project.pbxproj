@@ -16,6 +16,9 @@
 		060A901F181689B3002631A5 /* XJSValueWeakRefTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 060A901E181689B3002631A5 /* XJSValueWeakRefTests.mm */; };
 		060A9020181689B3002631A5 /* XJSValueWeakRefTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 060A901E181689B3002631A5 /* XJSValueWeakRefTests.mm */; };
 		060A9021181689B3002631A5 /* XJSValueWeakRefTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 060A901E181689B3002631A5 /* XJSValueWeakRefTests.mm */; };
+		060FEF681A171345003ED214 /* XJSReflectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 060FEF671A171345003ED214 /* XJSReflectTests.m */; };
+		060FEF691A171345003ED214 /* XJSReflectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 060FEF671A171345003ED214 /* XJSReflectTests.m */; };
+		060FEF6A1A171345003ED214 /* XJSReflectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 060FEF671A171345003ED214 /* XJSReflectTests.m */; };
 		0614864319977C5900916973 /* XJSLogging_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 0614864119977C5900916973 /* XJSLogging_Private.h */; };
 		0614864419977C5900916973 /* XJSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0614864219977C5900916973 /* XJSLogging.m */; };
 		0614864519977C5900916973 /* XJSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0614864219977C5900916973 /* XJSLogging.m */; };
@@ -190,6 +193,7 @@
 		060A9012181214DB002631A5 /* XJSWeakMap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSWeakMap.mm; sourceTree = "<group>"; };
 		060A9016181220DD002631A5 /* XJSWeakMapTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSWeakMapTests.mm; sourceTree = "<group>"; };
 		060A901E181689B3002631A5 /* XJSValueWeakRefTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSValueWeakRefTests.mm; sourceTree = "<group>"; };
+		060FEF671A171345003ED214 /* XJSReflectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSReflectTests.m; sourceTree = "<group>"; };
 		0614864119977C5900916973 /* XJSLogging_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = XJSLogging_Private.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0614864219977C5900916973 /* XJSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = XJSLogging.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0616304A17F818DC0018F504 /* XJSInternalOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XJSInternalOperation.mm; sourceTree = "<group>"; };
@@ -658,6 +662,7 @@
 				0674ACFC185EF084004491AD /* XJSModuleManagerTests.mm */,
 				06480DA3187D55A500FB9A95 /* XJSAdopterTests.m */,
 				066CA06F18D46DE800BF9BF2 /* XJSFunctionTests.m */,
+				060FEF671A171345003ED214 /* XJSReflectTests.m */,
 				0692BC7C17D9D612009BFC18 /* Supporting Files */,
 			);
 			path = XJSBindingTests;
@@ -1212,6 +1217,7 @@
 				0660B9F017E0950200A3DD0C /* XJSContextTests.mm in Sources */,
 				06DA4B7017F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
 				0619AA7617F971DC001631BD /* XJSHelperFunctionsTests.mm in Sources */,
+				060FEF691A171345003ED214 /* XJSReflectTests.m in Sources */,
 				06480DA5187D55A500FB9A95 /* XJSAdopterTests.m in Sources */,
 				066CA07118D46DE800BF9BF2 /* XJSFunctionTests.m in Sources */,
 				0660B9EE17E094FA00A3DD0C /* XJSRuntimeTests.mm in Sources */,
@@ -1232,6 +1238,7 @@
 				067AAFD3181A73FA002DB3A2 /* XJSRuntimeEntryTests.mm in Sources */,
 				067AAFD4181A73FA002DB3A2 /* XJSHelperFunctionsTests.mm in Sources */,
 				067AAFD5181A73FA002DB3A2 /* XJSClassTests.mm in Sources */,
+				060FEF6A1A171345003ED214 /* XJSReflectTests.m in Sources */,
 				060A9019181220DD002631A5 /* XJSWeakMapTests.mm in Sources */,
 				06480DA6187D55A500FB9A95 /* XJSAdopterTests.m in Sources */,
 				066AD6AE17F0588A00EADB2B /* XJSContextTests.mm in Sources */,
@@ -1280,6 +1287,7 @@
 				0660B9D217E0584D00A3DD0C /* XJSValueTests.mm in Sources */,
 				06DA4B6F17F58FAD00C9C3B6 /* XJSValueConvertTests.mm in Sources */,
 				0664602B17DDC4960071D23F /* XJSContextTests.mm in Sources */,
+				060FEF681A171345003ED214 /* XJSReflectTests.m in Sources */,
 				06480DA4187D55A500FB9A95 /* XJSAdopterTests.m in Sources */,
 				066CA07018D46DE800BF9BF2 /* XJSFunctionTests.m in Sources */,
 				0619AA7517F971DC001631BD /* XJSHelperFunctionsTests.mm in Sources */,

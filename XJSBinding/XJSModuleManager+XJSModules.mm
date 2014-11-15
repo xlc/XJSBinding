@@ -36,6 +36,17 @@
         
         return YES;
     } forModuleId:@"xjs/log"];
+    
+    [XJSModuleManager provideBlock:^BOOL(XJSValue *require, XJSValue *exports, XJSValue *module) {
+        XJSContext *cx = require.context;
+        JSObject *obj = JS_NewObject(cx.context, NULL, NULL, NULL);
+        
+        JSObject *reflect = JS_InitReflect(cx.context, obj);
+        XJSValue *val = [[XJSValue alloc] initWithContext:cx value:JS::ObjectOrNullValue(reflect)];
+        module[@"exports"] = val;
+        
+        return YES;
+    } forModuleId:@"xjs/reflect"];
 }
 
 @end
